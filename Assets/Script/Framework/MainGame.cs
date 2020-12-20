@@ -70,7 +70,11 @@ public class MainGame : MonoBehaviour
     protected virtual void CallMain()
     {
         LuaFunction main = luaState.GetFunction("Main");
-        main.Call();
+#if UNITY_EDITOR
+        main.Call(true);
+        #else
+        main.Call(false);
+#endif
         main.Dispose();
     }
     

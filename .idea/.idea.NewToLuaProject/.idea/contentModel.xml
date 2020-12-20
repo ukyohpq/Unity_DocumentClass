@@ -15,11 +15,18 @@
         <e p="link.xml" t="Include" />
         <e p="Script" t="Include">
           <e p="Framework" t="Include">
+            <e p="Editor" t="Include">
+              <e p="DocumentClassEditor.cs" t="Include" />
+            </e>
+            <e p="FrameConst.cs" t="Include" />
             <e p="HotFixLua.cs" t="Include" />
             <e p="Log" t="Include">
               <e p="BTLog.cs" t="Include" />
             </e>
             <e p="MainGame.cs" t="Include" />
+            <e p="UI" t="Include">
+              <e p="DocumentClass.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Source" t="Include">

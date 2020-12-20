@@ -1,0 +1,2 @@
+﻿---@class TestPool
+TestPool = poolClass()
