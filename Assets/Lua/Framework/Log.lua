@@ -1,4 +1,4 @@
-﻿---
+---
 --- Created by MengChengBo
 --- DateTime: 2017/10/31 10:47
 ---
@@ -8,7 +8,7 @@ local _log = Babeltime.Log.BTLog
 ELogType =
 {
     Debug = 0,    --- 调试信息的打印，日志等级最低
-    Info = 1,     --- 基本的日志输出(不带trace)
+Info = 1,     --- 基本的日志输出(不带trace)
     Warning = 2,  ---
     Error = 3,
     Assert = 4,
