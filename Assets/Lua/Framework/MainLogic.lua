@@ -6,9 +6,9 @@ function MainLogic:ctor()
 end
 
 function MainLogic:Update(deltaTime, unscaledDeltaTime)
-
+    LogUtil.LogError("MainLogic:Update")
 end
 
-function MainLogic:fixedUpdate(fixedDeltaTime, fixedUnscaledTime)
-
+function MainLogic:FixedUpdate(fixedDeltaTime, fixedUnscaledTime)
+    LogUtil.LogError("MainLogic:FixedUpdate")
 end

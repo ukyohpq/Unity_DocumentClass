@@ -1,4 +1,4 @@
-﻿local function is(ins, cls)
+local function is(ins, cls)
     if ins.__cname == nil or cls.__cname == nil then
         return false
     end

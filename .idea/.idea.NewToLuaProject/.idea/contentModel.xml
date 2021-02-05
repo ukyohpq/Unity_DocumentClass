@@ -15,6 +15,8 @@
         <e p="link.xml" t="Include" />
         <e p="Script" t="Include">
           <e p="Framework" t="Include">
+            <e p="AssetManager.cs" t="Include" />
+            <e p="EasyLoader.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="DocumentClassEditor.cs" t="Include" />
             </e>
@@ -93,6 +95,7 @@
           </e>
           <e p="LuaConst.cs" t="Include" />
         </e>
+        <e p="testmain.cs" t="Include" />
         <e p="ToLua" t="Include">
           <e p="BaseType" t="Include">
             <e p="LuaInterface_EventObjectWrap.cs" t="Include" />

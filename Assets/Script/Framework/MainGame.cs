@@ -7,7 +7,7 @@ using Babeltime.Log;
 public class MainGame : MonoBehaviour
 {
     private LuaState luaState;
-    private LuaFunction luaUpdate;
+    private LuaFunction luaBridge;
     private LuaFunction luaFixedUpdate;
     private void Awake()
     {
@@ -63,8 +63,7 @@ public class MainGame : MonoBehaviour
         luaState.AddSearchPath(LuaConst.toluaDir);
         luaState.DoFile("Framework\\Main.lua");
         CallMain();
-        luaUpdate = luaState.GetFunction("Update");
-        luaFixedUpdate = luaState.GetFunction("FixedUpdate");
+        luaBridge = luaState.GetFunction("LuaBridge");
     }
     
     protected virtual void CallMain()
@@ -72,7 +71,7 @@ public class MainGame : MonoBehaviour
         LuaFunction main = luaState.GetFunction("Main");
 #if UNITY_EDITOR
         main.Call(true);
-        #else
+#else
         main.Call(false);
 #endif
         main.Dispose();
@@ -134,11 +133,11 @@ public class MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        luaUpdate.Call(Time.time, Time.unscaledTime);
+        luaBridge.Call("Update", Time.time, Time.unscaledTime);
     }
 
     private void FixedUpdate()
     {
-        luaFixedUpdate.Call(Time.fixedTime, Time.fixedUnscaledTime);
+        luaBridge.Call("FixedUpdate", Time.fixedTime, Time.fixedUnscaledTime);
     }
 }
