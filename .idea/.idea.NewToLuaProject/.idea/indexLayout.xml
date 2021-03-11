@@ -19,6 +19,7 @@
       <Path>Logs</Path>
       <Path>Luajit</Path>
       <Path>Luajit64</Path>
+      <Path>Temp</Path>
       <Path>Unity5.x</Path>
       <Path>obj</Path>
     </explicitExcludes>

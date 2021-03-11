@@ -8,7 +8,6 @@ public class MainGame : MonoBehaviour
 {
     private LuaState luaState;
     private LuaFunction luaBridge;
-    private LuaFunction luaFixedUpdate;
     private void Awake()
     {
         luaState = new LuaState();

@@ -8,14 +8,19 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Editor" t="Include">
+          <e p="APIToluaGenerator.cs" t="Include" />
           <e p="Custom" t="Include">
             <e p="CustomSettings.cs" t="Include" />
           </e>
+          <e p="EmmyLuaService.cs" t="Include" />
         </e>
         <e p="link.xml" t="Include" />
         <e p="Script" t="Include">
           <e p="Framework" t="Include">
             <e p="AssetManager.cs" t="Include" />
+            <e p="Core" t="Include">
+              <e p="CSBridge.cs" t="Include" />
+            </e>
             <e p="EasyLoader.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="DocumentClassEditor.cs" t="Include" />
@@ -27,6 +32,7 @@
             </e>
             <e p="MainGame.cs" t="Include" />
             <e p="UI" t="Include">
+              <e p="Button.cs" t="Include" />
               <e p="DocumentClass.cs" t="Include" />
             </e>
           </e>
@@ -35,6 +41,8 @@
           <e p="Generate" t="Include">
             <e p="Babeltime_Log_BTLogWrap.cs" t="Include" />
             <e p="DelegateFactory.cs" t="Include" />
+            <e p="Framework_core_CSBridgeWrap.cs" t="Include" />
+            <e p="Framework_UI_ButtonWrap.cs" t="Include" />
             <e p="LuaBinder.cs" t="Include" />
             <e p="LuaInterface_DebuggerWrap.cs" t="Include" />
             <e p="LuaInterface_InjectTypeWrap.cs" t="Include" />
@@ -60,6 +68,7 @@
             <e p="UnityEngine_CharacterControllerWrap.cs" t="Include" />
             <e p="UnityEngine_ColliderWrap.cs" t="Include" />
             <e p="UnityEngine_ComponentWrap.cs" t="Include" />
+            <e p="UnityEngine_EventSystems_UIBehaviourWrap.cs" t="Include" />
             <e p="UnityEngine_GameObjectWrap.cs" t="Include" />
             <e p="UnityEngine_InputWrap.cs" t="Include" />
             <e p="UnityEngine_KeyCodeWrap.cs" t="Include" />
@@ -90,6 +99,9 @@
             <e p="UnityEngine_TimeWrap.cs" t="Include" />
             <e p="UnityEngine_TrackedReferenceWrap.cs" t="Include" />
             <e p="UnityEngine_TransformWrap.cs" t="Include" />
+            <e p="UnityEngine_UI_GraphicWrap.cs" t="Include" />
+            <e p="UnityEngine_UI_MaskableGraphicWrap.cs" t="Include" />
+            <e p="UnityEngine_UI_TextWrap.cs" t="Include" />
             <e p="UnityEngine_WrapModeWrap.cs" t="Include" />
             <e p="UnityEngine_WWWWrap.cs" t="Include" />
           </e>
