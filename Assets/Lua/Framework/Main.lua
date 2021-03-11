@@ -11,15 +11,16 @@ local function requireLua(isEditor)
 	require("Framework.MainLogic")
 end
 
-local cap
 --主入口函数。从这里开始lua逻辑
 function Main(isEditor)
-	--LogUtil.Debug("Main start")
+	IsEditor = isEditor
 	requireLua(isEditor)
-	mainLogic = MainLogic.New()
-	LogUtil.LogError("isEditor:%s", isEditor)
-	require("UnityEngine.GameObject")
+	--LogUtil.LogError("Main start isEditor:%s", isEditor)+
 	cap = UnityEngine.GameObject.New()
+	LogUtil.LogError("=================cap:%s", cap)
+	mainLogic = MainLogic.New()
+	--require("UnityEngine.GameObject")
+	--require("UnityEngine.UI.Text")
 end
 
 function LuaBridge(funcName, ...)
@@ -33,4 +34,9 @@ function LuaBridge(funcName, ...)
 		return
 	end
 	fun(mainLogic, ...)
+end
+
+function CSCallLua(evtName, contextID, uiPrefab)
+	LogUtil.LogError("evtName:%s contextID:%s prefab:%s", evtName, contextID, uiPrefab)
+	prefabComplete(contextID, uiPrefab)
 end
