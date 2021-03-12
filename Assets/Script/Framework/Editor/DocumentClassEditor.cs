@@ -9,6 +9,8 @@ using Framework.UI;
 using UnityEngine;
 using System.Text;
 using UnityEditor.Experimental.SceneManagement;
+using UnityEngine.UI;
+using Button = Framework.UI.Button;
 
 namespace Framework.Editor
 {
@@ -16,12 +18,12 @@ namespace Framework.Editor
     public class DocumentClassEditor:UnityEditor.Editor
     {
         private SerializedProperty m_LuaClass;
-        private SerializedProperty m_SuperClass;
+//        private SerializedProperty m_SuperClass;
 
         private void OnEnable()
         {
             m_LuaClass = serializedObject.FindProperty("LuaClass");
-            m_SuperClass = serializedObject.FindProperty("SuperClass");
+//            m_SuperClass = serializedObject.FindProperty("SuperClass");
             if (m_LuaClass.stringValue == "")
             {
                 m_LuaClass.stringValue = serializedObject.targetObject.name;
@@ -45,9 +47,9 @@ namespace Framework.Editor
             EditorGUILayout.PropertyField(m_LuaClass, new GUIContent("LuaClass"));
             EditorGUILayout.EndHorizontal();
 //            SuperClassName
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(m_SuperClass, new GUIContent("SuperClass"));
-            EditorGUILayout.EndHorizontal();
+//            EditorGUILayout.BeginHorizontal();
+//            EditorGUILayout.PropertyField(m_SuperClass, new GUIContent("SuperClass"));
+//            EditorGUILayout.EndHorizontal();
             
 //            saveAndCreate
             EditorGUILayout.BeginHorizontal();
@@ -60,6 +62,18 @@ namespace Framework.Editor
             serializedObject.ApplyModifiedProperties();
         }
 
+        private Type getTypeBySuffix(string suffix)
+        {
+            switch (suffix)
+            {
+                case "Text":
+                    return typeof(Text);
+                case "Button":
+                    return typeof(Button);
+                default:
+                    throw new Exception(string.Format("invalid component suffix:{}", suffix));
+            }
+        }
         private void saveAndCreate()
         {
             var go = (this.target as DocumentClass).gameObject;
@@ -78,19 +92,13 @@ namespace Framework.Editor
             var classFullName = makeClassName(fileName);
 //            类描述，包含类定义，继承，字段声明
             var classDesc = new List<string>();
-            var superClassName = m_SuperClass.stringValue;
-            if (superClassName == "")
-            {
-                classDesc.Add(string.Format("---@class {0}", classFullName));
-                classDesc.Add(string.Format(@"{0} = class(""{1}"")", className, classFullName));
-            }
-            else
-            {
-                classDesc.Add(string.Format("---@class {0}:{1}", classFullName, superClassName));
-                classDesc.Add(string.Format(@"local super = require({0})
-{1} = class(""{2}"",super)", superClassName, className, classFullName));
-            }
-            
+//            var superClassName = m_SuperClass.stringValue;
+            var superClassName = "Framework.UI.Prefab";
+
+            classDesc.Add(string.Format("---@type {0}", superClassName));
+            classDesc.Add(string.Format("local super = require(\"{0}\")\n", superClassName));
+            classDesc.Add(string.Format("---@class {0}:{1}", classFullName, superClassName));
+            classDesc.Add(string.Format("{0} = class(\"{1}\", super)", className, classFullName));
             printClassLines(classDesc);
             
 //            加载完成的回调函数，这里会把控件赋值给字段
@@ -107,10 +115,7 @@ namespace Framework.Editor
                 {
                     var suffixIndex = childName.LastIndexOf("_");
                     var suffix = childName.Substring(suffixIndex + 1);
-                    var luaCode = String.Format("\tself.{0} = aa", childName);
-                    classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0}", childName));
-                    onCompletedFunction.Insert(onCompletedFunction.Count - 1, luaCode);
-//                    lines.Add(luaCode);
+                    classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, getTypeBySuffix(suffix)));
                     BTLog.Error("name:{0} suffix:{1} count:{2}", childName, suffix, onCompletedFunction.Count);
                 }
             }
@@ -125,7 +130,7 @@ namespace Framework.Editor
             BTLog.Error("assetPath:{0}", assetPath);
             var GetAssetPathFunction = new List<string>();
             GetAssetPathFunction.Add(string.Format(@"function {0}:GetAssetPath()
-    if isEditor then
+    if IsEditor then
         return ""{1}""
     else
         return ""{2}""
