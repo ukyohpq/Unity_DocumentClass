@@ -25,3 +25,10 @@ sysinfo.txt
 /UnityVS.tolua.CSharp.csproj
 /UnityVS.tolua.CSharp.Editor.csproj
 /UnityVS.tolua.sln
+/Assets/Script/Framework/core/Utils.cs.meta
+
+# .meta
+*.meta
+
+# .idea相关需要排除
+.idea/
