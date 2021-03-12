@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Babeltime.Log;
+using Framework.UI;
 using LuaInterface;
 using UnityEditor;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace Framework.core
 //            TODO  UIRoot不能在这里写死。考虑引入UIStage
             go.transform.parent = GameObject.Find("UIRoot").transform;
             go.transform.localPosition = Vector3.zero;
-            var luaCall = LuaState.Get(new IntPtr()).GetFunction("CSCallLua");
+            
             if (contextPrefabDic.ContainsKey(contextID))
             {
                 BTLog.Error("contextPrefabDic contains key:{0}", contextID);
@@ -34,11 +35,21 @@ namespace Framework.core
             }
             
             contextPrefabDic[contextID] = go;
-            var ls = LuaState.Get(new IntPtr());
-            var d = ls.GetTable("prefabIDMap")[contextID] as LuaTable;
-
+            var docu = go.GetComponent<DocumentClass>();
+            if (docu == null)
+            {
+                throw new Exception("must has Component DocumentClass!");
+            }
+            docu.ContextId = contextID;
+            
+            var prefabLua = MainGame.Ins.GetPrefabLua(contextID);
+            if (prefabLua == null)
+            {
+                BTLog.Error(string.Format("load prefab document but can not find contextID:{0}", contextID));
+                return;
+            }
             var children = go.transform.GetComponentsInChildren<Transform>();
-            d["gameobject"] = go;
+            prefabLua["gameobject"] = go;
             foreach (var trans in children)
             {
                 BTLog.Error("child name:{0}", trans.name);
@@ -46,25 +57,14 @@ namespace Framework.core
                 if (name == null) continue;
                 if (name.Substring(0, 2) != "m_") continue;
                 var suffix = name.Substring(2);
-                Type T;
-                switch (suffix)
-                {
-                    case "Text":
-                        T = typeof(UnityEngine.UI.Text);
-                        break;
-                    case "Button":
-                        T = typeof(Framework.UI.Button);
-                        break;
-                    default:
-                        BTLog.Warning("未定义的后缀名");
-                        continue;
-                }
-                
-                d[trans.name] = trans.GetComponent(T);
+                var T = Utils.GetTypeByComponentSuffix(suffix);
+                if (T == null) continue;
+                prefabLua[trans.name] = trans.GetComponent(T);
             }
 
-            luaCall.Call("COMPLETE", contextID, go);
-            
+            (prefabLua["DispatchMessage"] as LuaFunction).Call(prefabLua, "Complete");
+//            var luaCall = MainGame.Ins.LuaState.GetFunction("CSCallLua");
+//            luaCall.Call("COMPLETE", contextID, go);
         }
     }
 }

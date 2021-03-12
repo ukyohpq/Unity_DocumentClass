@@ -4,6 +4,7 @@ MainLogic = class("Framework.MainLogic")
 
 function MainLogic:ctor()
     local testUI = TestUI.New()
+    testUI:AddEventListener("Complete", self, self.onComplete)
     testUI:LoadResource()
 end
 
@@ -15,6 +16,20 @@ function MainLogic:FixedUpdate(fixedDeltaTime, fixedUnscaledTime)
     --LogUtil.LogError("MainLogic:FixedUpdate")
 end
 
-function MainLogic:CSCallLua()
-
+---onComplete
+---@param evt Framework.event.Event
+function MainLogic:onComplete(evt)
+    LogUtil.LogError("onComplete target:%s", evt:GetCurrentTarget())
+    ---@type CustomGame.UI.TestUI
+    local testUI = evt:GetCurrentTarget()
+    LogUtil.LogError("testUI:%s", testUI.m_Text.text)
+    testUI.m_Text.text = "hello tolua"
+    testUI.m_Button:AddEventListener("click", self, self.onClick)
 end
+
+--TODO 事件处理器无法热更了
+function MainLogic:onClick(...)
+    LogUtil.LogError("MainLogic:onClick self:%s", 111)
+end
+
+return MainLogic

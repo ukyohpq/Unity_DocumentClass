@@ -1,3 +1,5 @@
+require("Framework.event.Event")
+
 local emptyCaller = {}
 
 
@@ -87,3 +89,5 @@ end
 function EventDispatcher:reset()
     self.nameMap = {}
 end
+
+return EventDispatcher

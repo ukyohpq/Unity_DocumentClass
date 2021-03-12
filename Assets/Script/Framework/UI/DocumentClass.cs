@@ -11,6 +11,15 @@ namespace Framework.UI
     {
         [SerializeField]
         private string LuaClass = "";
+
+        private int contextID;
+
+        public int ContextId
+        {
+            get { return contextID; }
+            set { contextID = value; }
+        }
+
 //        TODO 目前暂时确定父类一定是Framework.UI.Prefab类，不使用自定义父类，因为检测自定义父类是从Framework.UI.Prefab继承而来，比较麻烦，而且考虑使用状态而不是继承来重用Prefab
 //        [SerializeField]
 //        private string SuperClass = "";
@@ -22,6 +31,11 @@ namespace Framework.UI
         
         // Update is called once per frame
         void Update()
+        {
+            
+        }
+        
+        private void OnDestroy()
         {
             
         }

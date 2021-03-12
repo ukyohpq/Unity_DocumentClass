@@ -7,9 +7,26 @@ using Babeltime.Log;
 public class MainGame : MonoBehaviour
 {
     private LuaState luaState;
+
+    public LuaState LuaState
+    {
+        get { return luaState; }
+    }
+
+    private static MainGame ins;
+
+    public static MainGame Ins
+    {
+        get { return ins; }
+    }
+
     private LuaFunction luaBridge;
     private void Awake()
     {
+        if (ins == null)
+        {
+            ins = this;
+        }
         luaState = new LuaState();
         OpenLibs();
         luaState.LuaSetTop(0);
@@ -138,5 +155,10 @@ public class MainGame : MonoBehaviour
     private void FixedUpdate()
     {
         luaBridge.Call("FixedUpdate", Time.fixedTime, Time.fixedUnscaledTime);
+    }
+
+    public LuaTable GetPrefabLua(int contextID)
+    {
+        return luaState.GetTable("prefabIDMap")[contextID] as LuaTable;
     }
 }

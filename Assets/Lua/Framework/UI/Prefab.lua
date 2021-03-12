@@ -34,12 +34,13 @@ end
 --- 5.gameobject在移除的时候，需要通过DocumentClass去调用Prefab:DestroyFromCS()
 
 
-
----@class Framework.UI.Prefab
+local super = require("Framework.event.EventDispatcher")
+---@class Framework.UI.Prefab:Framework.event.EventDispatcher
 ---@field status number
-Prefab = class("Framework.UI.Prefab")
+Prefab = class("Framework.UI.Prefab", super)
 
 function Prefab:ctor()
+    super.ctor(self)
     self.status = 0
 end
 
