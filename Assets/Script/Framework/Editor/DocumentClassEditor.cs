@@ -8,6 +8,7 @@ using Framework;
 using Framework.UI;
 using UnityEngine;
 using System.Text;
+using Framework.core;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEngine.UI;
 using Button = Framework.UI.Button;
@@ -115,7 +116,7 @@ namespace Framework.Editor
                 {
                     var suffixIndex = childName.LastIndexOf("_");
                     var suffix = childName.Substring(suffixIndex + 1);
-                    classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, getTypeBySuffix(suffix)));
+                    classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, Utils.GetTypeByComponentSuffix(suffix)));
                     BTLog.Error("name:{0} suffix:{1} count:{2}", childName, suffix, onCompletedFunction.Count);
                 }
             }

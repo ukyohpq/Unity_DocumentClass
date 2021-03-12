@@ -8,6 +8,7 @@ public class Framework_UI_ButtonWrap
 	{
 		L.BeginClass(typeof(Framework.UI.Button), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("AddEventListener", AddEventListener);
+		L.RegFunction("RemoveEventListener", RemoveEventListener);
 		L.RegFunction("DispatchEvent", DispatchEvent);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -19,11 +20,31 @@ public class Framework_UI_ButtonWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 4);
 			Framework.UI.Button obj = (Framework.UI.Button)ToLua.CheckObject<Framework.UI.Button>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
-			obj.AddEventListener(arg0, arg1);
+			LuaTable arg1 = ToLua.CheckLuaTable(L, 3);
+			LuaFunction arg2 = ToLua.CheckLuaFunction(L, 4);
+			obj.AddEventListener(arg0, arg1, arg2);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveEventListener(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 4);
+			Framework.UI.Button obj = (Framework.UI.Button)ToLua.CheckObject<Framework.UI.Button>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			LuaTable arg1 = ToLua.CheckLuaTable(L, 3);
+			LuaFunction arg2 = ToLua.CheckLuaFunction(L, 4);
+			obj.RemoveEventListener(arg0, arg1, arg2);
 			return 0;
 		}
 		catch (Exception e)
