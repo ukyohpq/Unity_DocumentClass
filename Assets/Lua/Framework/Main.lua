@@ -15,12 +15,7 @@ end
 function Main(isEditor)
 	IsEditor = isEditor
 	requireLua(isEditor)
-	--LogUtil.LogError("Main start isEditor:%s", isEditor)+
-	cap = UnityEngine.GameObject.New()
-	LogUtil.LogError("=================cap:%s", cap)
 	mainLogic = MainLogic.New()
-	--require("UnityEngine.GameObject")
-	--require("UnityEngine.UI.Text")
 end
 
 function LuaBridge(funcName, ...)
