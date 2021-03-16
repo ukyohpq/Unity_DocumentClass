@@ -29,7 +29,7 @@ end
 
 --TODO 事件处理器无法热更了
 function MainLogic:onClick(...)
-    LogUtil.LogError("MainLogic:onClick self:%s", 111)
+    LogUtil.LogError("MainLogic:onClick self:%s", self)
 end
 
 return MainLogic
