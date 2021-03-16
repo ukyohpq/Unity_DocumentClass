@@ -23,15 +23,6 @@ public class MainGame : MonoBehaviour
 
     private LuaFunction luaBridge;
 
-    private void Start()
-    {
-#if UNITY_EDITOR && !LOADFROM_BUNDLE
-        BTLog.Debug("open HotFixLua");
-        var hot = this.gameObject.AddComponent<HotFixLua>();
-        hot.LuaPath = "/Lua/";
-#endif
-    }
-
     private void Awake()
     {
         if (ins == null)
@@ -44,8 +35,9 @@ public class MainGame : MonoBehaviour
         Bind();        
         LoadLuaFiles();
 #if UNITY_EDITOR && !LOADFROM_BUNDLE
+        BTLog.Debug("open HotFixLua");
         var hot = this.gameObject.AddComponent<HotFixLua>();
-        hot.LuaPath = "\\Lua";
+        hot.LuaPath = "/Lua/";
 #endif
     }
 
