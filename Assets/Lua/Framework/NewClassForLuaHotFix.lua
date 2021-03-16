@@ -145,7 +145,7 @@ local function notFixPolicy(luaPath)
 end
 
 function luaReload(luaPath, reloaded)
-    LogUtil.LogError("luaReload")
+    LogUtil.Debug("luaReload")
     if notFixPolicy(luaPath) == false then
         LogUtil.LogError(1)
         return
@@ -167,7 +167,7 @@ function luaReload(luaPath, reloaded)
     if package.loaded[luaPath] == nil then
         return
     end
-    LogUtil.LogError("lua hot fix:%s", luaPath)
+    LogUtil.Debug("lua hot fix:%s", luaPath)
     local oldModel = package.loaded[luaPath]
     package.loaded[luaPath] = nil
     isReloading = true
