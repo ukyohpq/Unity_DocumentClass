@@ -25,10 +25,17 @@ function MainLogic:onComplete(evt)
     LogUtil.LogError("testUI:%s", testUI.m_Text.text)
     testUI.m_Text.text = "hello tolua"
     testUI.m_Button:AddEventListener("click", self, self.onClick)
+    testUI.m_Button:AddEventListener("click", self, self.onClick2)
+    testUI.m_Button:RemoveEventListener("click", self, self.onClick)
 end
 
 function MainLogic:onClick(...)
     LogUtil.LogError("MainLogic:onClick self:%s", 1)
 end
+
+function MainLogic:onClick2(...)
+    LogUtil.LogError("MainLogic:onClick self:%s", 2)
+end
+
 
 return MainLogic
