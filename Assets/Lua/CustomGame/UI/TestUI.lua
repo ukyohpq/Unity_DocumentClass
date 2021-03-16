@@ -6,8 +6,9 @@ local super = require("Framework.UI.Prefab")
 ---@field m_Button Framework.UI.Button
 TestUI = class("CustomGame.UI.TestUI", super)
 
-function TestUI:OnComplete(ui)
-    self.m_Button:AddEventListener("click", self.onClick)
+function TestUI:OnComplete(evt)
+    LogUtil.LogError("OnComplete target:%s", evt.target == self)
+    self.m_Button:AddEventListener("click", self, self.onClick)
     self.m_Text.text = "hello tolua"
 end
 

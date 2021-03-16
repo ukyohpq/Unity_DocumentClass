@@ -3,9 +3,9 @@
 MainLogic = class("Framework.MainLogic")
 
 function MainLogic:ctor()
-    local testUI = TestUI.New()
-    testUI:AddEventListener("Complete", self, self.onComplete)
-    testUI:LoadResource()
+    --local testUI = TestUI.New()
+    --testUI:AddEventListener("Complete", self, self.onComplete)
+    --testUI:LoadResource()
 end
 
 function MainLogic:Update(deltaTime, unscaledDeltaTime)
@@ -21,12 +21,12 @@ end
 function MainLogic:onComplete(evt)
     LogUtil.LogError("onComplete target:%s", evt:GetCurrentTarget())
     ---@type CustomGame.UI.TestUI
-    local testUI = evt:GetCurrentTarget()
-    LogUtil.LogError("testUI:%s", testUI.m_Text.text)
-    testUI.m_Text.text = "hello tolua"
-    testUI.m_Button:AddEventListener("click", self, self.onClick)
-    testUI.m_Button:AddEventListener("click", self, self.onClick2)
-    testUI.m_Button:RemoveEventListener("click", self, self.onClick)
+    --local testUI = evt:GetCurrentTarget()
+    --LogUtil.LogError("testUI:%s", testUI.m_Text.text)
+    --testUI.m_Text.text = "hello tolua"
+    --testUI.m_Button:AddEventListener("click", self, self.onClick)
+    --testUI.m_Button:AddEventListener("click", self, self.onClick2)
+    --testUI.m_Button:RemoveEventListener("click", self, self.onClick)
 end
 
 function MainLogic:onClick(...)
