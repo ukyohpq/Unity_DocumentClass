@@ -7,7 +7,7 @@
 ---@type table<number, Framework.UI.Prefab>
 prefabIDMap = {}
 local contextID = 0
-local function getPrefabID(prefab)
+function getPrefabID(prefab)
     contextID = contextID + 1
     prefabIDMap[contextID] = prefab
     return contextID
@@ -42,6 +42,7 @@ Prefab = class("Framework.UI.Prefab", super)
 function Prefab:ctor()
     super.ctor(self)
     self.status = 0
+    self:AddEventListener("Complete", self, self.OnComplete)
 end
 
 function Prefab:start()
@@ -55,7 +56,9 @@ function Prefab:LoadResource()
     Framework.core.CSBridge.LoadPrefab(path, contextID)
 end
 
-function Prefab:OnComplete(go)
+---OnComplete
+---@param evt Framework.event.Event
+function Prefab:OnComplete(evt)
     self.status = 2
 end
 

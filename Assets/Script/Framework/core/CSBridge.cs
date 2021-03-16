@@ -40,29 +40,9 @@ namespace Framework.core
             {
                 throw new Exception("must has Component DocumentClass!");
             }
-            docu.ContextId = contextID;
+            docu.SetContextID(contextID);
             
-            var prefabLua = MainGame.Ins.GetPrefabLua(contextID);
-            if (prefabLua == null)
-            {
-                BTLog.Error(string.Format("load prefab document but can not find contextID:{0}", contextID));
-                return;
-            }
-            var children = go.transform.GetComponentsInChildren<Transform>();
-            prefabLua["gameobject"] = go;
-            foreach (var trans in children)
-            {
-                BTLog.Error("child name:{0}", trans.name);
-                var name = trans.name;
-                if (name == null) continue;
-                if (name.Substring(0, 2) != "m_") continue;
-                var suffix = name.Substring(2);
-                var T = Utils.GetTypeByComponentSuffix(suffix);
-                if (T == null) continue;
-                prefabLua[trans.name] = trans.GetComponent(T);
-            }
-
-            (prefabLua["DispatchMessage"] as LuaFunction).Call(prefabLua, "Complete");
+            
 //            var luaCall = MainGame.Ins.LuaState.GetFunction("CSCallLua");
 //            luaCall.Call("COMPLETE", contextID, go);
         }
