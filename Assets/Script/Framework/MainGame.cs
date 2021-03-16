@@ -3,6 +3,7 @@ using LuaInterface;
 using UnityEngine;
 using System.IO;
 using Babeltime.Log;
+using Framework.core;
 
 public class MainGame : MonoBehaviour
 {
@@ -21,6 +22,16 @@ public class MainGame : MonoBehaviour
     }
 
     private LuaFunction luaBridge;
+
+    private void Start()
+    {
+#if UNITY_EDITOR && !LOADFROM_BUNDLE
+        BTLog.Debug("open HotFixLua");
+        var hot = this.gameObject.AddComponent<HotFixLua>();
+        hot.LuaPath = "/Lua/";
+#endif
+    }
+
     private void Awake()
     {
         if (ins == null)
