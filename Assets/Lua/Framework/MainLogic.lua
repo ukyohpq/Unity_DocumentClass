@@ -27,7 +27,6 @@ function MainLogic:onComplete(evt)
     testUI.m_Button:AddEventListener("click", self, self.onClick)
 end
 
---TODO 事件处理器无法热更了
 function MainLogic:onClick(...)
     LogUtil.LogError("MainLogic:onClick self:%s", 1)
 end
