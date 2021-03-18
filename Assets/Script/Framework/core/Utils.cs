@@ -16,7 +16,6 @@ namespace Framework.core
     {
         public static Type GetTypeByComponentSuffix(string suffix)
         {
-            Type T;
             switch (suffix)
             {
                 case ComponentSuffix.Text:
@@ -31,7 +30,6 @@ namespace Framework.core
         
         public static string GetTypeNameByComponentSuffix(string suffix, Transform trans)
         {
-            Type T;
             switch (suffix)
             {
                 case ComponentSuffix.Text:
