@@ -100,7 +100,7 @@ namespace Framework.Editor
             classDesc.Add(string.Format("local super = require(\"{0}\")\n", superClassName));
             classDesc.Add(string.Format("---@class {0}:{1}", classFullName, superClassName));
             classDesc.Add(string.Format("{0} = class(\"{1}\", super)", className, classFullName));
-            printClassLines(classDesc);
+//            printClassLines(classDesc);
             
 //            加载完成的回调函数，这里会把控件赋值给字段
             var onCompletedFunction = new List<string>();
@@ -118,8 +118,12 @@ namespace Framework.Editor
             if (prefabStage != null)
             {
                 assetPath = prefabStage.prefabAssetPath;
+                if (go != prefabStage.prefabContentsRoot)
+                {
+//                    TODO 目前编辑嵌套prefab时保存，不能正确取到prefab的assetpath
+                    throw new Exception("不能在编辑别的prefab时，生成该prefab的代码");
+                }
             }
-            BTLog.Error("assetPath:{0}", assetPath);
             var GetAssetPathFunction = new List<string>();
             GetAssetPathFunction.Add(string.Format(
 @"function {0}:GetAssetPath()
@@ -133,8 +137,6 @@ end", className, assetPath,2));
 //            调试代码
 //            printClassLines(GetAssetPathFunction);
 
-            BTLog.Error("lines:{0}", onCompletedFunction.Count);
-            
             classDesc.Add("");
             onCompletedFunction.Add("");
             var classLines = classDesc.Concat(onCompletedFunction).Concat(GetAssetPathFunction);
@@ -145,7 +147,7 @@ return {0}", className));
 
         private void createLuaFieldByTrans(Transform trans, List<string> classDesc)
         {
-            BTLog.Error("createLuaFieldByTrans:{0}", trans.name);
+            BTLog.Debug("createLuaFieldByTrans:{0}", trans.name);
             var numChildren = trans.childCount;
             var nameList = new List<string>();
             for (var i = 0; i < numChildren; i++)
@@ -157,21 +159,16 @@ return {0}", className));
                     throw new Exception(string.Format("组件命名重复:{0}", childName));
                 }
                 nameList.Add(childName);
-                var suffixIndex = childName.LastIndexOf("_");
-                var suffix = "";
-                if (suffixIndex != -1)
+                var suffix = Utils.GetSuffixOfGoName(childName);
+//                如果不是合法后缀，则直接进入下一级，继续生成子go的fields
+                if (!Utils.IsValidSuffix(suffix))
                 {
-                    suffix = childName.Substring(suffixIndex);
+                    createLuaFieldByTrans(child, classDesc);
+                    continue;
                 }
-                if (Utils.IsValidSuffix(suffix))
-                {
-                    classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, Utils.GetTypeNameByComponentSuffix(suffix, child)));
-                    if (suffix != "_Doc")
-                    {
-                        createLuaFieldByTrans(child, classDesc);
-                    }
-                }
-                else
+                classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, Utils.GetTypeNameByComponentSuffix(suffix, child)));
+//                _Doc不用对其子go生成field
+                if (suffix != "_Doc")
                 {
                     createLuaFieldByTrans(child, classDesc);
                 }
