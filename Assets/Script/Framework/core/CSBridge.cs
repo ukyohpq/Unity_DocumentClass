@@ -40,7 +40,7 @@ namespace Framework.core
             {
                 throw new Exception("must has Component DocumentClass!");
             }
-            docu.SetContextID(contextID);
+            docu.SetContextId(contextID);
             
             
 //            var luaCall = MainGame.Ins.LuaState.GetFunction("CSCallLua");
