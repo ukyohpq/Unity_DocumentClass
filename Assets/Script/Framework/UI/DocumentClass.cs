@@ -70,7 +70,7 @@ namespace Framework.UI
                 if (suffix == "_Doc")
                 {
                     var childDoc = child.GetComponent<DocumentClass>();
-                    childDoc.BindSelf();
+                    childDoc.CreatePrefabAndBindLuaClass();
                     var childContextId = childDoc.GetContextId();
                     var childPrefab = MainGame.Ins.GetPrefabLua(childContextId);
                     prefabLua[childName] = childPrefab;
@@ -105,12 +105,13 @@ namespace Framework.UI
         {
             if (contextId == -1)
             {
-                BindSelf();
+                CreatePrefabAndBindLuaClass();
             }
 //            BTLog.Error("documentclass contextID:{0}", contextID);
         }
 
-        private void BindSelf()
+//        通过在cs端创建lua的Prefab对象进行绑定
+        private void CreatePrefabAndBindLuaClass()
         {
             var getPrefabId = MainGame.Ins.LuaState.GetFunction("getPrefabID");
             if (getPrefabId == null)
