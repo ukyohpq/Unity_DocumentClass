@@ -59,13 +59,13 @@ namespace Framework.UI
                 var child = trans.GetChild(i);
                 var childName = child.name;
                 if (childName == "") continue;
+                var suffix = Utils.GetSuffixOfGoName(childName);
 //                如果不是合法后缀，则直接进入下一级，检测子go有没有需要绑定的
-                if (!IsValidSuffix(childName))
+                if (!Utils.IsValidSuffix(suffix))
                 {
                     BindFieldsOnTrans(child, prefabLua);
                     continue;
                 }
-                var suffix = getSuffix(childName);
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
                 if (suffix == "_Doc")
                 {
@@ -137,21 +137,7 @@ namespace Framework.UI
             contextId = getPrefabId.Invoke<LuaTable, int>(prefab);
             BindLuaClass(prefab);
         }
-        private string getSuffix(string goName)
-        {
-            var index = goName.LastIndexOf("_");
-            if (index == -1)
-            {
-                return "";
-            }
-            return goName.Substring(index);
-        }
-        private bool IsValidSuffix(string goName)
-        {
-            var suffix = getSuffix(goName);
-            BTLog.Error("==========suffix:{0}", suffix);
-            return Utils.IsValidSuffix(suffix);
-        }
+
         // Update is called once per frame
         void Update()
         {
