@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace Framework.core
 {
+    public class ComponentSuffix
+    {
+        public const string Doc = "_Doc";
+        public const string Button = "_Button";
+        public const string Text = "_Text";
+    }
+    
     public class Utils
     {
         public static Type GetTypeByComponentSuffix(string suffix)
@@ -12,9 +19,9 @@ namespace Framework.core
             Type T;
             switch (suffix)
             {
-                case "_Text":
+                case ComponentSuffix.Text:
                     return typeof(UnityEngine.UI.Text);
-                case "_Button":
+                case ComponentSuffix.Button:
                     return typeof(Framework.UI.Button);
                 default:
                     BTLog.Warning("未定义的后缀名");
@@ -27,11 +34,11 @@ namespace Framework.core
             Type T;
             switch (suffix)
             {
-                case "_Text":
+                case ComponentSuffix.Text:
                     return "UnityEngine.UI.Text";
-                case "_Button":
+                case ComponentSuffix.Button:
                     return "Framework.UI.Button";
-                case "_Doc":
+                case ComponentSuffix.Doc:
                     var doc = trans.GetComponent<DocumentClass>();
                     if (doc == null)
                     {
@@ -65,9 +72,9 @@ namespace Framework.core
         {
             switch (suffix)
             {
-                case "_Text":
-                case "_Button":
-                case "_Doc":
+                case ComponentSuffix.Text:
+                case ComponentSuffix.Button:
+                case ComponentSuffix.Doc:
                     return true;
                 default:
                     return false;
