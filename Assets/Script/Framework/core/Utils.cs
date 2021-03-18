@@ -51,6 +51,16 @@ namespace Framework.core
             return fullName.Substring(lastPointIndex + 1);
         }
         
+        public static string GetSuffixOfGoName(string goName)
+        {
+            var index = goName.LastIndexOf("_");
+            if (index == -1)
+            {
+                return "";
+            }
+            return goName.Substring(index);
+        }
+        
         public static bool IsValidSuffix(string suffix)
         {
             switch (suffix)
