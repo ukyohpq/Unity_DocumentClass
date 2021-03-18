@@ -19,7 +19,7 @@ namespace Emmy
         {
             Filter<Type> baseFilter = new GeneralFilter<Type>(ToLuaMenu.baseType);
             Filter<Type> dropFilter = new GeneralFilter<Type>(ToLuaMenu.dropType);
-            var directory = Directory.CreateDirectory("LuaAPI");
+            var directory = Directory.CreateDirectory("Assets/LuaAPI");
             var collection = new BindTypeCollection(CustomSettings.customTypeList);
             var bindTypes = collection.CollectBindType(baseFilter, dropFilter);
             foreach (var bindType in bindTypes)
@@ -489,7 +489,7 @@ namespace Emmy
             _baseSB.AppendFormat("{0} = m\n", bt.name);
             _baseSB.Append("return m");
 
-            string fileName = string.Format("LuaAPI/{0}Wrap.lua", bt.wrapName);
+            string fileName = string.Format("Assets/LuaAPI/{0}Wrap.lua", bt.wrapName);
             File.WriteAllBytes(fileName, Encoding.GetEncoding("UTF-8").GetBytes(_baseSB.ToString()));
         }
 

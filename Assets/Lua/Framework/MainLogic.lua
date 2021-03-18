@@ -1,11 +1,13 @@
-﻿require("CustomGame.UI.TestUI")
+﻿require("CustomGame.UI.TestContainer")
+require("CustomGame.UI.TestUI")
+
 ---@class MainLogic
 MainLogic = class("Framework.MainLogic")
 
 function MainLogic:ctor()
-    --local testUI = TestUI.New()
-    --testUI:AddEventListener("Complete", self, self.onComplete)
-    --testUI:LoadResource()
+    local testUI = TestContainer.New()
+    testUI:AddEventListener("Complete", self, self.onComplete)
+    testUI:LoadResource()
 end
 
 function MainLogic:Update(deltaTime, unscaledDeltaTime)
@@ -20,17 +22,23 @@ end
 ---@param evt Framework.event.Event
 function MainLogic:onComplete(evt)
     LogUtil.LogError("onComplete target:%s", evt:GetCurrentTarget())
-    ---@type CustomGame.UI.TestUI
-    --local testUI = evt:GetCurrentTarget()
-    --LogUtil.LogError("testUI:%s", testUI.m_Text.text)
+    ---@type CustomGame.UI.TestContainer
+    local testUI = evt:GetCurrentTarget()
+    testUI.m_Doc.m2_Text.text = "this is text2"
+    testUI.m_Doc.m_Text.text = "this is text1"
+    LogUtil.LogError("doc:%s", testUI.m_Doc)
+    LogUtil.LogError("text1:%s", testUI.m_Doc.m_Text)
+    LogUtil.LogError("text2:%s", testUI.m_Doc.m2_Text)
+    testUI.m_Doc.m_Button:AddEventListener("click", self, self.onClick)
     --testUI.m_Text.text = "hello tolua"
     --testUI.m_Button:AddEventListener("click", self, self.onClick)
     --testUI.m_Button:AddEventListener("click", self, self.onClick2)
     --testUI.m_Button:RemoveEventListener("click", self, self.onClick)
 end
 
-function MainLogic:onClick(...)
-    LogUtil.LogError("MainLogic:onClick self:%s", 1)
+---onClick
+function MainLogic:onClick()
+    LogUtil.LogError("MainLogic:onClick self:%s", self.__cname)
 end
 
 function MainLogic:onClick2(...)

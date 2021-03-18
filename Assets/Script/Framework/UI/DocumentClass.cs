@@ -38,20 +38,52 @@ namespace Framework.UI
             return contextID;
         }
 
+        public string GetLuaClassName()
+        {
+            return LuaClass;
+        }
+        
         private void bindLuaClass(LuaTable prefabLua)
         {
-            var children = gameObject.transform.GetComponentsInChildren<Transform>();
-            prefabLua["gameobject"] = gameObject;
-            foreach (var trans in children)
+//            TODO 这里考虑有没有必要把这个gameobject传给lua
+            prefabLua["gameObject"] = gameObject;
+            bindFiledsOnTrans(transform, prefabLua);
+        }
+
+        private void bindFiledsOnTrans(Transform trans, LuaTable prefabLua)
+        {
+            BTLog.Error("bindFiledsOnTrans trans:{0}", trans.name);
+            var numChildren = trans.childCount;
+            for (int i = 0; i < numChildren; i++)
             {
-                BTLog.Error("child name:{0}", trans.name);
-                var name = trans.name;
+                var child = trans.GetChild(i);
+                var name = child.name;
                 if (name == null) continue;
-                if (name.Substring(0, 2) != "m_") continue;
-                var suffix = name.Substring(2);
-                var T = Utils.GetTypeByComponentSuffix(suffix);
-                if (T == null) continue;
-                prefabLua[trans.name] = trans.GetComponent(T);
+//                如果不是合法后缀，则直接进入下一级，检测子go有没有需要绑定的
+                if (!isValidSuffix(name))
+                {
+                    bindFiledsOnTrans(child, prefabLua);
+                    continue;
+                }
+                var suffix = getSuffix(name);
+//                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
+                if (suffix == "_Doc")
+                {
+                    var childDoc = child.GetComponent<DocumentClass>();
+                    childDoc.BindSelf();
+                    var contextID = childDoc.GetContextID();
+                    var childPrefab = MainGame.Ins.GetPrefabLua(contextID);
+                    prefabLua[name] = childPrefab;
+                }
+                else
+                {
+                    bindFiledsOnTrans(child, prefabLua);
+                    var T = Utils.GetTypeByComponentSuffix(suffix);
+                    if (T == null) continue;
+                    prefabLua[name] = child.GetComponent(T);
+                }
+                BTLog.Error("bind {0}. name:{1} childName:{2}", suffix, trans.name, name);
+
             }
 
             (prefabLua["DispatchMessage"] as LuaFunction).Call(prefabLua, "Complete");
@@ -62,34 +94,56 @@ namespace Framework.UI
         // Start is called before the first frame update
         void Start()
         {
+            BTLog.Error("===============start:{0}", name);
             if (contextID == -1)
             {
-                var getPrefabID = MainGame.Ins.LuaState.GetFunction("getPrefabID");
-                if (getPrefabID == null)
-                {
-                    BTLog.Error("can not find lua function getPrefabID");
-                    return;
-                }
-                var prefabClass = MainGame.Ins.LuaState.GetTable(LuaClass);
-                if (prefabClass == null)
-                {
-                    BTLog.Error("can not find lua class:{0}", LuaClass);
-                    return;
-                }
-
-                var constructor = prefabClass["New"] as LuaFunction;
-                if (constructor == null)
-                {
-                    BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
-                    return;
-                }
-                var prefab = constructor.Invoke<LuaTable>();
-                contextID = getPrefabID.Invoke<LuaTable, int>(prefab);
-                bindLuaClass(prefab);
+                BindSelf();
             }
             BTLog.Error("documentclass contextID:{0}", contextID);
         }
-        
+
+        private void BindSelf()
+        {
+            var getPrefabID = MainGame.Ins.LuaState.GetFunction("getPrefabID");
+            if (getPrefabID == null)
+            {
+                BTLog.Error("can not find lua function getPrefabID");
+                return;
+            }
+
+            var className = Utils.MakeClassName(LuaClass);
+            var prefabClass = MainGame.Ins.LuaState.GetTable(className);
+            if (prefabClass == null)
+            {
+                BTLog.Error("can not find lua class:{0}", LuaClass);
+                return;
+            }
+
+            var constructor = prefabClass["New"] as LuaFunction;
+            if (constructor == null)
+            {
+                BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
+                return;
+            }
+            var prefab = constructor.Invoke<LuaTable>();
+            contextID = getPrefabID.Invoke<LuaTable, int>(prefab);
+            bindLuaClass(prefab);
+        }
+        private string getSuffix(string goName)
+        {
+            var index = goName.LastIndexOf("_");
+            if (index == -1)
+            {
+                return "";
+            }
+            return goName.Substring(index);
+        }
+        private bool isValidSuffix(string goName)
+        {
+            var suffix = getSuffix(goName);
+            BTLog.Error("==========suffix:{0}", suffix);
+            return Utils.IsValidSuffix(suffix);
+        }
         // Update is called once per frame
         void Update()
         {

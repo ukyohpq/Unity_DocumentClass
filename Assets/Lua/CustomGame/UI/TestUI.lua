@@ -4,12 +4,12 @@ local super = require("Framework.UI.Prefab")
 ---@class CustomGame.UI.TestUI:Framework.UI.Prefab
 ---@field m_Text UnityEngine.UI.Text
 ---@field m_Button Framework.UI.Button
+---@field m2_Text UnityEngine.UI.Text
 TestUI = class("CustomGame.UI.TestUI", super)
 
+---OnComplete
+---@param evt Framework.event.Event
 function TestUI:OnComplete(evt)
-    LogUtil.LogError("OnComplete target:%s", evt.target == self)
-    self.m_Button:AddEventListener("click", self, self.onClick)
-    self.m_Text.text = "hello tolua"
 end
 
 function TestUI:GetAssetPath()
@@ -18,10 +18,6 @@ function TestUI:GetAssetPath()
     else
         return "2"
     end
-end
-
-function TestUI:onClick(...)
-    LogUtil.LogError("onClick")
 end
 
 return TestUI
