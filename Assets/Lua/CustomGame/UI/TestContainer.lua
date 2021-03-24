@@ -1,3 +1,5 @@
+require("CustomGame.UI.TestUI")
+
 ---@type Framework.UI.Prefab
 local super = require("Framework.UI.Prefab")
 

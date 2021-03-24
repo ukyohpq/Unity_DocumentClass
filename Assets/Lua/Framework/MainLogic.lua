@@ -1,13 +1,11 @@
-﻿require("CustomGame.UI.TestContainer")
-require("CustomGame.UI.TestUI")
+﻿require("CustomGame.GameFacade")
 
 ---@class MainLogic
 MainLogic = class("Framework.MainLogic")
 
 function MainLogic:ctor()
-    local testUI = TestContainer.New()
-    testUI:AddEventListener("Complete", self, self.onComplete)
-    testUI:LoadResource()
+    local facade = GameFacade.New()
+    facade:Start()
 end
 
 function MainLogic:Update(deltaTime, unscaledDeltaTime)
