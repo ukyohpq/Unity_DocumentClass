@@ -56,6 +56,7 @@ function class(classname, super)
         instances[instance] = true
         return instance
     end
+    cls.new = cls.New
     classMapForClassName[classname] = cls
     return cls
 end

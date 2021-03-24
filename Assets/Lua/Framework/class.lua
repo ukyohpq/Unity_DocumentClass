@@ -66,7 +66,7 @@ function class(classname, super)
             instance:ctor(...)
             return instance
         end
-
+        cls.new = cls.New
     else
         -- inherited from Lua Object
         if super then
