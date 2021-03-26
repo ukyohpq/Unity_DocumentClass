@@ -1,6 +1,6 @@
 local super = Notifier
 ---@class Mediator:Notifier
-Mediator = class("puremvc.patterns.mediator", super)
+Mediator = class("puremvc.patterns.mediator.Mediator", super)
 
 local NAME = "Mediator"
 

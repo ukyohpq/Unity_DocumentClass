@@ -1,6 +1,6 @@
 local super = Notifier
 ---@class Proxy:Notifier
-Proxy = class("puremvc.patterns.proxy", super)
+Proxy = class("puremvc.patterns.proxy.Proxy", super)
 local NAME = "Proxy"
 
 function Proxy:ctor(proxyName, data)
