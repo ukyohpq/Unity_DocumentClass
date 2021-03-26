@@ -21,6 +21,10 @@ public class MainGame : MonoBehaviour
         get { return ins; }
     }
 
+    private GameObject uiRoot;
+//    private GameObject uiStage;
+//    private GameObject uiBackstage;
+    
     private LuaFunction luaBridge;
 
     private void Awake()
@@ -29,6 +33,7 @@ public class MainGame : MonoBehaviour
         {
             ins = this;
         }
+        CreateUIStage();
         luaState = new LuaState();
         OpenLibs();
         luaState.LuaSetTop(0);
@@ -163,5 +168,36 @@ public class MainGame : MonoBehaviour
     public LuaTable GetPrefabLua(int contextID)
     {
         return luaState.GetTable("prefabIDMap")[contextID] as LuaTable;
+    }
+
+    private void CreateUIStage()
+    {
+        uiRoot = GameObject.Find("UIRoot");
+        if (uiRoot == null)
+        {
+            throw new Exception("can not find UIRoot");
+        }
+//        uiStage = GameObject.Find("UIStage");
+//        if (uiStage == null)
+//        {
+//            throw new Exception("can not find uiStage");
+//        }
+//        uiBackstage = GameObject.Find("UIBackstage");
+//        if (uiBackstage == null)
+//        {
+//            throw new Exception("can not find uiBackstage");
+//        }
+    }
+
+//    TODO 暂时不考虑使用backstage，因为active = false目前已经足够了
+//    public void AddChildToBackstage(GameObject child)
+//    {
+//        child.transform.parent = uiBackstage.transform;
+//    }
+
+    public void AddChild2Stage(GameObject child)
+    {
+//        child.transform.parent = uiStage.transform;
+        child.transform.parent = uiRoot.transform;
     }
 }

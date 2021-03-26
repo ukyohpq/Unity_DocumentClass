@@ -78,10 +78,6 @@ namespace Framework.Editor
         private void saveAndCreate()
         {
             var go = (this.target as DocumentClass).gameObject;
-//            var goclone = GameObject.Instantiate(go);
-//            goclone.transform.parent = GameObject.Find("UIRoot").transform;
-            BTLog.Debug("saveAndCreate GameObject:{0} {1}", AssetDatabase.GetAssetPath(go), AssetDatabase.GetAssetOrScenePath(go));
-//            GameObject.DestroyImmediate(goclone);
             var trans = go.transform;
             var classFullName = m_LuaClass.stringValue.Replace("/", ".");
             var className = Utils.MakeClassName(classFullName);

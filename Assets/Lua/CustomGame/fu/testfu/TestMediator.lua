@@ -1,30 +1,10 @@
 require("CustomGame.UI.TestContainer")
-local super = require("puremvc.patterns.mediator.Mediator")
+local super = GameMediator
 
----@class CustomGame.fu.testfu.TestMediator:Mediator
+---@class CustomGame.fu.testfu.TestMediator:Framework.core.mvc.GameMediator
 TestMediator = class("CustomGame.fu.testfu.TestMediator", super)
 
-function TestMediator:ctor(viewComponent)
-    super.ctor(self, self.__cname, viewComponent)
-end
 
-function TestMediator:show()
-    if self.viewComponent == nil then
-        local cls = self:getUIClass()
-        local ui = cls.New()
-        self:setViewComponent(ui)
-        ui:AddEventListener("Complete", self, self.onUILoaded)
-        ui:LoadResource()
-    else
-        self:showUI()
-    end
-end
-
----onUILoaded
----@param evt Framework.event.Event
-function TestMediator:onUILoaded(evt)
-    self:showUI()
-end
 
 function TestMediator:showUI()
     ---@type CustomGame.UI.TestContainer

@@ -7,6 +7,10 @@ function Notifier:ctor()
 end
 
 function Notifier:sendNotification(notificationName, body, type)
+	if notificationName == nil then
+		LogUtil.LogError("notificationName is nil")
+		return
+	end
 	self.facade:sendNotification(notificationName, body, type)
 end
 

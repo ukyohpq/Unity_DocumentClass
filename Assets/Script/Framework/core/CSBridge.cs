@@ -20,8 +20,8 @@ namespace Framework.core
                 return;
             }
             var go = GameObject.Instantiate(prefab);
-//            TODO  UIRoot不能在这里写死。考虑引入UIStage
-            go.transform.parent = GameObject.Find("UIRoot").transform;
+            MainGame.Ins.AddChild2Stage(go);
+            
             go.transform.localPosition = Vector3.zero;
             
             if (contextPrefabDic.ContainsKey(contextID))
@@ -45,6 +45,11 @@ namespace Framework.core
             
 //            var luaCall = MainGame.Ins.LuaState.GetFunction("CSCallLua");
 //            luaCall.Call("COMPLETE", contextID, go);
+        }
+
+        public static void AddChildTo(GameObject child, GameObject parent)
+        {
+            
         }
     }
 }
