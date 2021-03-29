@@ -6,24 +6,15 @@
 
 ---@type table<number, Framework.UI.Prefab>
 prefabIDMap = {}
-local contextID = 0
+local contextId = 0
 function getPrefabID(prefab)
-    contextID = contextID + 1
-    prefabIDMap[contextID] = prefab
-    return contextID
+    contextId = contextId + 1
+    prefabIDMap[contextId] = prefab
+    return contextId
 end
 
-function getPrefabByID(contextID)
-    return prefabIDMap[contextID]
-end
-
-function prefabComplete(contextID, go)
-    prefab = prefabIDMap[contextID]
-    if prefab then
-        prefab:OnComplete(go)
-    else
-        LogUtil.LogError("can not find prefab by id:%s", contextID)
-    end
+function getPrefabByID(cId)
+    return prefabIDMap[cId]
 end
 
 --- prefab运行流程
@@ -42,7 +33,7 @@ Prefab = class("Framework.UI.Prefab", super)
 function Prefab:ctor()
     super.ctor(self)
     self.status = 0
-    self:AddEventListener("Complete", self, self.OnComplete)
+    self:AddEventListener(Event.COMPLETE, self, self.OnComplete)
 end
 
 function Prefab:start()
