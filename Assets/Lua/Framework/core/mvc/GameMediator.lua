@@ -13,7 +13,7 @@ function GameMediator:show()
         local cls = self:getUIClass()
         local ui = cls.New()
         self:setViewComponent(ui)
-        ui:AddEventListener("Complete", self, self.onUILoaded)
+        ui:AddEventListener(Event.COMPLETE, self, self.onUILoaded)
         ui:LoadResource()
     else
         self:showUI()

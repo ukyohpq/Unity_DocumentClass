@@ -2,6 +2,7 @@
 using LuaInterface;
 using UnityEngine;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using Babeltime.Log;
 using Framework.core;
 
@@ -157,6 +158,7 @@ public class MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CSBridge.LoadAsset();
         luaBridge.Call("Update", Time.time, Time.unscaledTime);
     }
 
@@ -200,4 +202,6 @@ public class MainGame : MonoBehaviour
 //        child.transform.parent = uiStage.transform;
         child.transform.parent = uiRoot.transform;
     }
+    
+    
 }

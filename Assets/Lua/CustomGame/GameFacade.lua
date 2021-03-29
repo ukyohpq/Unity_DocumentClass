@@ -18,7 +18,10 @@ GameFacade = class("CustomGame.GameFacade", super)
 
 function GameFacade:Start()
     self:registerFus()
-    self:sendNotification(NotificationName.SHOW_SCENE, TestMediator.NAME)
+    ---@type CustomGame.fu.globalfu.SceneManagerProxy
+    local sceneProxy = self:retrieveProxy(SceneManagerProxy.NAME)
+    sceneProxy:showScene(TestMediator.NAME)
+    --self:sendNotification(NotificationName.SHOW_SCENE, TestMediator.NAME)
 end
 
 function GameFacade:registerFus()

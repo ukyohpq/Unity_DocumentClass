@@ -48,6 +48,17 @@ namespace Framework.UI
 //            TODO 这里考虑有没有必要把这个gameobject传给lua
             prefabLua["gameObject"] = gameObject;
             BindFieldsOnTrans(transform, prefabLua);
+//            完成绑定之后，广播complete事件
+            var dispatchMessage = prefabLua["DispatchMessage"] as LuaFunction;
+            if (dispatchMessage == null)
+            {
+                BTLog.Warning("Prefab Lua must has Method:DispatchMessage");
+                return;
+            }
+            else
+            {
+                dispatchMessage.Call(prefabLua, "COMPLETE");
+            }
         }
 
         private void BindFieldsOnTrans(Transform trans, LuaTable prefabLua)
@@ -84,17 +95,6 @@ namespace Framework.UI
                 }
                 BTLog.Debug("bind {0}. name:{1} childName:{2}", suffix, trans.name, childName);
 
-            }
-
-            var dispatchMessage = prefabLua["DispatchMessage"] as LuaFunction;
-            if (dispatchMessage == null)
-            {
-                BTLog.Warning("Prefab Lua must has Method:DispatchMessage");
-                return;
-            }
-            else
-            {
-                dispatchMessage.Call(prefabLua, "Complete");
             }
         }
 //        TODO 目前暂时确定父类一定是Framework.UI.Prefab类，不使用自定义父类，因为检测自定义父类是从Framework.UI.Prefab继承而来，比较麻烦，而且考虑使用状态而不是继承来重用Prefab
