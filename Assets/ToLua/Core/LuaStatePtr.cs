@@ -416,6 +416,16 @@ namespace LuaInterface
             LuaDLL.lua_pop(L, amount);
         }
 
+//        因为没有找到dup来复制顶部的element，所以只能临时创建一个table，把需要复制的element写入该table的field，然后再读两次
+        public void LuaDup()
+        {
+            LuaDLL.lua_newtable(L);
+            LuaDLL.lua_insert(L, -2);
+            LuaDLL.lua_setfield(L, -2, "xxx");
+            LuaDLL.lua_getfield(L, -1, "xxx");
+            LuaDLL.lua_getfield(L, -2, "xxx");
+            LuaDLL.lua_remove(L, -3);
+        }
         public void LuaNewTable()
         {
             LuaDLL.lua_createtable(L, 0 , 0);

@@ -51,6 +51,7 @@ end
 ---@param evt Framework.event.Event
 function Prefab:OnComplete(evt)
     self.status = 2
+    LogUtil.LogError("self.go:%s", self.gameObject)
 end
 
 function Prefab:StartLogic()
