@@ -98,12 +98,13 @@ namespace Framework.Editor
             classDesc.Add(string.Format("{0} = class(\"{1}\", super)", className, classFullName));
 //            printClassLines(classDesc);
             
+//TODO 暂时不需要这个函数了，因为不打算在ui里面写逻辑
 //            加载完成的回调函数，这里会把控件赋值给字段
-            var onCompletedFunction = new List<string>();
-            onCompletedFunction.Add("---OnComplete");
-            onCompletedFunction.Add("---@param evt Framework.event.Event");
-            onCompletedFunction.Add(string.Format("function {0}:OnComplete(evt)", className));
-            onCompletedFunction.Add("end");
+//            var onCompletedFunction = new List<string>();
+//            onCompletedFunction.Add("---OnComplete");
+//            onCompletedFunction.Add("---@param evt Framework.event.Event");
+//            onCompletedFunction.Add(string.Format("function {0}:OnComplete(evt)", className));
+//            onCompletedFunction.Add("end");
             
 //            BTLog.Error("classDesc:{0}", classDesc);
             createLuaFieldByTrans(trans, classDesc);
@@ -134,8 +135,8 @@ end", className, assetPath,2));
 //            printClassLines(GetAssetPathFunction);
 
             classDesc.Add("");
-            onCompletedFunction.Add("");
-            var classLines = classDesc.Concat(onCompletedFunction).Concat(GetAssetPathFunction);
+//            onCompletedFunction.Add("");
+            var classLines = classDesc.Concat(GetAssetPathFunction);
             classLines = classLines.Append(string.Format(@"
 return {0}", className));
             File.WriteAllLines(fileName, classLines);

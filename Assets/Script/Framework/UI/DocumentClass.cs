@@ -24,13 +24,8 @@ namespace Framework.UI
                 return;
             }
             contextId = value;
-            var prefabLua = MainGame.Ins.GetPrefabLua(contextId);
-            if (prefabLua == null)
-            {
-                BTLog.Error(string.Format("load prefab document but can not find contextID:{0}", contextId));
-                return;
-            }
-            BindLuaClass(prefabLua);
+            MainGame.Ins.GetPrefabLua(contextId);
+            BindLuaClass();
         }
 
         public int GetContextId()
@@ -43,27 +38,36 @@ namespace Framework.UI
             return LuaClass;
         }
         
-        private void BindLuaClass(LuaTable prefabLua)
+//        该函数在调用前，必须保证当前lua栈顶有一个lua的Prefab对象。也就是说，栈不为空!
+        private void BindLuaClass()
         {
-//            TODO 这里考虑有没有必要把这个gameobject传给lua
-            prefabLua["gameObject"] = gameObject;
-            BindFieldsOnTrans(transform, prefabLua);
-//            完成绑定之后，广播complete事件
-            var dispatchMessage = prefabLua["DispatchMessage"] as LuaFunction;
-            if (dispatchMessage == null)
+            var luaState = MainGame.Ins.LuaState;
+            if (luaState.LuaIsNil(-1))
             {
+                BTLog.Error("该函数在调用前必须保证lua栈顶上有一个lua的Prefab对象");
+                return;
+            }
+//            TODO 这里考虑有没有必要把这个gameObject传给lua
+            luaState.PushVariant(gameObject);
+            luaState.LuaSetField(-2, "gameObject");
+            BindFieldsOnTrans(transform, luaState.LuaGetTop());
+//            完成绑定之后，广播complete事件
+            luaState.LuaGetField(-1, "DispatchMessage");
+            if (luaState.LuaIsNil(-1))
+            {
+                luaState.LuaPop(1);
                 BTLog.Warning("Prefab Lua must has Method:DispatchMessage");
                 return;
             }
-            else
-            {
-                dispatchMessage.Call(prefabLua, "COMPLETE");
-            }
+            luaState.LuaInsert(-2);
+            luaState.Push("COMPLETE");
+            luaState.LuaCall(2, 0);
         }
 
-        private void BindFieldsOnTrans(Transform trans, LuaTable prefabLua)
+        private void BindFieldsOnTrans(Transform trans, int topIdx)
         {
-            BTLog.Debug("bindFiledsOnTrans trans:{0}", trans.name);
+            BTLog.Debug("BindFieldsOnTrans trans:{0}", trans.name);
+            var luaState = MainGame.Ins.LuaState;
             var numChildren = trans.childCount;
             for (int i = 0; i < numChildren; i++)
             {
@@ -74,7 +78,7 @@ namespace Framework.UI
 //                如果不是合法后缀，则直接进入下一级，检测子go有没有需要绑定的
                 if (!Utils.IsValidSuffix(suffix))
                 {
-                    BindFieldsOnTrans(child, prefabLua);
+                    BindFieldsOnTrans(child, topIdx);
                     continue;
                 }
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
@@ -83,15 +87,16 @@ namespace Framework.UI
                     var childDoc = child.GetComponent<DocumentClass>();
                     childDoc.CreatePrefabAndBindLuaClass();
                     var childContextId = childDoc.GetContextId();
-                    var childPrefab = MainGame.Ins.GetPrefabLua(childContextId);
-                    prefabLua[childName] = childPrefab;
+                    MainGame.Ins.GetPrefabLua(childContextId);
+                    luaState.LuaSetField(topIdx, childName);
                 }
                 else
                 {
-                    BindFieldsOnTrans(child, prefabLua);
+                    BindFieldsOnTrans(child, topIdx);
                     var T = Utils.GetTypeByComponentSuffix(suffix);
                     if (T == null) continue;
-                    prefabLua[childName] = child.GetComponent(T);
+                    luaState.PushVariant(child.GetComponent(T));
+                    luaState.LuaSetField(topIdx, childName);
                 }
                 BTLog.Debug("bind {0}. name:{1} childName:{2}", suffix, trans.name, childName);
 
@@ -113,30 +118,43 @@ namespace Framework.UI
 //        通过在cs端创建lua的Prefab对象进行绑定
         private void CreatePrefabAndBindLuaClass()
         {
-            var getPrefabId = MainGame.Ins.LuaState.GetFunction("getPrefabID");
-            if (getPrefabId == null)
+            var luaState = MainGame.Ins.LuaState;
+            luaState.LuaGetGlobal("getPrefabID");
+            if (luaState.LuaIsNil(-1))
             {
+                luaState.LuaPop(1);
                 BTLog.Error("can not find lua function getPrefabID");
                 return;
             }
-
+            
             var className = Utils.MakeClassName(LuaClass);
-            var prefabClass = MainGame.Ins.LuaState.GetTable(className);
-            if (prefabClass == null)
+            luaState.LuaGetGlobal(className);
+            if (luaState.LuaIsNil(-1))
             {
+                luaState.LuaPop(2);
                 BTLog.Error("can not find lua class:{0}", LuaClass);
                 return;
             }
-
-            var constructor = prefabClass["New"] as LuaFunction;
-            if (constructor == null)
+            luaState.LuaGetField(-1, "New");
+            if (luaState.LuaIsNil(-1))
             {
+                luaState.LuaPop(3);
                 BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
                 return;
             }
-            var prefab = constructor.Invoke<LuaTable>();
-            contextId = getPrefabId.Invoke<LuaTable, int>(prefab);
-            BindLuaClass(prefab);
+            luaState.LuaCall(0, 1);
+//            删除luaclass
+            luaState.LuaRemove(-2);
+            luaState.LuaDup();
+            //将dup出来的prefab实例放到栈底备用
+            luaState.LuaInsert(-3);
+
+            //call getPrefabID获取contextId
+            luaState.LuaCall(1, 1);
+            contextId = luaState.LuaToInteger(-1);
+            luaState.LuaPop(1);
+//            var prefab = luaState.ToVariant(-1) as LuaTable;
+            BindLuaClass();
         }
 
         // Update is called once per frame

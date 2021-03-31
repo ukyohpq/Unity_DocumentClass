@@ -65,10 +65,6 @@ namespace Framework.core
                 docu.SetContextId(contextID);
             }
             
-        } 
-        public static void AddChildTo(GameObject child, GameObject parent)
-        {
-            
         }
     }
 }

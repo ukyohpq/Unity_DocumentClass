@@ -7,11 +7,6 @@ local super = require("Framework.UI.Prefab")
 ---@field m2_Text UnityEngine.UI.Text
 TestUI = class("CustomGame.UI.TestUI", super)
 
----OnComplete
----@param evt Framework.event.Event
-function TestUI:OnComplete(evt)
-end
-
 function TestUI:GetAssetPath()
     if IsEditor then
         return "Assets/prefabs/TestUI.prefab"

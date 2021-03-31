@@ -167,9 +167,24 @@ public class MainGame : MonoBehaviour
         luaBridge.Call("FixedUpdate", Time.fixedTime, Time.fixedUnscaledTime);
     }
 
-    public LuaTable GetPrefabLua(int contextID)
+    public void GetPrefabLua(int contextId)
     {
-        return luaState.GetTable("prefabIDMap")[contextID] as LuaTable;
+        luaState.LuaGetGlobal("prefabIDMap");
+        if (luaState.LuaIsNil(-1))
+        {
+            luaState.LuaPop(1);
+            BTLog.Error("can nof find global table prefabIDMap");
+            return;
+        }
+        luaState.Push(contextId);
+        luaState.LuaGetTable(-2);
+        if (luaState.LuaIsNil(-1))
+        {
+            luaState.LuaPop(2);
+            BTLog.Error(string.Format("load prefab document but can not find contextID:{0}", contextId));
+            return;
+        }
+        luaState.LuaReplace(-2);
     }
 
     private void CreateUIStage()
