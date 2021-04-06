@@ -18,6 +18,14 @@ namespace Framework.Editor
     [CustomEditor(typeof(DocumentClass))]
     public class DocumentClassEditor:UnityEditor.Editor
     {
+        private class LuaClassParser
+        {
+            internal LuaClassParser()
+            {
+                
+            }
+        }
+        
         private SerializedProperty m_LuaClass;
 //        private SerializedProperty m_SuperClass;
 
@@ -30,6 +38,7 @@ namespace Framework.Editor
                 m_LuaClass.stringValue = serializedObject.targetObject.name;
             }
             
+            LuaClassParser parser = new LuaClassParser();
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -77,7 +86,7 @@ namespace Framework.Editor
         }
         private void saveAndCreate()
         {
-            var go = (this.target as DocumentClass).gameObject;
+            var go = (target as DocumentClass).gameObject;
             var trans = go.transform;
             var classFullName = m_LuaClass.stringValue.Replace("/", ".");
             var className = Utils.MakeClassName(classFullName);
