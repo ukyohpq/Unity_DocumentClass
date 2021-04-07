@@ -18,14 +18,6 @@ namespace Framework.Editor
     [CustomEditor(typeof(DocumentClass))]
     public class DocumentClassEditor:UnityEditor.Editor
     {
-        private class LuaClassParser
-        {
-            internal LuaClassParser()
-            {
-                
-            }
-        }
-        
         private SerializedProperty m_LuaClass;
 //        private SerializedProperty m_SuperClass;
 
@@ -38,7 +30,6 @@ namespace Framework.Editor
                 m_LuaClass.stringValue = serializedObject.targetObject.name;
             }
             
-            LuaClassParser parser = new LuaClassParser();
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -46,11 +37,15 @@ namespace Framework.Editor
         {
 //            ReadMe Title
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("ReadMe");
+            GUILayout.Label("Unity文档类");
             EditorGUILayout.EndHorizontal();
 //            ReadMe
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("ReadMe content");
+            GUILayout.Label(@"要从Prefab上导出组件，需要遵守如下命名规范:
+按钮: _Btn
+文本: _Txt
+文档类: _Doc
+");
             EditorGUILayout.EndHorizontal();
 //            LuaClassName
             EditorGUILayout.BeginHorizontal();
@@ -96,8 +91,18 @@ namespace Framework.Editor
 //                TODO 需要弹出对话框提示用户目标文件已经存在，是否覆盖。目前静默覆盖
                 File.Delete(fileName);
             }
+
+            var head = @"------------------------------------------------------------------------------------------
+----------
+----------    不要修改ui代码！
+----------    不要修改ui代码！！
+----------    不要修改ui代码！！！
+----------
+------------------------------------------------------------------------------------------
+";
 //            类描述，包含类定义，继承，字段声明
             var classDesc = new List<string>();
+            classDesc.Add(head);
 //            var superClassName = m_SuperClass.stringValue;
             var superClassName = "Framework.UI.Prefab";
 
@@ -172,11 +177,18 @@ return {0}", className));
                     createLuaFieldByTrans(child, classDesc);
                     continue;
                 }
-                classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, Utils.GetTypeNameByComponentSuffix(suffix, child)));
+
+                var typeName = Utils.GetTypeNameByComponentSuffix(suffix, child);
+                classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, typeName));
 //                _Doc不用对其子go生成field
                 if (suffix != "_Doc")
                 {
                     createLuaFieldByTrans(child, classDesc);
+                }
+                else
+                {
+//                    _Doc需要require一下
+                    classDesc.Insert(1, string.Format("require(\"{0}\")", typeName));
                 }
             }
         }
