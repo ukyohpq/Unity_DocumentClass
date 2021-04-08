@@ -30,8 +30,3 @@ function LuaBridge(funcName, ...)
 	end
 	fun(mainLogic, ...)
 end
-
-function CSCallLua(evtName, contextID, uiPrefab)
-	LogUtil.LogError("evtName:%s contextID:%s prefab:%s", evtName, contextID, uiPrefab)
-	prefabComplete(contextID, uiPrefab)
-end
