@@ -8,14 +8,13 @@ local function requireLua(isEditor)
 	if isEditor then
 		require("Framework.NewClassForLuaHotFix")
 	end
-	require("Framework.MainLogic")
 end
 
 --主入口函数。从这里开始lua逻辑
-function Main(isEditor)
+function Main(isEditor, logicPath)
 	IsEditor = isEditor
 	requireLua(isEditor)
-	mainLogic = MainLogic.New()
+	mainLogic = require(logicPath).New()
 end
 
 function LuaBridge(funcName, ...)

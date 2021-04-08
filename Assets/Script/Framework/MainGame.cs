@@ -8,6 +8,7 @@ using Framework.core;
 
 public class MainGame : MonoBehaviour
 {
+    public string luaLogicPath;
     private LuaState luaState;
 
     public LuaState LuaState
@@ -25,9 +26,6 @@ public class MainGame : MonoBehaviour
     private GameObject uiRoot;
 //    private GameObject uiStage;
 //    private GameObject uiBackstage;
-    
-    private LuaFunction luaBridge;
-
     private void Awake()
     {
         if (ins == null)
@@ -88,18 +86,24 @@ public class MainGame : MonoBehaviour
         luaState.AddSearchPath(LuaConst.toluaDir);
         luaState.DoFile("Framework\\Main.lua");
         CallMain();
-        luaBridge = luaState.GetFunction("LuaBridge");
     }
     
     protected virtual void CallMain()
     {
-        LuaFunction main = luaState.GetFunction("Main");
+        luaState.LuaGetGlobal("Main");
+        if (luaState.LuaIsNil(-1))
+        {
+            BTLog.Error("can not find lua Main function");
+            luaState.LuaPop(1);
+            return;
+        }
 #if UNITY_EDITOR
-        main.Call(true);
+        luaState.LuaPushBoolean(true);
 #else
-        main.Call(false);
+        luaState.LuaPushBoolean(false);
 #endif
-        main.Dispose();
+        luaState.LuaPushString(luaLogicPath);
+        luaState.LuaSafeCall(2, 0, 0, 0);
     }
     
     protected void OpenLuaSocket()
@@ -159,12 +163,33 @@ public class MainGame : MonoBehaviour
     void Update()
     {
         CSBridge.LoadAsset();
-        luaBridge.Call("Update", Time.time, Time.unscaledTime);
+        luaState.LuaGetGlobal("LuaBridge");
+        if (luaState.LuaIsNil(-1))
+        {
+            BTLog.Debug("can not find lua function: LuaBridge");
+            luaState.LuaPop(1);
+            return;
+        }
+        luaState.LuaPushString("Update");
+        luaState.LuaPushNumber(Time.time);
+        luaState.LuaPushNumber(Time.unscaledTime);
+        luaState.LuaSafeCall(3, 0, 0, 0);
     }
 
     private void FixedUpdate()
     {
-        luaBridge.Call("FixedUpdate", Time.fixedTime, Time.fixedUnscaledTime);
+        luaState.LuaGetGlobal("LuaBridge");
+        if (luaState.LuaIsNil(-1))
+        {
+            BTLog.Debug("can not find lua function: LuaBridge");
+            luaState.LuaPop(1);
+            return;
+        }
+        
+        luaState.LuaPushString("FixedUpdate");
+        luaState.LuaPushNumber(Time.fixedTime);
+        luaState.LuaPushNumber(Time.fixedUnscaledTime);
+        luaState.LuaSafeCall(3, 0, 0, 0);
     }
 
     public void GetPrefabLua(int contextId)

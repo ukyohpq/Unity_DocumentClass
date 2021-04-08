@@ -381,6 +381,16 @@ namespace LuaInterface
             return LuaDLL.lua_pcall(L, nArgs, nResults, errfunc);
         }
 
+        public void LuaSafeCall(int nArgs, int nResults, int errfunc, int topIndex)
+        {
+            if (LuaPCall(nArgs, nResults, errfunc) != 0)
+            {
+                var err = LuaToString(-1);
+                LuaSetTop(topIndex);
+                throw new LuaException(err, LuaException.GetLastError());
+            }
+        }
+        
         public int LuaYield(int nresults)
         {
             return LuaDLL.lua_yield(L, nresults);

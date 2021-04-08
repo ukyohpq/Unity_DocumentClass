@@ -61,7 +61,7 @@ namespace Framework.UI
             }
             luaState.LuaInsert(-2);
             luaState.Push("COMPLETE");
-            luaState.LuaCall(2, 0);
+            luaState.LuaSafeCall(2, 0, 0, 0);
         }
 
         private void BindFieldsOnTrans(Transform trans, int topIdx)
@@ -142,7 +142,10 @@ namespace Framework.UI
                 BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
                 return;
             }
-            luaState.LuaCall(0, 1);
+
+            var curTop = luaState.LuaGetTop();
+            luaState.LuaSafeCall(0, 1, 0, curTop);
+//            luaState.LuaCall(0, 1);
 //            删除luaclass
             luaState.LuaRemove(-2);
             luaState.LuaDup();
@@ -150,7 +153,8 @@ namespace Framework.UI
             luaState.LuaInsert(-3);
 
             //call getPrefabID获取contextId
-            luaState.LuaCall(1, 1);
+            curTop = luaState.LuaGetTop();
+            luaState.LuaSafeCall(1, 1, 0, curTop);
             contextId = luaState.LuaToInteger(-1);
             luaState.LuaPop(1);
 //            var prefab = luaState.ToVariant(-1) as LuaTable;
