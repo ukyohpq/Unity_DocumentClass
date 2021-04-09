@@ -20,11 +20,11 @@ end
 function LuaBridge(funcName, ...)
 	local fun = mainLogic[funcName]
 	if fun == nil then
-		LogUtil.LogError("can not find function:%s", funcName)
+		--LogUtil.LogError("can not find function:%s", funcName)
 		return
 	end
 	if type(fun) ~= "function" then
-		LogUtil.LogError("%s must be function", funcNamec)
+		--LogUtil.LogError("%s must be function", funcNamec)
 		return
 	end
 	fun(mainLogic, ...)

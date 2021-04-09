@@ -42,8 +42,8 @@ namespace Framework.Editor
 //            ReadMe
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label(@"要从Prefab上导出组件，需要遵守如下命名规范:
-按钮: _Btn
-文本: _Txt
+按钮: _Button
+文本: _Text
 文档类: _Doc
 ");
             EditorGUILayout.EndHorizontal();
