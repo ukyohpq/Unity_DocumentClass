@@ -4,7 +4,7 @@ require("Examples.01_SimpleUI.UI_01")
 logic = class("Examples.01_SimpleUI.logic")
 
 function logic:ctor()
-    local ui = UI.New()
+    local ui = UI_01.New()
     ui:LoadResource()
 end
 

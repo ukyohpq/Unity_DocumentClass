@@ -9,10 +9,10 @@
 ---@type Framework.UI.Prefab
 local super = require("Framework.UI.Prefab")
 
----@class Examples.01_SimpleUI.UI:Framework.UI.Prefab
-UI = class("Examples.01_SimpleUI.UI", super)
+---@class Examples.01_SimpleUI.UI_01:Framework.UI.Prefab
+UI_01 = class("Examples.01_SimpleUI.UI_01", super)
 
-function UI:GetAssetPath()
+function UI_01:GetAssetPath()
     if IsEditor then
         return "Assets/Lua/Examples/01_SimpleUI/UI_01.prefab"
     else
@@ -20,4 +20,4 @@ function UI:GetAssetPath()
     end
 end
 
-return UI
+return UI_01
