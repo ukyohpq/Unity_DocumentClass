@@ -12,8 +12,7 @@ namespace Framework.core
     {
         private static List<LoaderContext> loaderContexts = new List<LoaderContext>();
         private static Dictionary<string, AssetPrototype> AssetDict = new Dictionary<string, AssetPrototype>();
-        private static Dictionary<int, GameObject> contextPrefabDic = new Dictionary<int, GameObject>();
-        public static void LoadPrefab(string path, int contextID)
+        public static void LoadPrefab(string path, LuaTable contextID)
         {
             loaderContexts.Add(new LoaderContext(path, contextID));
         }
@@ -27,7 +26,7 @@ namespace Framework.core
                 var context = loaderContexts[0];
                 loaderContexts.RemoveAt(0);
                 var path = context.Path;
-                var contextID = context.ContextId;
+                var luaTable = context.LuaTb;
                 AssetPrototype asset;
                 if (!AssetDict.TryGetValue(path , out asset))
                 {
@@ -45,24 +44,13 @@ namespace Framework.core
                 MainGame.Ins.AddChild2Stage(go);
             
                 go.transform.localPosition = Vector3.zero;
-            
-                if (contextPrefabDic.ContainsKey(contextID))
-                {
-                    BTLog.Error("contextPrefabDic contains key:{0}", contextID);
-                    return;
-                }else if (contextPrefabDic.ContainsValue(go))
-                {
-                    BTLog.Error("contextPrefabDic contains value:{0}", go.name);
-                    return;
-                }
-            
-                contextPrefabDic[contextID] = go;
+                
                 var docu = go.GetComponent<DocumentClass>();
                 if (docu == null)
                 {
                     throw new Exception("must has Component DocumentClass!");
                 }
-                docu.SetContextId(contextID);
+                docu.SetLuaTable(luaTable);
             }
             
         }

@@ -66,19 +66,7 @@ namespace Framework.Editor
             
             serializedObject.ApplyModifiedProperties();
         }
-
-        private Type getTypeBySuffix(string suffix)
-        {
-            switch (suffix)
-            {
-                case "Text":
-                    return typeof(Text);
-                case "Button":
-                    return typeof(Button);
-                default:
-                    throw new Exception(string.Format("invalid component suffix:{}", suffix));
-            }
-        }
+        
         private void saveAndCreate()
         {
             var go = (target as DocumentClass).gameObject;

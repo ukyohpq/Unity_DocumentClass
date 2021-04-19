@@ -2,6 +2,7 @@ using System;
 using Babeltime.Log;
 using Framework.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Framework.core
 {
@@ -10,6 +11,7 @@ namespace Framework.core
         public const string Doc = "_Doc";
         public const string Button = "_Button";
         public const string Text = "_Text";
+        public const string Image = "_Image";
     }
     
     public class Utils
@@ -22,6 +24,8 @@ namespace Framework.core
                     return typeof(UnityEngine.UI.Text);
                 case ComponentSuffix.Button:
                     return typeof(Framework.UI.Button);
+                case ComponentSuffix.Image:
+                    return typeof(Image);
                 default:
                     BTLog.Warning("未定义的后缀名");
                     return null;
@@ -36,6 +40,8 @@ namespace Framework.core
                     return "UnityEngine.UI.Text";
                 case ComponentSuffix.Button:
                     return "Framework.UI.Button";
+                case ComponentSuffix.Image:
+                    return "UnityEngine.UI.Image";
                 case ComponentSuffix.Doc:
                     var doc = trans.GetComponent<DocumentClass>();
                     if (doc == null)
@@ -72,6 +78,7 @@ namespace Framework.core
             {
                 case ComponentSuffix.Text:
                 case ComponentSuffix.Button:
+                case ComponentSuffix.Image:
                 case ComponentSuffix.Doc:
                     return true;
                 default:

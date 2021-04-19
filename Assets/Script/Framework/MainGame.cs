@@ -85,9 +85,17 @@ public class MainGame : MonoBehaviour
         luaState.AddSearchPath(LuaConst.luaDir);
         luaState.AddSearchPath(LuaConst.toluaDir);
         luaState.DoFile("Framework\\Main.lua");
+        
+        luaState.LuaPushFunction(xxxxxx);
+        luaState.LuaSetGlobal("xxxxxx");
         CallMain();
     }
     
+    private int xxxxxx(IntPtr luaState)
+    {
+        BTLog.Error("this is xxxxxx");
+        return 1;
+    }
     protected virtual void CallMain()
     {
         luaState.LuaGetGlobal("Main");
@@ -190,26 +198,6 @@ public class MainGame : MonoBehaviour
         luaState.LuaPushNumber(Time.fixedTime);
         luaState.LuaPushNumber(Time.fixedUnscaledTime);
         luaState.LuaSafeCall(3, 0, 0, 0);
-    }
-
-    public void GetPrefabLua(int contextId)
-    {
-        luaState.LuaGetGlobal("prefabIDMap");
-        if (luaState.LuaIsNil(-1))
-        {
-            luaState.LuaPop(1);
-            BTLog.Error("can nof find global table prefabIDMap");
-            return;
-        }
-        luaState.Push(contextId);
-        luaState.LuaGetTable(-2);
-        if (luaState.LuaIsNil(-1))
-        {
-            luaState.LuaPop(2);
-            BTLog.Error(string.Format("load prefab document but can not find contextID:{0}", contextId));
-            return;
-        }
-        luaState.LuaReplace(-2);
     }
 
     private void CreateUIStage()

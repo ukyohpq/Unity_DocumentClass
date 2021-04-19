@@ -9,28 +9,18 @@ using Framework.core;
 
 namespace Framework.UI
 {
-    public class DocumentClass : MonoBehaviour
+    public class DocumentClass : GameObjectLuaBinder
     {
         [SerializeField]
         private string LuaClass = "";
-
-        private int contextId = -1;
-
+        
         [NoToLua]
-        public void SetContextId(int value)
+        public void SetLuaTable(LuaTable value)
         {
-            if (contextId == value)
-            {
-                return;
-            }
-            contextId = value;
-            MainGame.Ins.GetPrefabLua(contextId);
+            BindLuaTable(value);
+            value.GetLuaState().LuaGetRef(value.GetReference());
+            BTLog.Error("SetLuaTable top:{0}", value.GetLuaState().LuaGetTop());
             BindLuaClass();
-        }
-
-        public int GetContextId()
-        {
-            return contextId;
         }
 
         public string GetLuaClassName()
@@ -41,15 +31,12 @@ namespace Framework.UI
 //        该函数在调用前，必须保证当前lua栈顶有一个lua的Prefab对象。也就是说，栈不为空!
         private void BindLuaClass()
         {
-            var luaState = MainGame.Ins.LuaState;
+            var luaState = GetLuaState();
             if (luaState.LuaIsNil(-1))
             {
                 BTLog.Error("该函数在调用前必须保证lua栈顶上有一个lua的Prefab对象");
                 return;
             }
-//            TODO 这里考虑有没有必要把这个gameObject传给lua
-            luaState.PushVariant(gameObject);
-            luaState.LuaSetField(-2, "gameObject");
             BindFieldsOnTrans(transform, luaState.LuaGetTop());
 //            完成绑定之后，广播complete事件
             luaState.LuaGetField(-1, "DispatchMessage");
@@ -62,11 +49,12 @@ namespace Framework.UI
             luaState.LuaInsert(-2);
             luaState.Push("COMPLETE");
             luaState.LuaSafeCall(2, 0, 0, 0);
+            BTLog.Error("after bindluaclass:{0}", luaState.LuaGetTop());
         }
 
         private void BindFieldsOnTrans(Transform trans, int topIdx)
         {
-            BTLog.Debug("BindFieldsOnTrans trans:{0}", trans.name);
+            BTLog.Debug("BindFieldsOnTrans trans:{0} top:{1}", trans.name, topIdx);
             var luaState = MainGame.Ins.LuaState;
             var numChildren = trans.childCount;
             for (int i = 0; i < numChildren; i++)
@@ -86,8 +74,7 @@ namespace Framework.UI
                 {
                     var childDoc = child.GetComponent<DocumentClass>();
                     childDoc.CreatePrefabAndBindLuaClass();
-                    var childContextId = childDoc.GetContextId();
-                    MainGame.Ins.GetPrefabLua(childContextId);
+                    childDoc.PushLuaTable();
                     luaState.LuaSetField(topIdx, childName);
                 }
                 else
@@ -108,7 +95,7 @@ namespace Framework.UI
         // Start is called before the first frame update
         void Start()
         {
-            if (contextId == -1)
+            if (!hasLuaObj())
             {
                 CreatePrefabAndBindLuaClass();
             }
@@ -118,17 +105,12 @@ namespace Framework.UI
 //        通过在cs端创建lua的Prefab对象进行绑定
         private void CreatePrefabAndBindLuaClass()
         {
+            BTLog.Error("CreatePrefabAndBindLuaClass");
             var luaState = MainGame.Ins.LuaState;
-            luaState.LuaGetGlobal("getPrefabID");
-            if (luaState.LuaIsNil(-1))
-            {
-                luaState.LuaPop(1);
-                BTLog.Error("can not find lua function getPrefabID");
-                return;
-            }
-            
+            var top = luaState.LuaGetTop();
             var className = Utils.MakeClassName(LuaClass);
             luaState.LuaGetGlobal(className);
+            BTLog.Error("top:{0}", top);
             if (luaState.LuaIsNil(-1))
             {
                 luaState.LuaPop(2);
@@ -145,19 +127,10 @@ namespace Framework.UI
 
             var curTop = luaState.LuaGetTop();
             luaState.LuaSafeCall(0, 1, 0, curTop);
-//            luaState.LuaCall(0, 1);
 //            删除luaclass
             luaState.LuaRemove(-2);
-            luaState.LuaDup();
-            //将dup出来的prefab实例放到栈底备用
-            luaState.LuaInsert(-3);
-
-            //call getPrefabID获取contextId
-            curTop = luaState.LuaGetTop();
-            luaState.LuaSafeCall(1, 1, 0, curTop);
-            contextId = luaState.LuaToInteger(-1);
-            luaState.LuaPop(1);
-//            var prefab = luaState.ToVariant(-1) as LuaTable;
+            var prefab = luaState.ToVariant(-1) as LuaTable;
+            BindLuaTable(prefab);
             BindLuaClass();
         }
 
@@ -167,9 +140,9 @@ namespace Framework.UI
             
         }
         
-        private void OnDestroy()
+        protected void OnDestroy()
         {
-            
+            base.OnDestroy();
         }
     }
 }

@@ -4,19 +4,6 @@
 --- DateTime: 2021/1/19 11:31
 ---
 
----@type table<number, Framework.UI.Prefab>
-prefabIDMap = {}
-local contextId = 0
-function getPrefabID(prefab)
-    contextId = contextId + 1
-    prefabIDMap[contextId] = prefab
-    return contextId
-end
-
-function getPrefabByID(cId)
-    return prefabIDMap[cId]
-end
-
 --- prefab运行流程
 --- 1.new一个prefab
 --- 2.prefab通过cs接口加载资源
@@ -43,15 +30,13 @@ end
 function Prefab:LoadResource()
     self.status = 1
     local path = self:GetAssetPath()
-    local contextID = self:getLoadContextID()
-    Framework.core.CSBridge.LoadPrefab(path, contextID)
+    Framework.core.CSBridge.LoadPrefab(path, self)
 end
 
 ---OnComplete
 ---@param evt Framework.event.Event
 function Prefab:OnComplete(evt)
     self.status = 2
-    LogUtil.LogError("self.go:%s", self.gameObject)
 end
 
 function Prefab:StartLogic()
@@ -63,15 +48,14 @@ function Prefab:GetAssetPath()
 end
 
 function Prefab:Destroy()
-
+    if self.vvv then
+        LogUtil.LogError("call vvv")
+        self:vvv()
+    end
 end
 
 function Prefab:DestroyFromCS()
 
-end
-
-function Prefab:getLoadContextID()
-    return getPrefabID(self)
 end
 
 return Prefab

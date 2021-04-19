@@ -24,6 +24,9 @@ end
 function logic:onClick(evt)
     self.numClick = self.numClick + 1
     self.ui.m_Text.text = "total click" .. self.numClick
+    local ui = self.ui
+    self.ui = nil
+    ui:Destroy()
 end
 
 return logic

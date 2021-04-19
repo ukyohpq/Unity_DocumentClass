@@ -1,3 +1,5 @@
+using LuaInterface;
+
 namespace Framework.core
 {
     public class LoaderContext
@@ -9,17 +11,17 @@ namespace Framework.core
             get { return path; }
         }
 
-        private int contextId;
+        private LuaTable luaTb;
 
-        public int ContextId
+        public LuaTable LuaTb
         {
-            get { return contextId; }
+            get { return luaTb; }
         }
 
-        public LoaderContext(string path, int contextId)
+        public LoaderContext(string path, LuaTable luaTb)
         {
             this.path = path;
-            this.contextId = contextId;
+            this.luaTb = luaTb;
         }
     }
 }

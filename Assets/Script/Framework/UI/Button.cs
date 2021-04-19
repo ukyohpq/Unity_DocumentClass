@@ -30,6 +30,13 @@ namespace Framework.UI
 
                 return self == target.self && handler == target.handler;
             }
+
+            public void Destroy()
+            {
+                self = null;
+                handler.Dispose();
+                handler = null;
+            }
         }
         private Dictionary<string, List<LuaCallback>> handlerMap = new Dictionary<string, List<LuaCallback>>();
         [NoToLua]
@@ -97,6 +104,7 @@ namespace Framework.UI
                 if (cb.self == self && cb.handler == handler)
                 {
                     dic.Remove(cb);
+                    cb.Destroy();
                     return;
                 }
             }
@@ -109,22 +117,32 @@ namespace Framework.UI
             }
 
             var handlers = handlerMap[eventName];
+            var ls = MainGame.Ins.LuaState;
             foreach (var cb in handlers)
             {
+                ls.LuaGetRef(cb.handler.GetReference());
+                var nArgs = 0;
                 if (cb.self != null)
                 {
-                    cb.handler.Call(cb.self);
+                    ls.LuaGetRef(cb.self.GetReference());
+                    nArgs++;
                 }
-                else
-                {
-                    cb.handler.Call();
-                }
+                ls.LuaSafeCall(nArgs, 0, 0, 0);
             }
         }
 
         private void OnDestroy()
         {
-            this.handlerMap = null;
+            foreach (var kv in handlerMap)
+            {
+                var handlers = kv.Value;
+                foreach (var cb in handlers)
+                {
+                    cb.Destroy();
+                }
+            }
+            
+            handlerMap = null;
         }
     }
 }

@@ -44,7 +44,7 @@ public class Framework_core_CSBridgeWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			string arg0 = ToLua.CheckString(L, 1);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			LuaTable arg1 = ToLua.CheckLuaTable(L, 2);
 			Framework.core.CSBridge.LoadPrefab(arg0, arg1);
 			return 0;
 		}
