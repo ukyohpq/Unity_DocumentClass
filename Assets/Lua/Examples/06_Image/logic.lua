@@ -7,7 +7,6 @@ logic = class("Examples.05_DocumentClass.logic")
 
 function logic:ctor()
     self.ui = UI_06.New()
-    self.ui:LoadResource()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
 end
 

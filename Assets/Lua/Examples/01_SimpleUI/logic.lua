@@ -5,7 +5,6 @@ logic = class("Examples.01_SimpleUI.logic")
 
 function logic:ctor()
     local ui = UI_01.New()
-    ui:LoadResource()
 end
 
 return logic

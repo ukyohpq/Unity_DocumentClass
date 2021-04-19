@@ -14,29 +14,38 @@
 
 local super = require("Framework.event.EventDispatcher")
 ---@class Framework.UI.Prefab:Framework.event.EventDispatcher
----@field status number
+---@field private ___GameObjectLuaBinder___ Framework.core.GameObjectLuaBinder
+---@field private status number
 Prefab = class("Framework.UI.Prefab", super)
 
 function Prefab:ctor()
     super.ctor(self)
     self.status = 0
     self:AddEventListener(Event.COMPLETE, self, self.OnComplete)
+    self:LoadResource()
 end
 
 function Prefab:start()
     self:StartLogic()
 end
 
+---@private
 function Prefab:LoadResource()
     self.status = 1
     local path = self:GetAssetPath()
+    self.LoadResource = self.LoadResourced
     Framework.core.CSBridge.LoadPrefab(path, self)
+end
+
+function Prefab:LoadResourced()
+    error("LoadResourced can be called only once")
 end
 
 ---OnComplete
 ---@param evt Framework.event.Event
 function Prefab:OnComplete(evt)
     self.status = 2
+    LogUtil.LogError("___GameObjectLuaBinder___:%s", self.___GameObjectLuaBinder___)
 end
 
 function Prefab:StartLogic()
@@ -48,9 +57,10 @@ function Prefab:GetAssetPath()
 end
 
 function Prefab:Destroy()
-    if self.vvv then
-        LogUtil.LogError("call vvv")
-        self:vvv()
+    LogUtil.LogError("try CSDestroy:%s", tostring(self))
+    if self.___GameObjectLuaBinder___ then
+        LogUtil.LogError("CSDestroy:%s", tostring(self))
+        self.___GameObjectLuaBinder___:CSDestroy()
     end
 end
 

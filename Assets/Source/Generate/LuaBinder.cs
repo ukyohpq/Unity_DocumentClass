@@ -89,6 +89,7 @@ public static class LuaBinder
 		L.BeginModule("Framework");
 		L.BeginModule("core");
 		Framework_core_CSBridgeWrap.Register(L);
+		Framework_core_GameObjectLuaBinderWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("UI");
 		Framework_UI_ButtonWrap.Register(L);

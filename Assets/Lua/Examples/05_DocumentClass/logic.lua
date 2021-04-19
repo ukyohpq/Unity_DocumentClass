@@ -9,7 +9,6 @@ logic = class("Examples.05_DocumentClass.logic")
 function logic:ctor()
     self.numClick = 0
     self.ui = UI_05.New()
-    self.ui:LoadResource()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
 end
 
@@ -24,9 +23,9 @@ end
 function logic:onClick(evt)
     self.numClick = self.numClick + 1
     self.ui.m_Doc.m_Text.text = "total click" .. self.numClick
-    --local ui = self.ui
-    --self.ui = nil
-    --ui:Destroy()
+    local ui = self.ui
+    self.ui = nil
+    ui:Destroy()
 end
 
 return logic

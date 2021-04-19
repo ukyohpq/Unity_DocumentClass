@@ -9,7 +9,6 @@ logic = class("Examples.04_Button.logic")
 function logic:ctor()
     self.numClick = 0
     self.ui = UI_04.New()
-    self.ui:LoadResource()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
 end
 

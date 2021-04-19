@@ -12,9 +12,9 @@ namespace Framework.core
     {
         private static List<LoaderContext> loaderContexts = new List<LoaderContext>();
         private static Dictionary<string, AssetPrototype> AssetDict = new Dictionary<string, AssetPrototype>();
-        public static void LoadPrefab(string path, LuaTable contextID)
+        public static void LoadPrefab(string path, LuaTable luaTable)
         {
-            loaderContexts.Add(new LoaderContext(path, contextID));
+            loaderContexts.Add(new LoaderContext(path, luaTable));
         }
 
         [NoToLua]

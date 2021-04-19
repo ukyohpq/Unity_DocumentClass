@@ -6,6 +6,7 @@ using UnityEditor;
 
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;
+using Framework.core;
 using UnityEngine.UI;
 
 public static class CustomSettings
@@ -156,6 +157,7 @@ public static class CustomSettings
         _GT(typeof(Babeltime.Log.BTLog)),
         _GT(typeof(Framework.core.CSBridge)),
         _GT(typeof(Framework.UI.Button)),
+        _GT(typeof(GameObjectLuaBinder)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
