@@ -5,6 +5,7 @@ local function requireLua(isEditor)
 	--log一定要放在第一个require
 	require("Framework.Log")
 	require("Framework.class")
+	require("Framework.UI.Button")
 	if isEditor then
 		require("Framework.NewClassForLuaHotFix")
 	end

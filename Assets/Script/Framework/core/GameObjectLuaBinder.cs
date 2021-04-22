@@ -17,7 +17,7 @@ namespace Framework.core
         {
             return luaObj != null;
         }
-        protected void PushLuaTable()
+        public void PushLuaTable()
         {
             if (luaObj != null)
             {
@@ -64,13 +64,14 @@ namespace Framework.core
             }
             BTLog.Error("Do OnDestroy:{0}", name);
             var ls = luaObj.GetLuaState();
+            var curTop = ls.LuaGetTop();
             var luaObjRef = luaObj.GetReference();
             ls.LuaGetRef(luaObjRef);
             ls.LuaGetRef(luaObjRef); 
             ls.LuaGetField(-1, DESTROY);
             if (ls.LuaIsNil(-1))
             {
-                ls.LuaSetTable(0);
+                ls.LuaSetTop(curTop);
                 return;
             }
 
@@ -134,6 +135,11 @@ namespace Framework.core
         protected LuaState GetLuaState()
         {
             return luaObj.GetLuaState();
+        }
+
+        public virtual void CreatePrefabAndBindLuaClass(LuaState luaState)
+        {
+            BTLog.Error("CreatePrefabAndBindLuaClass");
         }
     }
 }

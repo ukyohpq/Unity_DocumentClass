@@ -12,9 +12,8 @@
 --- 5.gameobject在移除的时候，需要通过DocumentClass去调用Prefab:DestroyFromCS()
 
 
-local super = require("Framework.event.EventDispatcher")
----@class Framework.UI.Prefab:Framework.event.EventDispatcher
----@field private ___GameObjectLuaBinder___ Framework.core.GameObjectLuaBinder
+local super = require("Framework.UI.CLBinder")
+---@class Framework.UI.Prefab:Framework.UI.CLBinder
 ---@field private status number
 Prefab = class("Framework.UI.Prefab", super)
 
@@ -54,18 +53,6 @@ end
 
 function Prefab:GetAssetPath()
     error("must override!")
-end
-
-function Prefab:Destroy()
-    LogUtil.LogError("try CSDestroy:%s", tostring(self))
-    if self.___GameObjectLuaBinder___ then
-        LogUtil.LogError("CSDestroy:%s", tostring(self))
-        self.___GameObjectLuaBinder___:CSDestroy()
-    end
-end
-
-function Prefab:DestroyFromCS()
-
 end
 
 return Prefab

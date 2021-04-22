@@ -55,6 +55,7 @@ namespace Framework.UI
             var numChildren = trans.childCount;
             for (int i = 0; i < numChildren; i++)
             {
+                BTLog.Error("topIndex:{0}", topIdx);
                 var child = trans.GetChild(i);
                 var childName = child.name;
                 if (childName == "") continue;
@@ -66,21 +67,35 @@ namespace Framework.UI
                     continue;
                 }
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
-                if (suffix == "_Doc")
+                switch (suffix)
                 {
-                    var childDoc = child.GetComponent<DocumentClass>();
-                    childDoc.CreatePrefabAndBindLuaClass(luaState);
-                    childDoc.PushLuaTable();
-                    luaState.LuaSetField(topIdx, childName);
+                    case "_Doc":
+                        var childDoc = child.GetComponent<DocumentClass>();
+                        childDoc.CreatePrefabAndBindLuaClass(luaState);
+                        childDoc.PushLuaTable();
+                        luaState.LuaSetField(topIdx, childName);
+                        break;
+                    case "_Button":
+                        var childBtn = child.GetComponent<Button>();
+                        if (childBtn == null)
+                        {
+                            childBtn = child.gameObject.AddComponent<Button>();
+                        }
+
+                        var obj = luaState.ToVariant(topIdx);
+                        BTLog.Error("obj:{0}", obj);
+                        childBtn.CreatePrefabAndBindLuaClass(luaState);
+                        luaState.LuaSetField(topIdx, childName);
+                        break;
+                    default:
+                        BindFieldsOnTrans(child, luaState, topIdx);
+                        var T = Utils.GetTypeByComponentSuffix(suffix);
+                        if (T == null) continue;
+                        luaState.PushVariant(child.GetComponent(T));
+                        luaState.LuaSetField(topIdx, childName);
+                        break;
                 }
-                else
-                {
-                    BindFieldsOnTrans(child, luaState, topIdx);
-                    var T = Utils.GetTypeByComponentSuffix(suffix);
-                    if (T == null) continue;
-                    luaState.PushVariant(child.GetComponent(T));
-                    luaState.LuaSetField(topIdx, childName);
-                }
+
                 BTLog.Debug("bind {0}. name:{1} childName:{2}", suffix, trans.name, childName);
 
             }
@@ -99,14 +114,15 @@ namespace Framework.UI
         }
 
 //        通过在cs端创建lua的Prefab对象进行绑定
-        private void CreatePrefabAndBindLuaClass(LuaState luaState)
+        public override void CreatePrefabAndBindLuaClass(LuaState luaState)
         {
-            BTLog.Error("CreatePrefabAndBindLuaClass");
+            base.CreatePrefabAndBindLuaClass(luaState);
+            var curTop = luaState.LuaGetTop();
             var className = Utils.MakeClassName(LuaClass);
             luaState.LuaGetGlobal(className);
             if (luaState.LuaIsNil(-1))
             {
-                luaState.LuaPop(2);
+                luaState.LuaSetTop(curTop);
                 BTLog.Error("can not find lua class:{0}", LuaClass);
                 return;
             }
@@ -117,12 +133,11 @@ namespace Framework.UI
             luaState.LuaGetField(-1, "New");
             if (luaState.LuaIsNil(-1))
             {
-                luaState.LuaPop(3);
+                luaState.LuaSetTop(curTop);
                 BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
                 return;
             }
-
-            var curTop = luaState.LuaGetTop();
+            
             luaState.LuaSafeCall(0, 1, 0, curTop);
 
 //            将实例和类换一下位置，这里需要将class上的LoadResource抹掉
