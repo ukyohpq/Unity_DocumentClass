@@ -37,7 +37,7 @@ function Prefab:LoadResource()
 end
 
 function Prefab:LoadResourced()
-    error("LoadResourced can be called only once")
+    error("LoadResource can be called only once")
 end
 
 ---OnComplete
