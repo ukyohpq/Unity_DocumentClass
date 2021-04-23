@@ -45,7 +45,15 @@ namespace Framework.core
 //                ls.LuaSetField(-2, "vvv");
                 ls.PushVariant(this);
                 ls.LuaSetField(-2, GAMEOBJECT_LUABINDER);
-                ls.LuaPop(1);
+                var curTop = ls.LuaGetTop();
+                ls.LuaGetField(-1, "DispatchMessage");
+                if (ls.LuaIsNil(-1))
+                {
+                    throw new LuaException("can not find function DispatchMessage");
+                }
+                ls.LuaInsert(-2);
+                ls.LuaPushString("OnBind");
+                ls.LuaSafeCall(2, 0, 0, curTop);
             }
             else
             {

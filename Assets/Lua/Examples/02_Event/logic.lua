@@ -1,19 +1,19 @@
 require("Examples.02_Event.UI_02")
 require("Framework.event.Event")
 
----@class Examples.02_Event.logic
+---@class Examples.02_Event.logic_02
 ---@field ui Examples.02_Event.UI_02
-logic = class("Examples.02_Event.logic")
+logic_02 = class("Examples.02_Event.logic_02")
 
-function logic:ctor()
+function logic_02:ctor()
     self.ui = UI_02.New()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
 end
 
 ---onComplete
 ---@param evt Framework.event.Event
-function logic:onComplete(evt)
+function logic_02:onComplete(evt)
     LogUtil.LogError("evt:%s", evt.name)
 end
 
-return logic
+return logic_02

@@ -1,12 +1,12 @@
 require("Examples.04_Button.UI_04")
 require("Framework.event.Event")
 
----@class Examples.04_Button.logic
+---@class Examples.04_Button.logic_04
 ---@field ui Examples.04_Button.UI_04
 ---@field numClick number
-logic = class("Examples.04_Button.logic")
+logic_04 = class("Examples.04_Button.logic_04")
 
-function logic:ctor()
+function logic_04:ctor()
     self.numClick = 0
     self.ui = UI_04.New()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
@@ -14,13 +14,13 @@ end
 
 ---onComplete
 ---@param evt Framework.event.Event
-function logic:onComplete(evt)
+function logic_04:onComplete(evt)
     self.ui.m_Button:AddEventListener("click", self, self.onClick)
 end
 
 ---onClick
 ---@param evt Framework.event.Event
-function logic:onClick(evt)
+function logic_04:onClick(evt)
     self.numClick = self.numClick + 1
     self.ui.m_Text.text = "total click" .. self.numClick .. " target is:" .. evt.target.__cname
     --local ui = self.ui
@@ -28,4 +28,4 @@ function logic:onClick(evt)
     --ui:Destroy()
 end
 
-return logic
+return logic_04

@@ -1,10 +1,10 @@
 require("Examples.01_SimpleUI.UI_01")
 
----@class Examples.01_SimpleUI.logic
-logic = class("Examples.01_SimpleUI.logic")
+---@class Examples.01_SimpleUI.logic_01
+logic_01 = class("Examples.01_SimpleUI.logic_01")
 
-function logic:ctor()
+function logic_01:ctor()
     local ui = UI_01.New()
 end
 
-return logic
+return logic_01
