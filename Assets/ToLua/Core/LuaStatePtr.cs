@@ -425,13 +425,7 @@ namespace LuaInterface
         {
             LuaDLL.lua_pop(L, amount);
         }
-
-        public void LuaDup()
-        {
-            var luaRef = ToLuaRef();
-            LuaGetRef(luaRef);
-            LuaGetRef(luaRef);
-        }
+        
         public void LuaNewTable()
         {
             LuaDLL.lua_createtable(L, 0 , 0);

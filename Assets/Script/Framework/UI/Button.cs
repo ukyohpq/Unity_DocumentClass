@@ -29,7 +29,7 @@ namespace Framework.UI
         {
             var ls = GetLuaState();
             PushLuaTable();
-            ls.LuaDup();
+            ls.LuaPushValue(-1);
             ls.LuaGetField(-1, "DispatchMessage");
             ls.LuaInsert(-2);
             ls.LuaPushString(eventName);
