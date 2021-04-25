@@ -41,14 +41,27 @@ namespace Framework.core
             if (value != null)
             {
                 ls.LuaGetRef(luaRef);
-//                ls.LuaPushFunction(vvv);
-//                ls.LuaSetField(-2, "vvv");
+                ls.LuaPushFunction(DestroyFromLua);
+                ls.LuaSetField(-2, "DestroyToCS");
+
+                ls.LuaPushValue(-1);
                 ls.PushVariant(this);
-                ls.LuaSetField(-2, GAMEOBJECT_LUABINDER);
+                ls.LuaSetTable(LuaIndexes.LUA_REGISTRYINDEX);
+                
+                
+                ls.LuaPushValue(-1);
+                var obj = ls.ToVariant(-1);
+                BTLog.Error("obj==================:{0}", obj);
+                ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
+                var obj2 = ls.ToVariant(-1);
+                BTLog.Error("obj2=================:{0}", obj2);
+                ls.LuaPop(1);
+                
                 var curTop = ls.LuaGetTop();
                 ls.LuaGetField(-1, "DispatchMessage");
                 if (ls.LuaIsNil(-1))
                 {
+                    ls.LuaSetTop(curTop);
                     throw new LuaException("can not find function DispatchMessage");
                 }
                 ls.LuaInsert(-2);
@@ -62,6 +75,10 @@ namespace Framework.core
             
         }
 
+//        public static int vvv(IntPtr L)
+//        {
+//            return 0;
+//        }
 
         protected void OnDestroy()
         {
@@ -91,47 +108,25 @@ namespace Framework.core
             ls.LuaSafeCall(1, 0, 0, 0);
         }
 
-        public void CSDestroy()
+        private void CSDestroy()
         {
             BTLog.Error("CSDestroy:{0}", name);
-            var ls = luaObj.GetLuaState();
-            ls.LuaGetRef(luaObj.GetReference());
-            ls.LuaPushNil();
-            ls.LuaSetField(-2, GAMEOBJECT_LUABINDER);
             luaObj.Dispose();
             luaObj = null;
             GameObject.Destroy(gameObject);
         }
-        private int vvv(IntPtr L)
+        private static int DestroyFromLua(IntPtr L)
         {
             try
             {
-                BTLog.Error("cs call vvv");
+//                BTLog.Error("cs call vvv");
                 ToLua.CheckArgsCount(L, 1);
-                BTLog.Error("cs call vvv1");
-//                LuaDLL.lua_getfield(L, -1, GAMEOBJECT_LUABINDER);
-//                var obj = ToLua.ToVarObject(L, -1);
-//                BTLog.Error("cs call vvv2:{0}", obj);
-//                var ob = ToLua.ToVarObject(L, -1) as DocumentClass;
-//                BTLog.Error("cs call vvv3");
-//                LuaDLL.lua_pop(L, 1);
-//                BTLog.Error("cs call vvv4");
-//                LuaDLL.lua_pushnil(L);
-//                BTLog.Error("cs call vvv5");
-//                LuaDLL.lua_setfield(L, -1, GAMEOBJECT_LUABINDER);
-//                BTLog.Error("cs call vvv6");
-//                LuaDLL.lua_pop(L, 1);
-//                BTLog.Error("cs call vvv7");
-//                var luaObj = ob.luaObj;
-//                BTLog.Error("cs call vvv8");
-//                luaObj.Dispose();
-//                BTLog.Error("cs call vvv9");
-//                ob.luaObj = null;
-//                BTLog.Error("cs call vvv10");
-//                GameObject.Destroy(ob.gameObject);
-//                BTLog.Error("cs call vvv11");
-//                LuaDLL.lua_settop(L, 0);
-//                BTLog.Error("cs call vvv12");
+//                BTLog.Error("cs call vvv1 top:{0}", LuaDLL.lua_gettop(L));
+                LuaDLL.lua_pushnil(L);
+                LuaDLL.lua_setfield(L, -2, "DestroyToCS");
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                binder.CSDestroy();
                 return 0;
             }
             catch (Exception e)

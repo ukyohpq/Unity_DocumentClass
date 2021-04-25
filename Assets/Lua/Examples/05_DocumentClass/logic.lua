@@ -24,9 +24,9 @@ function logic_05:onClick(evt)
     self.numClick = self.numClick + 1
     self.ui.m_Doc.m_Text.text = "total click" .. self.numClick
     LogUtil.LogError("target:%s", evt.target.__cname)
-    --local ui = self.ui
-    --self.ui = nil
-    --ui:Destroy()
+    local ui = self.ui
+    self.ui = nil
+    ui:Destroy()
 end
 
 return logic_05

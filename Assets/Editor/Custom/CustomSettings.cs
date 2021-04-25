@@ -156,7 +156,6 @@ public static class CustomSettings
         
         _GT(typeof(Babeltime.Log.BTLog)),
         _GT(typeof(Framework.core.CSBridge)),
-        _GT(typeof(GameObjectLuaBinder)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
