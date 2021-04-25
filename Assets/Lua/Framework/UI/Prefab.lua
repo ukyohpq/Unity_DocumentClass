@@ -44,7 +44,7 @@ end
 ---@param evt Framework.event.Event
 function Prefab:OnComplete(evt)
     self.status = 2
-    LogUtil.LogError("___GameObjectLuaBinder___:%s", self.___GameObjectLuaBinder___)
+    LogUtil.LogError("OnComplete:%s", self:getName())
 end
 
 function Prefab:StartLogic()

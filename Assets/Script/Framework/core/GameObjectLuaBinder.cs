@@ -34,29 +34,24 @@ namespace Framework.core
         protected void BindLuaTable(LuaTable value)
         {
             luaObj = value;
-            BTLog.Error("SetLuaTable2:{0}", luaObj == null);
-            
             var ls = value.GetLuaState();
             var luaRef = value.GetReference();
             if (value != null)
             {
                 ls.LuaGetRef(luaRef);
+//                luaObj.DestroyToCS = this.DestroyToCS
                 ls.LuaPushFunction(DestroyFromLua);
                 ls.LuaSetField(-2, "DestroyToCS");
+//                luaObj.name = this.name;
+                ls.LuaPushString(name);
+                ls.LuaSetField(-2, "name");
 
+//                registry[luaObj] = this;
                 ls.LuaPushValue(-1);
                 ls.PushVariant(this);
                 ls.LuaSetTable(LuaIndexes.LUA_REGISTRYINDEX);
                 
-                
-                ls.LuaPushValue(-1);
-                var obj = ls.ToVariant(-1);
-                BTLog.Error("obj==================:{0}", obj);
-                ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
-                var obj2 = ls.ToVariant(-1);
-                BTLog.Error("obj2=================:{0}", obj2);
-                ls.LuaPop(1);
-                
+//                luaObj:DispatchMessage("OnBind")
                 var curTop = ls.LuaGetTop();
                 ls.LuaGetField(-1, "DispatchMessage");
                 if (ls.LuaIsNil(-1))
@@ -72,49 +67,31 @@ namespace Framework.core
             {
 
             }
-            
         }
-
-//        public static int vvv(IntPtr L)
-//        {
-//            return 0;
-//        }
 
         protected void OnDestroy()
         {
-            BTLog.Error("OnDestroy:{0}", name);
             if (luaObj == null)
             {
                 return;
             }
-            BTLog.Error("Do OnDestroy:{0}", name);
+//            luaObj:Destroy()
             var ls = luaObj.GetLuaState();
             var curTop = ls.LuaGetTop();
             var luaObjRef = luaObj.GetReference();
             ls.LuaGetRef(luaObjRef);
-            ls.LuaGetRef(luaObjRef); 
+            ls.LuaPushValue(-1); 
             ls.LuaGetField(-1, DESTROY);
             if (ls.LuaIsNil(-1))
             {
                 ls.LuaSetTop(curTop);
                 return;
             }
-
-            if (ls.lua_isboolean(-1))
-            {
-                BTLog.Error("is bool");
-            }
+            
             ls.LuaInsert(-2);
             ls.LuaSafeCall(1, 0, 0, 0);
         }
-
-        private void CSDestroy()
-        {
-            BTLog.Error("CSDestroy:{0}", name);
-            luaObj.Dispose();
-            luaObj = null;
-            GameObject.Destroy(gameObject);
-        }
+        
         private static int DestroyFromLua(IntPtr L)
         {
             try
@@ -126,7 +103,10 @@ namespace Framework.core
                 LuaDLL.lua_setfield(L, -2, "DestroyToCS");
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
                 var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
-                binder.CSDestroy();
+                binder.luaObj.Dispose();
+                binder.luaObj = null;
+//                BTLog.Error("DestroyFromLua:{0}", binder.name);
+                GameObject.Destroy(binder.gameObject);
                 return 0;
             }
             catch (Exception e)
@@ -142,7 +122,7 @@ namespace Framework.core
 
         public virtual void CreatePrefabAndBindLuaClass(LuaState luaState)
         {
-            BTLog.Error("CreatePrefabAndBindLuaClass");
+            BTLog.Debug("CreatePrefabAndBindLuaClass");
         }
     }
 }

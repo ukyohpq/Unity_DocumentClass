@@ -85,17 +85,9 @@ public class MainGame : MonoBehaviour
         luaState.AddSearchPath(LuaConst.luaDir);
         luaState.AddSearchPath(LuaConst.toluaDir);
         luaState.DoFile("Framework\\Main.lua");
-        
-        luaState.LuaPushFunction(xxxxxx);
-        luaState.LuaSetGlobal("xxxxxx");
         CallMain();
     }
     
-    private int xxxxxx(IntPtr luaState)
-    {
-        BTLog.Error("this is xxxxxx");
-        return 1;
-    }
     protected virtual void CallMain()
     {
         luaState.LuaGetGlobal("Main");

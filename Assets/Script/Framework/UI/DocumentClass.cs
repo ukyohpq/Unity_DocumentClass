@@ -16,10 +16,18 @@ namespace Framework.UI
         {
             BindLuaTable(value);
             var luaState = value.GetLuaState();
+#if UNITY_EDITOR
+            var oldTop = luaState.LuaGetTop();
+#endif
             luaState.LuaGetRef(value.GetReference());
-            BTLog.Error("SetLuaTable top:{0}", value.GetLuaState().LuaGetTop());
             BindLuaClass(luaState);
-            BTLog.Error("after bindluaclass:{0}", luaState.LuaGetTop());
+#if UNITY_EDITOR
+            var curTop = luaState.LuaGetTop();
+            if (curTop != oldTop)
+            {
+                BTLog.Error("stack is unbalanced oldTop:{0} curTop:{1}", oldTop, curTop);
+            }
+#endif
         }
 
         public string GetLuaClassName()
@@ -55,7 +63,6 @@ namespace Framework.UI
             var numChildren = trans.childCount;
             for (int i = 0; i < numChildren; i++)
             {
-                BTLog.Error("topIndex:{0}", topIdx);
                 var child = trans.GetChild(i);
                 var childName = child.name;
                 if (childName == "") continue;
@@ -82,8 +89,6 @@ namespace Framework.UI
                             childBtn = child.gameObject.AddComponent<Button>();
                         }
 
-                        var obj = luaState.ToVariant(topIdx);
-                        BTLog.Error("obj:{0}", obj);
                         childBtn.CreatePrefabAndBindLuaClass(luaState);
                         luaState.LuaSetField(topIdx, childName);
                         break;
