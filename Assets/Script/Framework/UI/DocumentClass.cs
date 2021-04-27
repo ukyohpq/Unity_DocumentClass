@@ -136,11 +136,6 @@ namespace Framework.UI
         {
             base.OnDestroy();
         }
-
-        private int EmptyLuaFunc(IntPtr L)
-        {
-            return 0;
-        }
     }
 }
 
