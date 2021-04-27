@@ -122,42 +122,7 @@ namespace Framework.UI
         public override void CreatePrefabAndBindLuaClass(LuaState luaState)
         {
             base.CreatePrefabAndBindLuaClass(luaState);
-            var curTop = luaState.LuaGetTop();
-            var className = Utils.MakeClassName(LuaClass);
-            luaState.LuaGetGlobal(className);
-            if (luaState.LuaIsNil(-1))
-            {
-                luaState.LuaSetTop(curTop);
-                BTLog.Error("can not find lua class:{0}", LuaClass);
-                return;
-            }
-            
-//            从cs中创建的prefab对象不需要LoadResource，故这里将LoadResource重置
-            luaState.LuaPushFunction(EmptyLuaFunc);
-            luaState.LuaSetField(-2, "bind");
-            luaState.LuaGetField(-1, "New");
-            if (luaState.LuaIsNil(-1))
-            {
-                luaState.LuaSetTop(curTop);
-                BTLog.Error("can not find constructor for lua class:{0}", LuaClass);
-                return;
-            }
-            
-            luaState.LuaSafeCall(0, 1, 0, curTop);
-
-//            将实例和类换一下位置，这里需要将class上的LoadResource抹掉
-            luaState.LuaInsert(-2);
-            luaState.LuaPushNil();
-            luaState.LuaSetField(-2, "bind");
-//          删除luaclass
-            luaState.LuaRemove(-1);
-            
-//            将实例的bind修改为afterBind
-//            luaState.LuaGetField(-1, "afterBind");
-//            luaState.LuaSetField(-2, "bind");
-            
-            var prefab = luaState.ToVariant(-1) as LuaTable;
-            BindLuaTable(prefab);
+            PushLuaInstance(luaState, Utils.MakeClassName(LuaClass));
             BindLuaClass(luaState);
         }
 

@@ -120,9 +120,47 @@ namespace Framework.core
             return luaObj.GetLuaState();
         }
 
+        protected void PushLuaInstance(LuaState luaState, string className)
+        {
+            var curTop = luaState.LuaGetTop();
+            luaState.LuaGetGlobal(className);
+            if (luaState.LuaIsNil(-1))
+            {
+                luaState.LuaSetTop(curTop);
+                BTLog.Error("can not find lua class:{0}", className);
+                return;
+            }
+            
+//            从cs中创建的prefab对象不需要LoadResource，故这里将LoadResource重置
+            luaState.LuaPushFunction(EmptyLuaFunc);
+            luaState.LuaSetField(-2, "bind");
+            luaState.LuaGetField(-1, "New");
+            if (luaState.LuaIsNil(-1))
+            {
+                luaState.LuaSetTop(curTop);
+                BTLog.Error("can not find constructor for lua class:{0}", className);
+                return;
+            }
+            
+            luaState.LuaSafeCall(0, 1, 0, curTop);
+
+//            将实例和类换一下位置，这里需要将class上的LoadResource抹掉
+            luaState.LuaInsert(-2);
+            luaState.LuaPushNil();
+            luaState.LuaSetField(-2, "bind");
+//          删除luaclass
+            luaState.LuaRemove(-1);
+            var tb = luaState.ToVariant(-1) as LuaTable;
+            BindLuaTable(tb);
+        }
         public virtual void CreatePrefabAndBindLuaClass(LuaState luaState)
         {
             BTLog.Debug("CreatePrefabAndBindLuaClass");
+        }
+
+        private static int EmptyLuaFunc(IntPtr L)
+        {
+            return 0;
         }
     }
 }
