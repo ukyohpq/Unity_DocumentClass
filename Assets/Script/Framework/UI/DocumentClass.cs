@@ -134,7 +134,7 @@ namespace Framework.UI
             
 //            从cs中创建的prefab对象不需要LoadResource，故这里将LoadResource重置
             luaState.LuaPushFunction(EmptyLuaFunc);
-            luaState.LuaSetField(-2, "LoadResource");
+            luaState.LuaSetField(-2, "bind");
             luaState.LuaGetField(-1, "New");
             if (luaState.LuaIsNil(-1))
             {
@@ -148,13 +148,13 @@ namespace Framework.UI
 //            将实例和类换一下位置，这里需要将class上的LoadResource抹掉
             luaState.LuaInsert(-2);
             luaState.LuaPushNil();
-            luaState.LuaSetField(-2, "LoadResource");
+            luaState.LuaSetField(-2, "bind");
 //          删除luaclass
             luaState.LuaRemove(-1);
             
-//            将实例的LoadResource修改为LoadResourced
-            luaState.LuaGetField(-1, "LoadResourced");
-            luaState.LuaSetField(-2, "LoadResource");
+//            将实例的bind修改为afterBind
+//            luaState.LuaGetField(-1, "afterBind");
+//            luaState.LuaSetField(-2, "bind");
             
             var prefab = luaState.ToVariant(-1) as LuaTable;
             BindLuaTable(prefab);

@@ -1,14 +1,16 @@
 ﻿---@type MainLogic
 local mainLogic
 
-local function requireLua(isEditor)
+function requireLua(isEditor)
 	--log一定要放在第一个require
 	require("Framework.Log")
 	require("Framework.class")
-	require("Framework.UI.Button")
 	if isEditor then
 		require("Framework.NewClassForLuaHotFix")
 	end
+	--require顺序不要改变，HotFix要位于所有class前
+	require("Framework.UI.Button")
+	require("Framework.UI.Prefab")
 end
 
 --主入口函数。从这里开始lua逻辑

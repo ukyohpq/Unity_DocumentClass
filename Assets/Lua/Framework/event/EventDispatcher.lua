@@ -5,7 +5,7 @@ local emptyCaller = {}
 
 
 ---@class Framework.event.EventDispatcher
----@field private nameMap
+---@field private nameMap table<string, table<Framework.event.EventDispatcher, table<function, number>>>
 EventDispatcher = class("Framework.event.EventDispatcher")
 
 function EventDispatcher:ctor()

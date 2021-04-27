@@ -155,7 +155,6 @@ public static class CustomSettings
         _GT(typeof(LuaProfiler)),
         
         _GT(typeof(Babeltime.Log.BTLog)),
-        _GT(typeof(Framework.core.CSBridge)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

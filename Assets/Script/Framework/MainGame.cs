@@ -36,7 +36,7 @@ public class MainGame : MonoBehaviour
         luaState = new LuaState();
         OpenLibs();
         luaState.LuaSetTop(0);
-        Bind();        
+        Bind();
         LoadLuaFiles();
 #if UNITY_EDITOR && !LOADFROM_BUNDLE
         BTLog.Debug("open HotFixLua");
@@ -57,38 +57,58 @@ public class MainGame : MonoBehaviour
 
         if (LuaConst.openLuaSocket)
         {
-            OpenLuaSocket();            
-        }        
+            OpenLuaSocket();
+        }
 
         if (LuaConst.openLuaDebugger)
         {
             OpenZbsDebugger();
         }
-        
+
     }
-    
+
     protected virtual void Bind()
-    {        
+    {
         LuaBinder.Bind(luaState);
-        DelegateFactory.Init();   
-        LuaCoroutine.Register(luaState, this);        
+        DelegateFactory.Init();
+        LuaCoroutine.Register(luaState, this);
     }
-    
+
     protected virtual void LoadLuaFiles()
     {
         luaState.Start();
         StartMain();
     }
-    
+
     protected virtual void StartMain()
     {
         luaState.AddSearchPath(LuaConst.luaDir);
         luaState.AddSearchPath(LuaConst.toluaDir);
+        ;
         luaState.DoFile("Framework\\Main.lua");
+        RequireBaseFiles();
+        CLBinderFactory.MakeCLBinder(luaState);
         CallMain();
     }
-    
-    protected virtual void CallMain()
+
+    private void RequireBaseFiles()
+    {
+        luaState.LuaGetGlobal("requireLua");
+        if (luaState.LuaIsNil(-1))
+        {
+            BTLog.Error("can not find lua requireLua function");
+            luaState.LuaPop(1);
+            return;
+        }
+#if UNITY_EDITOR
+        luaState.LuaPushBoolean(true);
+#else
+        luaState.LuaPushBoolean(false);
+#endif
+        luaState.LuaSafeCall(1, 0, 0, 0);
+    }
+
+protected virtual void CallMain()
     {
         luaState.LuaGetGlobal("Main");
         if (luaState.LuaIsNil(-1))
@@ -191,7 +211,7 @@ public class MainGame : MonoBehaviour
         luaState.LuaPushNumber(Time.fixedUnscaledTime);
         luaState.LuaSafeCall(3, 0, 0, 0);
     }
-
+    
     private void CreateUIStage()
     {
         uiRoot = GameObject.Find("UIRoot");

@@ -88,7 +88,6 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("Framework");
 		L.BeginModule("core");
-		Framework_core_CSBridgeWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("System");

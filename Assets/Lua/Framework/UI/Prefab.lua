@@ -21,23 +21,11 @@ function Prefab:ctor()
     super.ctor(self)
     self.status = 0
     self:AddEventListener(Event.COMPLETE, self, self.OnComplete)
-    self:LoadResource()
+    --self:LoadResource()
 end
 
 function Prefab:start()
     self:StartLogic()
-end
-
----@private
-function Prefab:LoadResource()
-    self.status = 1
-    local path = self:GetAssetPath()
-    self.LoadResource = self.LoadResourced
-    Framework.core.CSBridge.LoadPrefab(path, self)
-end
-
-function Prefab:LoadResourced()
-    error("LoadResource can be called only once")
 end
 
 ---OnComplete
