@@ -50,6 +50,9 @@ function EventDispatcher:HasEventHandler(eventName, caller)
 end
 
 function EventDispatcher:AddEventListener(eventName, caller, handler)
+    if handler == nil then
+        return
+    end
     local callerMap = self.nameMap[eventName]
     if callerMap == nil then
         callerMap = {}
@@ -68,6 +71,9 @@ function EventDispatcher:AddEventListener(eventName, caller, handler)
 end
 
 function EventDispatcher:RemoveEventListener(eventName, caller, handler)
+    if handler == nil then
+        return
+    end
     local callerMap = self.nameMap[eventName]
     if callerMap == nil then
         return

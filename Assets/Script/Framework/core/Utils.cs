@@ -25,7 +25,7 @@ namespace Framework.core
                 case ComponentSuffix.Button:
                     return typeof(Framework.UI.Button);
                 case ComponentSuffix.Image:
-                    return typeof(Image);
+                    return typeof(Framework.UI.Image);
                 default:
                     BTLog.Warning("未定义的后缀名");
                     return null;
