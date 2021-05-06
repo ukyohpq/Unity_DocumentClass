@@ -1,6 +1,6 @@
 ## unity_documentclass
 一、实现基于unity的文档类功能
-基于tolua和emmylua，一种类似as3文档类的实现。
+基于tolua和emmylua，一种可扩展的c#对象(主要是prefab)的绑定方式。
 对一个prefab添加脚本组件:DocumentClass，并指定其类名，有两种方式可以将prefab和lua类联系起来：
 1.代码创建即可在lua中通过实例化该类，得到该prefab的一个实例。
 2.直接拖放prefab到hierarchy上，会自动创建一个对应的lua类型的实例，且该实例和prefab相关联。
