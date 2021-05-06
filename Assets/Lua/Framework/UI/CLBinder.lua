@@ -11,6 +11,7 @@ function CLBinder:ctor()
 end
 
 function CLBinder:Destroy()
+    self:RemoveAllEventListeners()
     LogUtil.LogError("try CSDestroy:%s", self:getName())
     self.isDestroyed = true
     if self.DestroyToCS then

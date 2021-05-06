@@ -48,6 +48,26 @@ namespace Framework.core
                 LuaDLL.lua_pop(L, 1);
                 LuaDLL.lua_getfield(L, -1, "afterBind");
                 LuaDLL.lua_setfield(L, -2, "bind");
+                
+                LuaDLL.lua_pushcfunction(L, DestroyFromLua);
+                LuaDLL.lua_setfield(L, -2, "DestroyToCS");
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+
+        private static int DestroyFromLua(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushnil(L);
+                LuaDLL.lua_setfield(L, -2, "DestroyToCS");
+                var tb = ToLua.ToLuaTable(L, -1);
+                CSBridge.StopLoadPrefab(tb);
                 return 0;
             }
             catch (Exception e)

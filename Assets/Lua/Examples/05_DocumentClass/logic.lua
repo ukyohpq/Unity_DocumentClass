@@ -10,6 +10,8 @@ function logic_05:ctor()
     self.numClick = 0
     self.ui = UI_05.New()
     self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
+    --self.ui:Destroy()
+    --self.ui = null
 end
 
 ---onComplete
@@ -24,9 +26,10 @@ function logic_05:onClick(evt)
     self.numClick = self.numClick + 1
     self.ui.m_Doc.m_Text.text = "total click" .. self.numClick
     LogUtil.LogError("target:%s", evt.target.__cname)
-    local ui = self.ui
-    self.ui = nil
-    ui:Destroy()
+    --self.ui:bind()
+    --local ui = self.ui
+    --self.ui = nil
+    --ui:Destroy()
 end
 
 return logic_05

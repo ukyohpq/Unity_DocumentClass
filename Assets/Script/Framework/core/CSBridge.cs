@@ -17,6 +17,19 @@ namespace Framework.core
             loaderContexts.Add(new LoaderContext(path, luaTable));
         }
 
+        public static void StopLoadPrefab(LuaTable lb)
+        {
+            if (loaderContexts.Count == 0) return;
+            foreach (var lc in loaderContexts)
+            {
+                if (lc.LuaTb == lb)
+                {
+                    loaderContexts.Remove(lc);
+                    return;
+                }
+            }
+        }
+        
         [NoToLua]
         public static void LoadAsset()
         {

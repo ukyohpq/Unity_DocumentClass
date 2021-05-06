@@ -8,7 +8,6 @@ namespace Framework.core
     public class GameObjectLuaBinder:MonoBehaviour
     {
         private const string DESTROY = "Destroy";
-        private const string GAMEOBJECT_LUABINDER = "___GameObjectLuaBinder___";
         private LuaTable luaObj;
 
         protected bool hasLuaObj()
