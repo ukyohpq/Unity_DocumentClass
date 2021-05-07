@@ -10,7 +10,8 @@
 local super = require("Framework.UI.Prefab")
 
 ---@class Examples.06_Image.UI_06:Framework.UI.Prefab
----@field m_Image UnityEngine.UI.Image
+---@field m_Image Framework.UI.Image
+---@field m_Button Framework.UI.Button
 UI_06 = class("Examples.06_Image.UI_06", super)
 
 function UI_06:GetAssetPath()

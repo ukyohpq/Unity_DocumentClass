@@ -11,6 +11,7 @@ function requireLua(isEditor)
 	--require顺序不要改变，HotFix要位于所有class前
 	require("Framework.UI.Button")
 	require("Framework.UI.Prefab")
+	require("Framework.UI.Image")
 end
 
 --主入口函数。从这里开始lua逻辑

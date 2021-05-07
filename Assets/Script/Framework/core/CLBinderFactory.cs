@@ -1,5 +1,6 @@
 using System;
 using Babeltime.Log;
+using Framework.core.loader;
 using LuaInterface;
 
 namespace Framework.core
@@ -37,15 +38,9 @@ namespace Framework.core
 //                self, bind, self,
                 LuaDLL.lua_call(L, 1, 0);
                 
-                LuaDLL.lua_pushvalue(L, -1);
-                LuaDLL.lua_getfield(L, -1, "GetAssetPath");
-                LuaDLL.lua_insert(L, -2);
-                LuaDLL.lua_call(L, 1, 1);
-                var tb = ToLua.ToLuaTable(L, -2);
-                var path = LuaDLL.lua_tostring(L, -1);
-                CSBridge.LoadPrefab(path, tb);
+                var tb = ToLua.ToLuaTable(L, -1);
+                CSBridge.LoadPrefab(tb);
                 
-                LuaDLL.lua_pop(L, 1);
                 LuaDLL.lua_getfield(L, -1, "afterBind");
                 LuaDLL.lua_setfield(L, -2, "bind");
                 
@@ -67,7 +62,7 @@ namespace Framework.core
                 LuaDLL.lua_pushnil(L);
                 LuaDLL.lua_setfield(L, -2, "DestroyToCS");
                 var tb = ToLua.ToLuaTable(L, -1);
-                CSBridge.StopLoadPrefab(tb);
+                CSBridge.StopLoad(tb);
                 return 0;
             }
             catch (Exception e)

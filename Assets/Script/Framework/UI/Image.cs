@@ -11,6 +11,7 @@ namespace Framework.UI
             base.CreatePrefabAndBindLuaClass(luaState);
             PushLuaInstance(luaState, "Image");
             luaState.LuaPushFunction(SetImage);
+            luaState.LuaSetField(-2, "SetImage");
         }
 
         private static int SetImage(IntPtr L)
@@ -22,6 +23,8 @@ namespace Framework.UI
                     case 2:
 //                        通过路径加载
                         var path = LuaDLL.lua_tostring(L, -1);
+                        var tb = ToLua.ToVarObject(L, -2) as LuaTable;
+                        CSBridge.LoadImage(tb, path);
                         break;
                     case 3:
 //                        通过图集加载

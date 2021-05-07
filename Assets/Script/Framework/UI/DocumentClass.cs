@@ -92,6 +92,16 @@ namespace Framework.UI
                         childBtn.CreatePrefabAndBindLuaClass(luaState);
                         luaState.LuaSetField(topIdx, childName);
                         break;
+                    case "_Image":
+                        var childImage = child.GetComponent<Image>();
+                        if (childImage == null)
+                        {
+                            childImage = child.gameObject.AddComponent<Image>();
+                        }
+
+                        childImage.CreatePrefabAndBindLuaClass(luaState);
+                        luaState.LuaSetField(topIdx, childName);
+                        break;
                     default:
                         BindFieldsOnTrans(child, luaState, topIdx);
                         var T = Utils.GetTypeByComponentSuffix(suffix);

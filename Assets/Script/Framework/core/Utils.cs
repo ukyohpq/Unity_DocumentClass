@@ -41,7 +41,7 @@ namespace Framework.core
                 case ComponentSuffix.Button:
                     return "Framework.UI.Button";
                 case ComponentSuffix.Image:
-                    return "UnityEngine.UI.Image";
+                    return "Framework.UI.Image";
                 case ComponentSuffix.Doc:
                     var doc = trans.GetComponent<DocumentClass>();
                     if (doc == null)
