@@ -76,8 +76,14 @@ namespace Framework.Editor
             var fileName = getFilePathByClassName(classFullName);
             if (File.Exists(fileName))
             {
-//                TODO 需要弹出对话框提示用户目标文件已经存在，是否覆盖。目前静默覆盖
-                File.Delete(fileName);
+                if(EditorUtility.DisplayDialog("警告!", "源文件已经存在，点击确定将进行覆盖", "覆盖", "放弃"))
+                {
+                    File.Delete(fileName);
+                }
+                else
+                {
+                    return;
+                }
             }
 
             var head = @"------------------------------------------------------------------------------------------
