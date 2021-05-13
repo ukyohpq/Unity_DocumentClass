@@ -17,19 +17,20 @@ end
 ---onComplete
 ---@param evt Framework.event.Event
 function logic_05:onComplete(evt)
-    self.ui.m_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
 end
 
 ---onClick
 ---@param evt Framework.event.Event
 function logic_05:onClick(evt)
-    self.numClick = self.numClick + 1
-    self.ui.m_Doc.m_Text.text = "total click" .. self.numClick
-    LogUtil.LogError("target:%s", evt.target.__cname)
-    --self.ui:bind()
-    --local ui = self.ui
-    --self.ui = nil
-    --ui:Destroy()
+    ---@type Framework.UI.Button
+    local btn = evt.target
+    if btn == self.ui.m1_Doc.m_Button then
+        LogUtil.LogError("click 1")
+    elseif btn == self.ui.m2_Doc.m_Button then
+        LogUtil.LogError("click 2")
+    end
 end
 
 return logic_05
