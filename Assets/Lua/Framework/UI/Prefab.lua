@@ -12,8 +12,8 @@
 --- 5.gameobject在移除的时候，需要通过DocumentClass去调用Prefab:DestroyFromCS()
 
 
-local super = require("Framework.UI.CLBinder")
----@class Framework.UI.Prefab:Framework.UI.CLBinder
+local super = require("Framework.Display.DisplayObject")
+---@class Framework.UI.Prefab:Framework.Display.DisplayObject
 ---@field private status number
 Prefab = class("Framework.UI.Prefab", super)
 
@@ -32,7 +32,7 @@ end
 ---@param evt Framework.event.Event
 function Prefab:OnComplete(evt)
     self.status = 2
-    LogUtil.LogError("OnComplete:%s", self:getName())
+    LogUtil.LogError("OnComplete:%s", self:GetName())
 end
 
 function Prefab:StartLogic()

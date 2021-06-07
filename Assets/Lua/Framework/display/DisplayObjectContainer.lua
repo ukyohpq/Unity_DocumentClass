@@ -27,7 +27,7 @@ function DisplayObjectContainer:GetChildAt(index)
 end
 
 function DisplayObjectContainer:GetChildByName(name)
-    
+    --TODO
 end
 
 function DisplayObjectContainer:RemoveChild(child)

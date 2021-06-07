@@ -1,8 +1,7 @@
 using System;
 using Babeltime.Log;
-using Framework.UI;
+using Framework.LuaUI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Framework.core
 {
@@ -23,9 +22,9 @@ namespace Framework.core
                 case ComponentSuffix.Text:
                     return typeof(UnityEngine.UI.Text);
                 case ComponentSuffix.Button:
-                    return typeof(Framework.UI.Button);
+                    return typeof(LuaButton);
                 case ComponentSuffix.Image:
-                    return typeof(Framework.UI.Image);
+                    return typeof(LuaImage);
                 default:
                     BTLog.Warning("未定义的后缀名");
                     return null;

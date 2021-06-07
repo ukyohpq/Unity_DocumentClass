@@ -4,7 +4,7 @@ using LuaInterface;
 using UnityEngine;
 using Framework.core;
 
-namespace Framework.UI
+namespace Framework.LuaUI
 {
     public class DocumentClass : GameObjectLuaBinder
     {
@@ -83,20 +83,20 @@ namespace Framework.UI
                         luaState.LuaSetField(topIdx, childName);
                         break;
                     case "_Button":
-                        var childBtn = child.GetComponent<Button>();
+                        var childBtn = child.GetComponent<LuaButton>();
                         if (childBtn == null)
                         {
-                            childBtn = child.gameObject.AddComponent<Button>();
+                            childBtn = child.gameObject.AddComponent<LuaButton>();
                         }
 
                         childBtn.CreatePrefabAndBindLuaClass(luaState);
                         luaState.LuaSetField(topIdx, childName);
                         break;
                     case "_Image":
-                        var childImage = child.GetComponent<Image>();
+                        var childImage = child.GetComponent<LuaImage>();
                         if (childImage == null)
                         {
-                            childImage = child.gameObject.AddComponent<Image>();
+                            childImage = child.gameObject.AddComponent<LuaImage>();
                         }
 
                         childImage.CreatePrefabAndBindLuaClass(luaState);

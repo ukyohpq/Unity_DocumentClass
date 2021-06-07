@@ -2,9 +2,9 @@ using System;
 using Framework.core;
 using LuaInterface;
 
-namespace Framework.UI
+namespace Framework.LuaUI
 {
-    public class Image:GameObjectLuaBinder
+    public class LuaImage:GameObjectLuaBinder
     {
         public override void CreatePrefabAndBindLuaClass(LuaState luaState)
         {

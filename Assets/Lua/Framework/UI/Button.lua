@@ -1,7 +1,6 @@
-local super = require("Framework.UI.CLBinder")
+local super = require("Framework.Display.DisplayObject")
 
-
----@class Framework.UI.Button:Framework.UI.CLBinder
+---@class Framework.UI.Button:Framework.Display.DisplayObject
 Button = class("Framework.UI.Button", super)
 
 return Button

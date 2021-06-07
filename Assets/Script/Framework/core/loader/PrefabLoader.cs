@@ -1,6 +1,6 @@
 using System;
 using Babeltime.Log;
-using Framework.UI;
+using Framework.LuaUI;
 using LuaInterface;
 using UnityEditor;
 using UnityEngine;

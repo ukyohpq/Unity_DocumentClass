@@ -6,9 +6,9 @@ using LuaInterface;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Framework.UI
+namespace Framework.LuaUI
 {
-    public class Button:GameObjectLuaBinder, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+    public class LuaButton:GameObjectLuaBinder, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
     {
         public void OnPointerClick(PointerEventData eventData)
         {

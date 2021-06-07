@@ -4,14 +4,10 @@ using System.IO;
 using System.Linq;
 using Babeltime.Log;
 using UnityEditor;
-using Framework;
-using Framework.UI;
 using UnityEngine;
-using System.Text;
 using Framework.core;
+using Framework.LuaUI;
 using UnityEditor.Experimental.SceneManagement;
-using UnityEngine.UI;
-using Button = Framework.UI.Button;
 
 namespace Framework.Editor
 {

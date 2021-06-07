@@ -1,9 +1,10 @@
 using System;
 using Babeltime.Log;
+using Framework.core;
 using Framework.core.loader;
 using LuaInterface;
 
-namespace Framework.core
+namespace Framework.LuaUI
 {
     public static class CLBinderFactory
     {
