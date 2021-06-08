@@ -1,6 +1,6 @@
-local super = require("Framework.Display.DisplayObject")
+local super = require("Framework.display.DisplayObject")
 
----@class Framework.UI.Image:Framework.Display.DisplayObject
+---@class Framework.UI.Image:Framework.display.DisplayObject
 Image = class("Framework.UI.Image", super)
 
 function Image:SetImage()

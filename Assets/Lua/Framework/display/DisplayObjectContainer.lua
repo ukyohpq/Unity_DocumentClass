@@ -1,21 +1,29 @@
-local super = require("Framwork.display.DisplayObject")
+local super = require("Framework.display.DisplayObject")
 
 ---@class Framework.display.DisplayObjectContainer:Framework.display.DisplayObject
 ---@field private children Framework.display.DisplayObject[]
 DisplayObjectContainer = class("Framework.display.DisplayObjectContainer", super)
 
 function DisplayObjectContainer:ctor()
+    super.ctor(self)
     self.children = {}
 end
 
 ---AddChild
 ---@param child Framework.display.DisplayObject
 function DisplayObjectContainer:AddChild(child)
+    child.parent = self
     table.insert(self.children, child)
+    return child
 end
 
+---AddChildAt
+---@param child Framework.display.DisplayObject
+---@param index number
 function DisplayObjectContainer:AddChildAt(child, index)
+    child.parent = self
     table.insert(self.children, index, child)
+    return child
 end
 
 function DisplayObjectContainer:GetNumChildren()

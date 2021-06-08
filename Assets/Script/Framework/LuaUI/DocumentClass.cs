@@ -8,6 +8,71 @@ namespace Framework.LuaUI
 {
     public class DocumentClass : GameObjectLuaBinder
     {
+        public static void Extend(LuaState ls)
+        {
+            ls.LuaGetGlobal("Prefab");
+            if (ls.LuaIsNil(-1))
+            {
+                ls.LuaPop(1);
+                throw new Exception("can not find lua Class: Prefab");
+            }
+            ls.LuaPushFunction(PrefabBind);
+            ls.LuaSetField(-2, "bind");
+            ls.LuaPop(1);
+        }
+
+        private static int PrefabBind(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+//                dup self
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_getglobal(L, "Prefab");
+                LuaDLL.lua_getfield(L, -1, "super");
+//                Prefab.super:bind(self)
+                LuaDLL.lua_getfield(L, -1, "bind");
+//                self, self, Prefab, super, bind
+                LuaDLL.lua_insert(L, -4);
+//                self, bind, self, Prefab, super
+                LuaDLL.lua_pop(L, 2);
+//                self, bind, self,
+                LuaDLL.lua_call(L, 1, 0);
+                
+                var tb = ToLua.ToLuaTable(L, -1);
+                CSBridge.LoadPrefab(tb);
+                
+                LuaDLL.lua_getfield(L, -1, "afterBind");
+                LuaDLL.lua_setfield(L, -2, "bind");
+                
+                LuaDLL.lua_pushcfunction(L, DestroyFromLua);
+                LuaDLL.lua_setfield(L, -2, "DestroyToCS");
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+
+        private static int DestroyFromLua(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushnil(L);
+                LuaDLL.lua_setfield(L, -2, "DestroyToCS");
+                var tb = ToLua.ToLuaTable(L, -1);
+                CSBridge.StopLoad(tb);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+        
+        
         [SerializeField]
         private string LuaClass = "";
         
@@ -79,7 +144,18 @@ namespace Framework.LuaUI
                     case "_Doc":
                         var childDoc = child.GetComponent<DocumentClass>();
                         childDoc.CreatePrefabAndBindLuaClass(luaState);
+//                        parent child
                         childDoc.PushLuaTable();
+//                        parent child parent
+                        luaState.LuaPushValue(-2);
+//                        parent child parent AddChild
+                        luaState.LuaGetField(-1, "AddChild");
+//                        parent AddChild child parent
+                        luaState.LuaInsert(-3);
+//                        parent AddChild parent child
+                        luaState.LuaInsert(-2);
+//                        parent child
+                        luaState.LuaSafeCall(2, 1, 0, 0);
                         luaState.LuaSetField(topIdx, childName);
                         break;
                     case "_Button":
@@ -90,6 +166,11 @@ namespace Framework.LuaUI
                         }
 
                         childBtn.CreatePrefabAndBindLuaClass(luaState);
+                        luaState.LuaPushValue(-2);
+                        luaState.LuaGetField(-1, "AddChild");
+                        luaState.LuaInsert(-3);
+                        luaState.LuaInsert(-2);
+                        luaState.LuaSafeCall(2, 1, 0, 0);
                         luaState.LuaSetField(topIdx, childName);
                         break;
                     case "_Image":
@@ -100,10 +181,14 @@ namespace Framework.LuaUI
                         }
 
                         childImage.CreatePrefabAndBindLuaClass(luaState);
+                        luaState.LuaPushValue(-2);
+                        luaState.LuaGetField(-1, "AddChild");
+                        luaState.LuaInsert(-3);
+                        luaState.LuaInsert(-2);
+                        luaState.LuaSafeCall(2, 1, 0, 0);
                         luaState.LuaSetField(topIdx, childName);
                         break;
                     default:
-                        BindFieldsOnTrans(child, luaState, topIdx);
                         var T = Utils.GetTypeByComponentSuffix(suffix);
                         if (T == null) continue;
                         luaState.PushVariant(child.GetComponent(T));
@@ -115,6 +200,7 @@ namespace Framework.LuaUI
 
             }
         }
+        
 //        TODO 目前暂时确定父类一定是Framework.UI.Prefab类，不使用自定义父类，因为检测自定义父类是从Framework.UI.Prefab继承而来，比较麻烦，而且考虑使用状态而不是继承来重用Prefab
 //        [SerializeField]
 //        private string SuperClass = "";
@@ -146,6 +232,8 @@ namespace Framework.LuaUI
         {
             base.OnDestroy();
         }
+        
+        
     }
 }
 

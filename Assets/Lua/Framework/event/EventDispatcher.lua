@@ -15,6 +15,9 @@ end
 ---DispatchEvent
 ---@param evt Framework.event.Event
 function EventDispatcher:DispatchEvent(evt)
+    if evt.target == nil then
+        evt:SetTarget(self)
+    end
     evt:SetCurrentTarget(self)
     local eventName = evt:GetEventName()
     local callerMap = self.nameMap[eventName]
@@ -35,7 +38,6 @@ end
 
 function EventDispatcher:DispatchMessage(eventName, ...)
     local evt = Event.New(eventName)
-    evt:SetTarget(self)
     evt.data = {...}
     self:DispatchEvent(evt)
 end

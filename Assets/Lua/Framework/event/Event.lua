@@ -3,6 +3,7 @@
 ---@field private currentTarget
 ---@field private name string
 ---@field private data table
+---@field private isBubble boolean
 Event = class("Framework.event.Event")
 Event.COMPLETE = "COMPLETE"
 
@@ -36,4 +37,16 @@ end
 
 function Event:GetEventData()
     return self.data
+end
+
+function Event:StopBubble()
+    self.isBubble = false
+end
+
+function Event:IsBubble()
+    return self.isBubble
+end
+
+function Event:UseBubble()
+    self.isBubble = true
 end

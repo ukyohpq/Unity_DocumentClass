@@ -1,10 +1,10 @@
 local super = require("Framework.event.EventDispatcher")
 
----@class Framework.Display.DisplayObject:Framework.event.EventDispatcher
+---@class Framework.display.DisplayObject:Framework.event.EventDispatcher
 ---@field private isDestroyed boolean
 ---@field private name string
----@field parent Framework.display.DisplayObjectContainer
-DisplayObject = class("Framework.UI.DisplayObject", super)
+---@field private parent Framework.display.DisplayObjectContainer
+DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
     super.ctor(self)
@@ -41,6 +41,16 @@ end
 
 function DisplayObject:getIsDestroyed()
     return self.isDestroyed
+end
+
+function DisplayObject:DispatchEvent(evt)
+    if evt:GetTarget() == nil then
+        evt:UseBubble()
+    end
+    super.DispatchEvent(self, evt)
+    if evt:IsBubble() and self.parent then
+        self.parent:DispatchEvent(evt)
+    end
 end
 
 return DisplayObject

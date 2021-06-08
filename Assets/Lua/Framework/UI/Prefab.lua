@@ -12,8 +12,8 @@
 --- 5.gameobject在移除的时候，需要通过DocumentClass去调用Prefab:DestroyFromCS()
 
 
-local super = require("Framework.Display.DisplayObject")
----@class Framework.UI.Prefab:Framework.Display.DisplayObject
+local super = require("Framework.display.DisplayObjectContainer")
+---@class Framework.UI.Prefab:Framework.display.DisplayObjectContainer
 ---@field private status number
 Prefab = class("Framework.UI.Prefab", super)
 

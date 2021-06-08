@@ -88,7 +88,7 @@ public class MainGame : MonoBehaviour
         ;
         luaState.DoFile("Framework\\Main.lua");
         RequireBaseFiles();
-        CLBinderFactory.MakeCLBinder(luaState);
+        LuaUIManager.InitLuaUI(luaState);
         CallMain();
     }
 
