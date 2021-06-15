@@ -15,6 +15,7 @@ namespace Framework.core.loader
         }
         public override void Load()
         {
+            var ls = lt.GetLuaState();
             var fc = lt["GetAssetPath"] as LuaFunction;
             var path = fc.Invoke<string>();
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
@@ -25,8 +26,20 @@ namespace Framework.core.loader
             }
 
             var go = GameObject.Instantiate(prefab);
-            MainGame.Ins.AddChild2Stage(go);
-            
+            var parentLt = lt["parent"] as LuaTable;
+            if (parentLt == null)
+            {
+                MainGame.Ins.AddChild2Stage(go);
+            }
+            else
+            {
+                parentLt.Push();
+                ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
+                var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
+                go.transform.parent = parentGo.transform;
+                BTLog.Error("Load prefab and set parent:{0}", parentGo.name);
+            }
+
             go.transform.localPosition = Vector3.zero;
                 
             var docu = go.GetComponent<DocumentClass>();

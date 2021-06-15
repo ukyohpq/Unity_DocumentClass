@@ -12,17 +12,21 @@ end
 ---AddChild
 ---@param child Framework.display.DisplayObject
 function DisplayObjectContainer:AddChild(child)
-    child.parent = self
-    table.insert(self.children, child)
-    return child
+    return self:AddChildAt(child, #self.children)
 end
 
 ---AddChildAt
 ---@param child Framework.display.DisplayObject
 ---@param index number
 function DisplayObjectContainer:AddChildAt(child, index)
+    if self.children[index] == child then
+        return
+    end
     child.parent = self
     table.insert(self.children, index, child)
+    if self.AddChildExtend then
+        self:AddChildExtend(child)
+    end
     return child
 end
 
@@ -31,7 +35,7 @@ function DisplayObjectContainer:GetNumChildren()
 end
 
 function DisplayObjectContainer:GetChildAt(index)
-    return self.children[i]
+    return self.children[index]
 end
 
 function DisplayObjectContainer:GetChildByName(name)

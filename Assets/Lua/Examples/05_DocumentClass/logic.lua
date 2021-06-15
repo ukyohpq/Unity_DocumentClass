@@ -17,6 +17,8 @@ end
 ---onComplete
 ---@param evt Framework.event.Event
 function logic_05:onComplete(evt)
+    local doc = UI_Doc.New()
+    self.ui:AddChild(doc)
     self.ui:AddEventListener("click", self, self.onClick)
 end
 
