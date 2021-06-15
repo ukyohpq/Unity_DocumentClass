@@ -96,12 +96,15 @@ namespace Framework.core
 //                BTLog.Error("cs call vvv");
                 ToLua.CheckArgsCount(L, 1);
 //                BTLog.Error("cs call vvv1 top:{0}", LuaDLL.lua_gettop(L));
+                LuaDLL.lua_pushvalue(L, -1);
                 LuaDLL.lua_pushnil(L);
                 LuaDLL.lua_setfield(L, -2, "DestroyToCS");
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
                 var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
                 binder.luaObj.Dispose();
                 binder.luaObj = null;
+                LuaDLL.lua_pushnil(L);
+                LuaDLL.lua_settable(L, LuaIndexes.LUA_REGISTRYINDEX);
 //                BTLog.Error("DestroyFromLua:{0}", binder.name);
                 GameObject.Destroy(binder.gameObject);
                 return 0;
