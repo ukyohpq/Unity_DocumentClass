@@ -44,9 +44,6 @@ function DisplayObject:getIsDestroyed()
 end
 
 function DisplayObject:DispatchEvent(evt)
-    if evt:GetTarget() == nil then
-        evt:UseBubble()
-    end
     super.DispatchEvent(self, evt)
     if evt:IsBubble() and self.parent then
         self.parent:DispatchEvent(evt)

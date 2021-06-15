@@ -46,7 +46,3 @@ end
 function Event:IsBubble()
     return self.isBubble
 end
-
-function Event:UseBubble()
-    self.isBubble = true
-end

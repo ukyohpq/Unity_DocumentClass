@@ -29,9 +29,16 @@ namespace Framework.LuaUI
         {
             var ls = GetLuaState();
             PushLuaTable();
-            ls.LuaGetField(-1, "DispatchMessage");
+            ls.LuaGetField(-1, "DispatchEvent");
             ls.LuaInsert(-2);
+            ls.LuaGetGlobal("Event");
+            ls.LuaGetField(-1, "New");
             ls.LuaPushString(eventName);
+            ls.LuaSafeCall(1, 1, 0, 0);
+            ls.LuaInsert(-2);
+            ls.LuaPop(1);
+            ls.LuaPushBoolean(true);
+            ls.LuaSetField(-2, "isBubble");
             ls.LuaSafeCall(2, 0, 0, 0);
         }
         
