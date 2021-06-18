@@ -1,7 +1,7 @@
 ﻿---@type MainLogic
 local mainLogic
 
-function requireLua(isEditor)
+function requireLuaUIFramework(isEditor)
 	--log一定要放在第一个require
 	require("Framework.Log")
 	require("Framework.class")
@@ -9,6 +9,7 @@ function requireLua(isEditor)
 		require("Framework.NewClassForLuaHotFix")
 	end
 	--require顺序不要改变，HotFix要位于所有class前
+	require("Framework.event.Event")
 	require("Framework.UI.Button")
 	require("Framework.UI.Prefab")
 	require("Framework.UI.Image")
@@ -17,7 +18,7 @@ end
 --主入口函数。从这里开始lua逻辑
 function Main(isEditor, logicPath)
 	IsEditor = isEditor
-	requireLua(isEditor)
+	requireLuaUIFramework(isEditor)
 	mainLogic = require(logicPath).New()
 end
 

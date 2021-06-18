@@ -12,7 +12,7 @@ end
 ---AddChild
 ---@param child Framework.display.DisplayObject
 function DisplayObjectContainer:AddChild(child)
-    return self:AddChildAt(child, #self.children)
+    return self:AddChildAt(child, #self.children + 1)
 end
 
 ---AddChildAt
