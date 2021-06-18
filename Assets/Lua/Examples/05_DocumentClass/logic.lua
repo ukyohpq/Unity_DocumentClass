@@ -17,15 +17,13 @@ end
 ---onComplete
 ---@param evt Framework.event.Event
 function logic_05:onComplete(evt)
-    local doc = UI_Doc.New()
-    self.ui:AddChild(doc)
-    self.ui:AddEventListener("click", self, self.onClick)
+    self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
 end
 
 ---onClick
 ---@param evt Framework.event.Event
 function logic_05:onClick(evt)
-    evt:StopBubble()
     LogUtil.LogError("curtarget:%s target:%s", evt:GetCurrentTarget().name, evt:GetTarget().name)
     ---@type Framework.UI.Button
     local btn = evt:GetTarget()

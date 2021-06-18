@@ -29,6 +29,8 @@ public class MainGame : MonoBehaviour
 //    private GameObject uiBackstage;
     private void Awake()
     {
+        var t = Time.realtimeSinceStartup;
+        BTLog.Error("start:{0}", t);
         if (ins == null)
         {
             ins = this;
@@ -38,7 +40,11 @@ public class MainGame : MonoBehaviour
         OpenLibs();
         luaState.LuaSetTop(0);
         Bind();
+        t = Time.realtimeSinceStartup;
+        BTLog.Error("before call lua:{0}", t);
         LoadLuaFiles();
+        var t2 = Time.realtimeSinceStartup;
+        BTLog.Error("after call lua:{0} cost:{1}", t2, t2 - t);
 #if UNITY_EDITOR && !LOADFROM_BUNDLE
         BTLog.Debug("open HotFixLua");
         var hot = this.gameObject.AddComponent<HotFixLua>();

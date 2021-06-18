@@ -16,6 +16,11 @@ namespace Framework.core
         {
             loaderContexts.Add(new ImageLoader(lt, path));
         }
+
+        public static void LoadAtlasImage(LuaTable lt, string atlas, string name)
+        {
+            loaderContexts.Add(new AtlasImgLoader(lt, atlas, name));
+        }
         
         public static void StopLoad(LuaTable lb)
         {
