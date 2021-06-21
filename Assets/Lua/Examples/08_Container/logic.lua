@@ -18,20 +18,20 @@ end
 ---onClickUI
 ---@param evt Framework.event.Event
 function logic_08:onClickUI(evt)
-    LogUtil.LogError("onClickUI")
+    LogUtil.LogError("onClickUI target:%s curTarget:%s", evt.target.name, evt.currentTarget.name)
 end
 
 ---onClickChild
 ---@param evt Framework.event.Event
 function logic_08:onClickChild(evt)
-    LogUtil.LogError("onClickChild")
+    LogUtil.LogError("onClickChild target:%s curTarget:%s", evt.target.name, evt.currentTarget.name)
     evt:StopBubble()
 end
 
 ---onClickBtn
 ---@param evt Framework.event.Event
 function logic_08:onClickBtn(evt)
-    LogUtil.LogError("onClickBtn")
+    LogUtil.LogError("onClickBtn target:%s curTarget:%s", evt.target.name, evt.currentTarget.name)
 end
 
 return logic_08
