@@ -1,6 +1,6 @@
 using System;
 using Babeltime.Log;
-using Framework.LuaUI;
+using Framework.LuaUI.Components;
 using LuaInterface;
 using UnityEditor;
 using UnityEngine;
@@ -35,7 +35,7 @@ namespace Framework.core.loader
             {
                 parentLt.Push();
                 ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
-                var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
+                var parentGo = ls.ToVariant(-1) as MonoBehaviour;
                 go.transform.parent = parentGo.transform;
                 BTLog.Error("Load prefab and set parent:{0}", parentGo.name);
             }

@@ -2,10 +2,9 @@
 using LuaInterface;
 using UnityEngine;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using Babeltime.Log;
 using Framework.core;
-using Framework.LuaUI;
+using Framework.LuaUI.UIExtends;
 
 public class MainGame : MonoBehaviour
 {

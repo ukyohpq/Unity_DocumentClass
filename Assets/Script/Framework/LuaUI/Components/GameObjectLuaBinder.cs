@@ -3,7 +3,7 @@ using Babeltime.Log;
 using LuaInterface;
 using UnityEngine;
 
-namespace Framework.core
+namespace Framework.core.Components
 {
     public class GameObjectLuaBinder:MonoBehaviour
     {

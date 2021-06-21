@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Babeltime.Log;
 using Framework.core;
+using Framework.core.Components;
 using LuaInterface;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Framework.LuaUI
+namespace Framework.LuaUI.Components
 {
     public class LuaButton:GameObjectLuaBinder, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
     {
@@ -41,12 +42,6 @@ namespace Framework.LuaUI
             ls.LuaSetField(-2, "isBubble");
             ls.LuaSafeCall(2, 0, 0, 0);
         }
-        
-        public override void CreatePrefabAndBindLuaClass(LuaState luaState)
-        {
-            base.CreatePrefabAndBindLuaClass(luaState);
-            PushLuaInstance(luaState, "Button");
-        }
-        
+
     }
 }

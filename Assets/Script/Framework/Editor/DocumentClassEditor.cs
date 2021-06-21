@@ -6,7 +6,7 @@ using Babeltime.Log;
 using UnityEditor;
 using UnityEngine;
 using Framework.core;
-using Framework.LuaUI;
+using Framework.LuaUI.Components;
 using UnityEditor.Experimental.SceneManagement;
 
 namespace Framework.Editor

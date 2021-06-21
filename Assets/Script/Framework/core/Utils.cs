@@ -1,6 +1,8 @@
 using System;
 using Babeltime.Log;
 using Framework.LuaUI;
+using Framework.LuaUI.Components;
+using Framework.LuaUI.UIExtends;
 using UnityEngine;
 
 namespace Framework.core
@@ -11,26 +13,11 @@ namespace Framework.core
         public const string Button = "_Button";
         public const string Text = "_Text";
         public const string Image = "_Image";
+        public const string ScrollView = "_SV";
     }
     
     public class Utils
     {
-        public static Type GetTypeByComponentSuffix(string suffix)
-        {
-            switch (suffix)
-            {
-                case ComponentSuffix.Text:
-                    return typeof(LuaTextField);
-                case ComponentSuffix.Button:
-                    return typeof(LuaButton);
-                case ComponentSuffix.Image:
-                    return typeof(LuaImage);
-                default:
-                    BTLog.Warning("未定义的后缀名");
-                    return null;
-            }
-        }
-        
         public static string GetTypeNameByComponentSuffix(string suffix, Transform trans)
         {
             switch (suffix)
@@ -41,6 +28,8 @@ namespace Framework.core
                     return "Framework.UI.Button";
                 case ComponentSuffix.Image:
                     return "Framework.UI.Image";
+                case ComponentSuffix.ScrollView:
+                    return "Framework.UI.ScrollView";
                 case ComponentSuffix.Doc:
                     var doc = trans.GetComponent<DocumentClass>();
                     if (doc == null)
@@ -78,6 +67,7 @@ namespace Framework.core
                 case ComponentSuffix.Text:
                 case ComponentSuffix.Button:
                 case ComponentSuffix.Image:
+                case ComponentSuffix.ScrollView:
                 case ComponentSuffix.Doc:
                     return true;
                 default:

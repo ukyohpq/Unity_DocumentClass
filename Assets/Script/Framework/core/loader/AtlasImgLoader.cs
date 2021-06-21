@@ -43,7 +43,7 @@ namespace Framework.core.loader
             lt.Push();
             ls.LuaPushValue(-1);
             ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
-            var binder = ls.ToVariant(-1) as GameObjectLuaBinder;
+            var binder = ls.ToVariant(-1) as MonoBehaviour;
             var unityImage = binder.gameObject.GetComponent<Image>(); 
             unityImage.sprite = t;
             ls.LuaPop(1);

@@ -1,9 +1,9 @@
 using System;
 using Babeltime.Log;
-using Framework.core;
 using LuaInterface;
+using UnityEngine;
 
-namespace Framework.LuaUI
+namespace Framework.LuaUI.UIExtends
 {
     public class LuaDisplayObjectContainer
     {
@@ -35,7 +35,7 @@ namespace Framework.LuaUI
 //                    此时child的gameobject还没有创建出来，就不用设置parent了
                     return 0;
                 }
-                var childBinder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var childBinder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
                 BTLog.Error("childBinder:{0}", childBinder == null);
                 if (childBinder != null)
                 {
@@ -43,7 +43,7 @@ namespace Framework.LuaUI
                 }
                 LuaDLL.lua_pop(L, 1);
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
-                var parentBinder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var parentBinder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
                 BTLog.Error("parent:{0}", parentBinder == null);
                 if (parentBinder != null)
                 {

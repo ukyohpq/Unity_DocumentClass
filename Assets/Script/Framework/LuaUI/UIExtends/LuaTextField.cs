@@ -1,11 +1,11 @@
 using System;
-using Framework.core;
 using LuaInterface;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Framework.LuaUI
+namespace Framework.LuaUI.UIExtends
 {
-    public class LuaTextField:GameObjectLuaBinder
+    public class LuaTextField
     {
         public static void Extend(LuaState ls)
         {
@@ -32,7 +32,7 @@ namespace Framework.LuaUI
                     return 0;
                 }
 
-                var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var binder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
                 LuaDLL.lua_pop(L, 1);
                 var text = LuaDLL.lua_tostring(L, -1);
                 var textField = binder.gameObject.GetComponent<Text>();
@@ -44,12 +44,6 @@ namespace Framework.LuaUI
             }
 
             return 0;
-        }
-        
-        public override void CreatePrefabAndBindLuaClass(LuaState luaState)
-        {
-            base.CreatePrefabAndBindLuaClass(luaState);
-            PushLuaInstance(luaState, "TextField");
         }
     }
 }

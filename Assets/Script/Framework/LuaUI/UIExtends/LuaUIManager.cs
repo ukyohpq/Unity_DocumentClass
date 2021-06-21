@@ -1,16 +1,12 @@
-using System;
-using Babeltime.Log;
-using Framework.core;
-using Framework.core.loader;
 using LuaInterface;
 
-namespace Framework.LuaUI
+namespace Framework.LuaUI.UIExtends
 {
     public static class LuaUIManager
     {
         public static void InitLuaUI(LuaState ls)
         {
-            DocumentClass.Extend(ls);
+            LuaPrefab.Extend(ls);
             LuaImage.Extend(ls);
             LuaDisplayObjectContainer.Extend(ls);
             LuaTextField.Extend(ls);

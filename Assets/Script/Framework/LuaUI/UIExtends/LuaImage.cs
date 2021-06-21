@@ -2,9 +2,9 @@ using System;
 using Framework.core;
 using LuaInterface;
 
-namespace Framework.LuaUI
+namespace Framework.LuaUI.UIExtends
 {
-    public class LuaImage:GameObjectLuaBinder
+    public class LuaImage
     {
         public static void Extend(LuaState ls)
         {
@@ -17,11 +17,6 @@ namespace Framework.LuaUI
             ls.LuaPushFunction(SetImageExtend);
             ls.LuaSetField(-2, "SetTextExtend");
             ls.LuaPop(1);
-        }
-        public override void CreatePrefabAndBindLuaClass(LuaState luaState)
-        {
-            base.CreatePrefabAndBindLuaClass(luaState);
-            PushLuaInstance(luaState, "Image");
         }
 
         private static int SetImageExtend(IntPtr L)
