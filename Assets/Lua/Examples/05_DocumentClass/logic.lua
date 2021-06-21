@@ -9,17 +9,12 @@ logic_05 = class("Examples.05_DocumentClass.logic_05")
 function logic_05:ctor()
     self.numClick = 0
     self.ui = UI_05.New()
-    self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
+    self.ui.m1_Doc.m_Text:SetText("按钮1")
+    self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m2_Doc.m_Text:SetText("按钮2")
+    self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
     --self.ui:Destroy()
     --self.ui = null
-end
-
----onComplete
----@param evt Framework.event.Event
-function logic_05:onComplete(evt)
-    LogUtil.LogError("complete self.ui.m1_Doc.m_Button:%s", self.ui.m1_Doc.m_Button)
-    self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
-    self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
 end
 
 ---onClick

@@ -8,13 +8,7 @@ logic_07 = class("Examples.07_ImageWithAtlas.logic_07")
 
 function logic_07:ctor()
     self.ui = UI_07.New()
-    self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
     self.imgSwitch = true
-end
-
----onComplete
----@param evt Framework.event.Event
-function logic_07:onComplete(evt)
     self.ui.m_Button:AddEventListener("click", self, self.onClick)
     self.ui.m_Image:AddEventListener(Event.COMPLETE, self, self.onSpriteComplete)
 end

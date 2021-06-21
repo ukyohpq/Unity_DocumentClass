@@ -3,6 +3,7 @@ using Babeltime.Log;
 using LuaInterface;
 using UnityEngine;
 using Framework.core;
+using UnityEngine.UI;
 
 namespace Framework.LuaUI
 {
@@ -165,7 +166,6 @@ namespace Framework.LuaUI
 //                        childBtn.CreatePrefabAndBindLuaClass(luaState);
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        BTLog.Error("lt:{0}", lt);
                         childBtn.BindLuaTable(lt);
                         luaState.LuaPop(1);
 //                        luaState.LuaGetField(topIdx, childName);
@@ -182,7 +182,6 @@ namespace Framework.LuaUI
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        BTLog.Error("Image:{0}", lt);
                         childImage.BindLuaTable(lt);
                         luaState.LuaPop(1);
 //                        childImage.CreatePrefabAndBindLuaClass(luaState);
@@ -196,9 +195,11 @@ namespace Framework.LuaUI
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        BTLog.Error("Text:{0}", lt);
                         childText.BindLuaTable(lt);
-                        luaState.LuaPop(1);
+                        luaState.LuaGetField(-1, "text");
+                        var t = luaState.ToVariant(-1) as string;
+                        childText.GetComponent<Text>().text = t;
+                        luaState.LuaPop(2);
 //                        childText.CreatePrefabAndBindLuaClass(luaState);
 //                        luaState.LuaSetField(topIdx, childName);
                         break;

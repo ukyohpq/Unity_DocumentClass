@@ -7,13 +7,7 @@ logic_03 = class("Examples.03_Text.logic_03")
 
 function logic_03:ctor()
     self.ui = UI_03.New()
-    self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
-end
-
----onComplete
----@param evt Framework.event.Event
-function logic_03:onComplete(evt)
-    self.ui.m_Text:SetText(evt.name)
+    self.ui.m_Text:SetText("Hello world")
 end
 
 return logic_03
