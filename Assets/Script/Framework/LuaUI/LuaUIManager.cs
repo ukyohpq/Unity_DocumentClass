@@ -11,7 +11,9 @@ namespace Framework.LuaUI
         public static void InitLuaUI(LuaState ls)
         {
             DocumentClass.Extend(ls);
+            LuaImage.Extend(ls);
             LuaDisplayObjectContainer.Extend(ls);
+            LuaTextField.Extend(ls);
         }
     }
 }

@@ -13,7 +13,7 @@ end
 ---onComplete
 ---@param evt Framework.event.Event
 function logic_03:onComplete(evt)
-    self.ui.m_Text.text = evt.name
+    self.ui.m_Text:SetText(evt.name)
 end
 
 return logic_03

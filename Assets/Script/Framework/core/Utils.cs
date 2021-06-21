@@ -20,7 +20,7 @@ namespace Framework.core
             switch (suffix)
             {
                 case ComponentSuffix.Text:
-                    return typeof(UnityEngine.UI.Text);
+                    return typeof(LuaTextField);
                 case ComponentSuffix.Button:
                     return typeof(LuaButton);
                 case ComponentSuffix.Image:
@@ -36,7 +36,7 @@ namespace Framework.core
             switch (suffix)
             {
                 case ComponentSuffix.Text:
-                    return "UnityEngine.UI.Text";
+                    return "Framework.UI.TextField";
                 case ComponentSuffix.Button:
                     return "Framework.UI.Button";
                 case ComponentSuffix.Image:

@@ -28,7 +28,7 @@ namespace Framework.core
             
         }
         
-        protected void BindLuaTable(LuaTable value)
+        public void BindLuaTable(LuaTable value)
         {
             luaObj = value;
             var ls = value.GetLuaState();

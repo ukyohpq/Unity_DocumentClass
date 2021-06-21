@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47afd76c531f2240806b5cf3272f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LuaClass: Examples.08_Container.child
+  LuaClass: Examples.08_Container.Child
 --- !u!1 &4982246494827309465
 GameObject:
   m_ObjectHideFlags: 0

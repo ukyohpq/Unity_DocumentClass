@@ -8,22 +8,11 @@ logic_08 = class("Examples.08_Container.logic_08")
 
 function logic_08:ctor()
     self.ui = Container.New()
-    self.ui:AddEventListener(Event.COMPLETE, self, self.onComplete)
-end
-
----onComplete
----@param evt Framework.event.Event
-function logic_08:onComplete(evt)
     local child = Child.New()
     self.ui:AddChild(child)
-    child:AddEventListener(Event.COMPLETE, self, self.childComplete)
     self.ui:AddEventListener("click", self, self.onClickUI)
-    child:AddEventListener("click", self, self.onClickChild)
-end
-
-function logic_08:childComplete(evt)
-    local child = self.ui:GetChildAt(1)
     child.m_Button:AddEventListener("click", self, self.onClickBtn)
+    child:AddEventListener("click", self, self.onClickChild)
 end
 
 ---onClickUI

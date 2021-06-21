@@ -17,6 +17,7 @@ end
 ---onComplete
 ---@param evt Framework.event.Event
 function logic_05:onComplete(evt)
+    LogUtil.LogError("complete self.ui.m1_Doc.m_Button:%s", self.ui.m1_Doc.m_Button)
     self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
     self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
 end

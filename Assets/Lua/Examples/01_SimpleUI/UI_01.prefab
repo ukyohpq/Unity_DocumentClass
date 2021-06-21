@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3645867123290652495}
   - component: {fileID: 4293842456204533508}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UI_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47afd76c531f2240806b5cf3272f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LuaClass: Examples.01_SimpleUI.UI
+  LuaClass: Examples.01_SimpleUI.UI_01

@@ -16,17 +16,17 @@ namespace Framework.LuaUI
                 ls.LuaPop(1);
                 throw new Exception("can not find lua Class: Prefab");
             }
-            ls.LuaPushFunction(PrefabBind);
-            ls.LuaSetField(-2, "bind");
+            ls.LuaPushFunction(bindExtend);
+            ls.LuaSetField(-2, "bindExtend");
             ls.LuaPop(1);
         }
 
-        private static int PrefabBind(IntPtr L)
+        private static int bindExtend(IntPtr L)
         {
             try
             {
                 ToLua.CheckArgsCount(L, 1);
-//                dup self
+/*//                dup self
                 LuaDLL.lua_pushvalue(L, -1);
                 LuaDLL.lua_getglobal(L, "Prefab");
                 LuaDLL.lua_getfield(L, -1, "super");
@@ -37,7 +37,7 @@ namespace Framework.LuaUI
 //                self, bind, self, Prefab, super
                 LuaDLL.lua_pop(L, 2);
 //                self, bind, self,
-                LuaDLL.lua_call(L, 1, 0);
+                LuaDLL.lua_call(L, 1, 0);*/
                 
                 var tb = ToLua.ToLuaTable(L, -1);
                 CSBridge.LoadPrefab(tb);
@@ -119,6 +119,7 @@ namespace Framework.LuaUI
             }
             luaState.LuaInsert(-2);
             luaState.Push("COMPLETE");
+            BTLog.Error("BindLuaClass COMPLETE:{0}", this.name);
             luaState.LuaSafeCall(2, 0, 0, 0);
         }
 
@@ -138,55 +139,68 @@ namespace Framework.LuaUI
                     BindFieldsOnTrans(child, luaState, topIdx);
                     continue;
                 }
+
+                LuaTable lt = null;
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
                 switch (suffix)
                 {
-                    case "_Doc":
+                    case ComponentSuffix.Doc:
                         var childDoc = child.GetComponent<DocumentClass>();
-                        childDoc.CreatePrefabAndBindLuaClass(luaState);
-//                        parent child
-                        childDoc.PushLuaTable();
-//                        parent child parent
-                        luaState.LuaPushValue(-2);
-//                        parent child parent AddChild
-                        luaState.LuaGetField(-1, "AddChild");
-//                        parent AddChild child parent
-                        luaState.LuaInsert(-3);
-//                        parent AddChild parent child
-                        luaState.LuaInsert(-2);
-//                        parent child
-                        luaState.LuaSafeCall(2, 1, 0, 0);
-                        luaState.LuaSetField(topIdx, childName);
+                        BTLog.Error("childName:{0}", childName);
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        childDoc.BindLuaTable(lt);
+                        childDoc.BindLuaClass(luaState);
+//                        childDoc.CreatePrefabAndBindLuaClass(luaState);
+//                        childDoc.PushLuaTable();
+//                        luaState.LuaSetField(topIdx, childName);
                         break;
-                    case "_Button":
+                    case ComponentSuffix.Button:
                         var childBtn = child.GetComponent<LuaButton>();
                         if (childBtn == null)
                         {
                             childBtn = child.gameObject.AddComponent<LuaButton>();
                         }
 
-                        childBtn.CreatePrefabAndBindLuaClass(luaState);
-                        luaState.LuaPushValue(-2);
-                        luaState.LuaGetField(-1, "AddChild");
-                        luaState.LuaInsert(-3);
-                        luaState.LuaInsert(-2);
-                        luaState.LuaSafeCall(2, 1, 0, 0);
-                        luaState.LuaSetField(topIdx, childName);
+//                        childBtn.CreatePrefabAndBindLuaClass(luaState);
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        BTLog.Error("lt:{0}", lt);
+                        childBtn.BindLuaTable(lt);
+                        luaState.LuaPop(1);
+//                        luaState.LuaGetField(topIdx, childName);
+//                        var tb = luaState.ToVariant(-1) as LuaTable;
+//                        childBtn.BindLuaTable(tb);
+//                        luaState.LuaPop(1);
+//                        luaState.LuaSetField(topIdx, childName);
                         break;
-                    case "_Image":
+                    case ComponentSuffix.Image:
                         var childImage = child.GetComponent<LuaImage>();
                         if (childImage == null)
                         {
                             childImage = child.gameObject.AddComponent<LuaImage>();
                         }
-
-                        childImage.CreatePrefabAndBindLuaClass(luaState);
-                        luaState.LuaPushValue(-2);
-                        luaState.LuaGetField(-1, "AddChild");
-                        luaState.LuaInsert(-3);
-                        luaState.LuaInsert(-2);
-                        luaState.LuaSafeCall(2, 1, 0, 0);
-                        luaState.LuaSetField(topIdx, childName);
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        BTLog.Error("Image:{0}", lt);
+                        childImage.BindLuaTable(lt);
+                        luaState.LuaPop(1);
+//                        childImage.CreatePrefabAndBindLuaClass(luaState);
+//                        luaState.LuaSetField(topIdx, childName);
+                        break;
+                    case ComponentSuffix.Text:
+                        var childText = child.GetComponent<LuaTextField>();
+                        if (childText == null)
+                        {
+                            childText = child.gameObject.AddComponent<LuaTextField>();
+                        }
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        BTLog.Error("Text:{0}", lt);
+                        childText.BindLuaTable(lt);
+                        luaState.LuaPop(1);
+//                        childText.CreatePrefabAndBindLuaClass(luaState);
+//                        luaState.LuaSetField(topIdx, childName);
                         break;
                     default:
                         var T = Utils.GetTypeByComponentSuffix(suffix);

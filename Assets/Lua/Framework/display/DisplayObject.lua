@@ -8,7 +8,6 @@ DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
     super.ctor(self)
-    self:bind()
     self.isDestroyed = false
 end
 
@@ -28,15 +27,6 @@ end
 function DisplayObject:GetName()
     --注意一定不要给name赋值，这是个只读字段
     return self.name
-end
-
----bind 只能被调用一次
-function DisplayObject:bind()
-    self.bind = self.afterBind
-end
-
-function DisplayObject:afterBind()
-    error("function bind can not be called only once")
 end
 
 function DisplayObject:getIsDestroyed()

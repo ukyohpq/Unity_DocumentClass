@@ -6,15 +6,25 @@ namespace Framework.LuaUI
 {
     public class LuaImage:GameObjectLuaBinder
     {
+        public static void Extend(LuaState ls)
+        {
+            ls.LuaGetGlobal("Image");
+            if (ls.LuaIsNil(-1))
+            {
+                ls.LuaPop(1);
+                throw new Exception("can not find lua Class: Image");
+            }
+            ls.LuaPushFunction(SetImageExtend);
+            ls.LuaSetField(-2, "SetTextExtend");
+            ls.LuaPop(1);
+        }
         public override void CreatePrefabAndBindLuaClass(LuaState luaState)
         {
             base.CreatePrefabAndBindLuaClass(luaState);
             PushLuaInstance(luaState, "Image");
-            luaState.LuaPushFunction(SetImage);
-            luaState.LuaSetField(-2, "SetImage");
         }
 
-        private static int SetImage(IntPtr L)
+        private static int SetImageExtend(IntPtr L)
         {
             try
             {
@@ -43,7 +53,7 @@ namespace Framework.LuaUI
             }
             catch (Exception e)
             {
-                throw e;
+                return LuaDLL.toluaL_exception(L, e);
             }
         }
     }

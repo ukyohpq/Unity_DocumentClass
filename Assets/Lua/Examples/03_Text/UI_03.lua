@@ -10,8 +10,14 @@
 local super = require("Framework.UI.Prefab")
 
 ---@class Examples.03_Text.UI_03:Framework.UI.Prefab
----@field m_Text UnityEngine.UI.Text
+---@field m_Text Framework.UI.TextField
 UI_03 = class("Examples.03_Text.UI_03", super)
+
+function UI_03:ctor(autoBind)
+    super.ctor(self, autoBind)
+	self.m_Text = TextField.New()
+	self:AddChild(self.m_Text)
+end
 
 function UI_03:GetAssetPath()
     if IsEditor then

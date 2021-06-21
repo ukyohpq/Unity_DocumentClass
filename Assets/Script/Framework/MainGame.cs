@@ -100,10 +100,10 @@ public class MainGame : MonoBehaviour
 
     private void RequireBaseFiles()
     {
-        luaState.LuaGetGlobal("requireLua");
+        luaState.LuaGetGlobal("requireLuaUIFramework");
         if (luaState.LuaIsNil(-1))
         {
-            BTLog.Error("can not find lua requireLua function");
+            BTLog.Error("can not find lua requireLuaUIFramework function");
             luaState.LuaPop(1);
             return;
         }

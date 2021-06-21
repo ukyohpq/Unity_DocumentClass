@@ -17,10 +17,13 @@ local super = require("Framework.display.DisplayObjectContainer")
 ---@field private status number
 Prefab = class("Framework.UI.Prefab", super)
 
-function Prefab:ctor()
+function Prefab:ctor(autoBind)
     super.ctor(self)
     self.status = 0
     self:AddEventListener(Event.COMPLETE, self, self.OnComplete)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
     --self:LoadResource()
 end
 

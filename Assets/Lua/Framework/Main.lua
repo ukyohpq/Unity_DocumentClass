@@ -13,6 +13,7 @@ function requireLuaUIFramework(isEditor)
 	require("Framework.UI.Button")
 	require("Framework.UI.Prefab")
 	require("Framework.UI.Image")
+	require("Framework.UI.TextField")
 end
 
 --主入口函数。从这里开始lua逻辑

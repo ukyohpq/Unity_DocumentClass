@@ -12,6 +12,10 @@ local super = require("Framework.UI.Prefab")
 ---@class Examples.08_Container.Container:Framework.UI.Prefab
 Container = class("Examples.08_Container.Container", super)
 
+function Container:ctor(autoBind)
+    super.ctor(self, autoBind)
+end
+
 function Container:GetAssetPath()
     if IsEditor then
         return "Assets/Lua/Examples/08_Container/Container.prefab"

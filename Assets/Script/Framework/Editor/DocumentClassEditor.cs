@@ -17,6 +17,7 @@ namespace Framework.Editor
         private SerializedProperty m_LuaClass;
 //        private SerializedProperty m_SuperClass;
 
+        private List<string[]> _fields;
         private void OnEnable()
         {
             m_LuaClass = serializedObject.FindProperty("LuaClass");
@@ -111,6 +112,7 @@ namespace Framework.Editor
 //            onCompletedFunction.Add("end");
             
 //            BTLog.Error("classDesc:{0}", classDesc);
+            _fields = new List<string[]>();
             createLuaFieldByTrans(trans, classDesc);
 
 //            获取资源路径，会根据是不是editor进行区分
@@ -125,6 +127,18 @@ namespace Framework.Editor
                     throw new Exception("不能在编辑别的prefab时，生成该prefab的代码");
                 }
             }
+
+            var fieldsStr = "";
+            foreach (var field in _fields)
+            {
+                fieldsStr = fieldsStr + string.Format("\n\tself.{0} = {1}.New({2})\n\tself:AddChild(self.{0})", field[0], field[1], field[2]);
+            }
+            var CtorFunction = new List<string>();
+            CtorFunction.Add(string.Format(
+@"function {0}:ctor(autoBind)
+    super.ctor(self, autoBind){1}
+end
+", className, fieldsStr));
             var GetAssetPathFunction = new List<string>();
             GetAssetPathFunction.Add(string.Format(
 @"function {0}:GetAssetPath()
@@ -139,11 +153,12 @@ end", className, assetPath,2));
 //            printClassLines(GetAssetPathFunction);
 
             classDesc.Add("");
+            classDesc = classDesc.Concat(CtorFunction).ToList();
 //            onCompletedFunction.Add("");
-            var classLines = classDesc.Concat(GetAssetPathFunction);
-            classLines = classLines.Append(string.Format(@"
+            classDesc = classDesc.Concat(GetAssetPathFunction).ToList();
+            classDesc.Add(string.Format(@"
 return {0}", className));
-            File.WriteAllLines(fileName, classLines);
+            File.WriteAllLines(fileName, classDesc);
         }
 
         private void createLuaFieldByTrans(Transform trans, List<string> classDesc)
@@ -170,6 +185,7 @@ return {0}", className));
 
                 var typeName = Utils.GetTypeNameByComponentSuffix(suffix, child);
                 classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, typeName));
+                _fields.Add(new []{childName, typeName.Substring(typeName.LastIndexOf(".") + 1), suffix == ComponentSuffix.Doc?"false":""});
 //                _Doc不用对其子go生成field
                 if (suffix != "_Doc")
                 {
