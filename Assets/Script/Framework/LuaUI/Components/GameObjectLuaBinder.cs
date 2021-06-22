@@ -39,6 +39,7 @@ namespace Framework.core.Components
             {
                 ls.LuaGetRef(luaRef);
 //                luaObj.DestroyToCS = this.DestroyToCS
+//                为了实现仅能调用一次销毁，函数DestroyToCS必须放在instance上，而不能放在class上
                 ls.LuaPushFunction(DestroyFromLua);
                 ls.LuaSetField(-2, "DestroyToCS");
 //                luaObj.name = this.name;
