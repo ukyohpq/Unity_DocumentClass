@@ -139,6 +139,10 @@ namespace Framework.LuaUI.Components
                         luaState.LuaGetField(-1, "imageStr");
                         var imageStr = luaState.LuaToString(-1);
                         luaState.LuaPop(2);
+                        if (imageStr == "")
+                        {
+                            break;
+                        }
                         var strParams = imageStr.Split('|');
                         switch (strParams.Length)
                         {
@@ -149,7 +153,6 @@ namespace Framework.LuaUI.Components
                                 CSBridge.LoadAtlasImage(lt, strParams[0], strParams[1]);
                                 break;
                             default:
-                                BTLog.Error("image path err:{0}", imageStr);
                                 break;
                         }
                         break;

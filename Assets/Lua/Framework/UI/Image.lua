@@ -4,6 +4,11 @@ local super = require("Framework.display.DisplayObject")
 ---@field imageStr string
 Image = class("Framework.UI.Image", super)
 
+function Image:ctor()
+    super.ctor(self)
+    self.imageStr = ""
+end
+
 function Image:SetImage(imagePath)
     if self.imageStr == imagePath then
         return
