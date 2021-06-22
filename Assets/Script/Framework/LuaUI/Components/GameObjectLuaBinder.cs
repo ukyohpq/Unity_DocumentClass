@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Babeltime.Log;
 using LuaInterface;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Framework.core.Components
 {
     public class GameObjectLuaBinder:MonoBehaviour
     {
+        public Transform Container;
         private const string DESTROY = "Destroy";
         private LuaTable luaObj;
 

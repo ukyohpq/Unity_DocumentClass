@@ -9,11 +9,11 @@ namespace Framework.LuaUI.UIExtends
     {
         public static void Extend(LuaState ls)
         {
-            ls.LuaGetGlobal("LuaScrollView");
+            ls.LuaGetGlobal("ScrollView");
             if (ls.LuaIsNil(-1))
             {
                 ls.LuaPop(1);
-                throw new Exception("can not find lua Class: LuaScrollView");
+                throw new Exception("can not find lua Class: ScrollView");
             }
             ls.LuaPushFunction(AddChildExtend);
             ls.LuaSetField(-2, "AddChildExtend");

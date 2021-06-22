@@ -10,10 +10,7 @@ function requireLuaUIFramework(isEditor)
 	end
 	--require顺序不要改变，HotFix要位于所有class前
 	require("Framework.event.Event")
-	require("Framework.UI.Button")
-	require("Framework.UI.Prefab")
-	require("Framework.UI.Image")
-	require("Framework.UI.TextField")
+	require("Framework.UI.UIImporter")
 end
 
 --主入口函数。从这里开始lua逻辑

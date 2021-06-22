@@ -15,7 +15,7 @@ namespace Framework.LuaUI.UIExtends
                 throw new Exception("can not find lua Class: Image");
             }
             ls.LuaPushFunction(SetImageExtend);
-            ls.LuaSetField(-2, "SetTextExtend");
+            ls.LuaSetField(-2, "SetImageExtend");
             ls.LuaPop(1);
         }
 

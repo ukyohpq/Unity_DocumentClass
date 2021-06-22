@@ -77,17 +77,18 @@ namespace Framework.LuaUI.Components
                     continue;
                 }
 
+                GameObjectLuaBinder childBinder;
                 LuaTable lt = null;
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
                 switch (suffix)
                 {
                     case ComponentSuffix.Doc:
                         var childDoc = child.GetComponent<DocumentClass>();
-                        BTLog.Error("childName:{0}", childName);
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
                         childDoc.BindLuaTable(lt);
                         childDoc.BindLuaClass(luaState);
+                        childDoc.Container = childDoc.transform;
                         break;
                     case ComponentSuffix.Button:
                         var childBtn = child.GetComponent<LuaButton>();
@@ -101,21 +102,59 @@ namespace Framework.LuaUI.Components
                         luaState.LuaPop(1);
                         break;
                     case ComponentSuffix.Text:
-                        var childText = child.GetComponent<GameObjectLuaBinder>();
-                        if (childText == null)
+                        childBinder = child.GetComponent<GameObjectLuaBinder>();
+                        if (childBinder == null)
                         {
-                            childText = child.gameObject.AddComponent<GameObjectLuaBinder>();
+                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childText.BindLuaTable(lt);
+                        childBinder.BindLuaTable(lt);
                         luaState.LuaGetField(-1, "text");
                         var t = luaState.ToVariant(-1) as string;
-                        childText.GetComponent<Text>().text = t;
+                        childBinder.GetComponent<Text>().text = t;
                         luaState.LuaPop(2);
                         break;
+                    case ComponentSuffix.ScrollView:
+                        childBinder = child.GetComponent<GameObjectLuaBinder>();
+                        if (childBinder == null)
+                        {
+                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
+                        }
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        childBinder.BindLuaTable(lt);
+                        childBinder.Container = childBinder.transform.Find("Viewport/Content");
+                        luaState.LuaPop(1);
+                        break;
+                    case ComponentSuffix.Image:
+                        childBinder = child.GetComponent<GameObjectLuaBinder>();
+                        if (childBinder == null)
+                        {
+                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
+                        }
+                        luaState.LuaGetField(topIdx, childName);
+                        lt = luaState.ToVariant(-1) as LuaTable;
+                        childBinder.BindLuaTable(lt);
+                        luaState.LuaGetField(-1, "imageStr");
+                        var imageStr = luaState.LuaToString(-1);
+                        luaState.LuaPop(2);
+                        var strParams = imageStr.Split('|');
+                        switch (strParams.Length)
+                        {
+                            case 1:
+                                CSBridge.LoadImage(lt, strParams[0]);
+                                break;
+                            case 2:
+                                CSBridge.LoadAtlasImage(lt, strParams[0], strParams[1]);
+                                break;
+                            default:
+                                BTLog.Error("image path err:{0}", imageStr);
+                                break;
+                        }
+                        break;
                     default:
-                        var childBinder = child.GetComponent<GameObjectLuaBinder>();
+                        childBinder = child.GetComponent<GameObjectLuaBinder>();
                         if (childBinder == null)
                         {
                             childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();

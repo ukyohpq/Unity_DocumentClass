@@ -10,6 +10,7 @@ namespace Framework.LuaUI.UIExtends
             LuaImage.Extend(ls);
             LuaDisplayObjectContainer.Extend(ls);
             LuaTextField.Extend(ls);
+            LuaScrollView.Extend(ls);
         }
     }
 }
