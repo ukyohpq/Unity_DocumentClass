@@ -147,10 +147,10 @@ namespace Framework.LuaUI.Components
                         switch (strParams.Length)
                         {
                             case 1:
-                                CSBridge.LoadImage(lt, strParams[0]);
+                                LoaderManager.LoadImage(lt, strParams[0]);
                                 break;
                             case 2:
-                                CSBridge.LoadAtlasImage(lt, strParams[0], strParams[1]);
+                                LoaderManager.LoadAtlasImage(lt, strParams[0], strParams[1]);
                                 break;
                             default:
                                 break;
@@ -180,6 +180,7 @@ namespace Framework.LuaUI.Components
         // Start is called before the first frame update
         void Start()
         {
+//            TODO 这里用于非lua中通过New创建出来的，直接拖拽到场景中的prefab，其luatable需要自己创建并绑定。但考虑到这可能是一种不存在的需求，故以后可能会删除
             if (!hasLuaObj())
             {
                 CreatePrefabAndBindLuaClass(MainGame.Ins.LuaState);

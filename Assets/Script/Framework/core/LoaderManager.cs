@@ -4,7 +4,7 @@ using LuaInterface;
 
 namespace Framework.core
 {
-    public class CSBridge
+    public class LoaderManager
     {
         private static List<BaseLoader> loaderContexts = new List<BaseLoader>();
         public static void LoadPrefab(LuaTable lt)

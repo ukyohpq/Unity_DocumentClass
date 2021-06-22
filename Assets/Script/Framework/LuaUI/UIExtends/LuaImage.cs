@@ -30,14 +30,14 @@ namespace Framework.LuaUI.UIExtends
 //                        通过路径加载
                         var path = LuaDLL.lua_tostring(L, -1);
                         tb = ToLua.ToVarObject(L, -2) as LuaTable;
-                        CSBridge.LoadImage(tb, path);
+                        LoaderManager.LoadImage(tb, path);
                         break;
                     case 3:
 //                        通过图集加载
                         tb = ToLua.ToVarObject(L, -3) as LuaTable;
                         var atlas = LuaDLL.lua_tostring(L, -2);
                         var imgName = LuaDLL.lua_tostring(L, -1);
-                        CSBridge.LoadAtlasImage(tb, atlas, imgName);
+                        LoaderManager.LoadAtlasImage(tb, atlas, imgName);
                         break;
                     default:
                         throw new LuaException("number of args error");

@@ -38,7 +38,7 @@ namespace Framework.LuaUI.UIExtends
                 LuaDLL.lua_call(L, 1, 0);*/
                 
                 var tb = ToLua.ToLuaTable(L, -1);
-                CSBridge.LoadPrefab(tb);
+                LoaderManager.LoadPrefab(tb);
                 
                 LuaDLL.lua_getfield(L, -1, "afterBind");
                 LuaDLL.lua_setfield(L, -2, "bind");
@@ -61,7 +61,7 @@ namespace Framework.LuaUI.UIExtends
                 LuaDLL.lua_pushnil(L);
                 LuaDLL.lua_setfield(L, -2, "DestroyToCS");
                 var tb = ToLua.ToLuaTable(L, -1);
-                CSBridge.StopLoad(tb);
+                LoaderManager.StopLoad(tb);
                 return 0;
             }
             catch (Exception e)

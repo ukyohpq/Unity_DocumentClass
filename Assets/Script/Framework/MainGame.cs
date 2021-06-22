@@ -188,7 +188,7 @@ protected virtual void CallMain()
     // Update is called once per frame
     void Update()
     {
-        CSBridge.LoadAsset();
+        LoaderManager.LoadAsset();
         luaState.LuaGetGlobal("LuaBridge");
         if (luaState.LuaIsNil(-1))
         {
