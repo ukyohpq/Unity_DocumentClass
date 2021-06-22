@@ -20,7 +20,7 @@ Prefab = class("Framework.UI.Prefab", super)
 function Prefab:ctor(autoBind)
     super.ctor(self)
     self.status = 0
-    self:AddEventListener(Event.COMPLETE, self, self.OnComplete)
+    self:AddEventListener(Event.INIT, self, self.OnInit)
     if autoBind ~= false then
         self:bindExtend()
     end
@@ -33,9 +33,9 @@ end
 
 ---OnComplete
 ---@param evt Framework.event.Event
-function Prefab:OnComplete(evt)
+function Prefab:OnInit(evt)
     self.status = 2
-    LogUtil.LogError("OnComplete:%s", self:GetName())
+    LogUtil.LogError("OnInit:%s", self:GetName())
 end
 
 function Prefab:StartLogic()

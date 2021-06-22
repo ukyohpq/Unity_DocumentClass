@@ -6,6 +6,7 @@
 ---@field private isBubble boolean
 Event = class("Framework.event.Event")
 Event.COMPLETE = "COMPLETE"
+Event.INIT = "INIT"
 
 
 function Event:ctor(name, data)

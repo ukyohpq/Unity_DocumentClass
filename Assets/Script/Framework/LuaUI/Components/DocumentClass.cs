@@ -1,5 +1,4 @@
-﻿using System;
-using Babeltime.Log;
+﻿using Babeltime.Log;
 using LuaInterface;
 using UnityEngine;
 using Framework.core;
@@ -55,8 +54,8 @@ namespace Framework.LuaUI.Components
                 return;
             }
             luaState.LuaInsert(-2);
-            luaState.Push("COMPLETE");
-            BTLog.Error("BindLuaClass COMPLETE:{0}", this.name);
+            luaState.Push("INIT");
+//            BTLog.Error("BindLuaClass INIT:{0}", this.name);
             luaState.LuaSafeCall(2, 0, 0, 0);
         }
 
