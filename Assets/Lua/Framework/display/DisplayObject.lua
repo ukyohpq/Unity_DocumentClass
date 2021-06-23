@@ -5,12 +5,15 @@ local super = require("Framework.event.EventDispatcher")
 ---@field private name string
 ---@field private parent Framework.display.DisplayObjectContainer
 ---@field private draggable boolean
+---@field private active boolean
 DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
     super.ctor(self)
     self.isDestroyed = false
     self.draggable = false
+    self.active = true
+    self:AddEventListener(Event.ON_BIND, self, self.onBind)
 end
 
 function DisplayObject:Destroy()
@@ -44,6 +47,19 @@ end
 
 function DisplayObject:SetDraggable(draggable)
     self.draggable = draggable
+end
+
+function DisplayObject:SetActive(active)
+    if self.active == active then
+        return
+    end
+    self:SetActiveExtend(active)
+end
+
+---onInit
+---@param evt Framework.event.Event
+function DisplayObject:onBind(evt)
+    self:SetActiveExtend(self.active)    
 end
 
 return DisplayObject

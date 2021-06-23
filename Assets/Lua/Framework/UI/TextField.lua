@@ -21,4 +21,9 @@ function TextField:GetText()
     return self.text
 end
 
+function TextField:onBind(evt)
+    super.onBind(self, evt)
+    self:SetTextExtend(self.text)
+end
+
 return TextField

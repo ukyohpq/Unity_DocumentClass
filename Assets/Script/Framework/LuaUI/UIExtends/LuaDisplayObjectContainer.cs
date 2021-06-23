@@ -49,7 +49,7 @@ namespace Framework.LuaUI.UIExtends
                 {
                     BTLog.Error("parentBinder:{0}", parentBinder.name);
                 }
-//                BTLog.Error("parent:{0}, child:{0}", parentBinder.name, childBinder.name);
+                BTLog.Error("parent:{0}, child:{0}", parentBinder.name, childBinder.name);
                 childBinder.transform.parent = parentBinder.transform;
                 BTLog.Error("after AddChildExtend");
             }

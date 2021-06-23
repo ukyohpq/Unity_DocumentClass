@@ -78,16 +78,16 @@ namespace Framework.LuaUI.Components
 
                 GameObjectLuaBinder childBinder;
                 LuaTable lt = null;
+                var curTop = luaState.LuaGetTop();
 //                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
                 switch (suffix)
                 {
                     case ComponentSuffix.Doc:
                         var childDoc = child.GetComponent<DocumentClass>();
+                        childBinder = childDoc;
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childDoc.BindLuaTable(lt);
                         childDoc.BindLuaClass(luaState);
-                        childDoc.Container = childDoc.transform;
                         break;
                     case ComponentSuffix.Button:
                         var childBtn = child.GetComponent<PointerEventHandler>();
@@ -95,24 +95,9 @@ namespace Framework.LuaUI.Components
                         {
                             childBtn = child.gameObject.AddComponent<PointerEventHandler>();
                         }
+                        childBinder = childBtn;
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childBtn.BindLuaTable(lt);
-                        luaState.LuaPop(1);
-                        break;
-                    case ComponentSuffix.Text:
-                        childBinder = child.GetComponent<GameObjectLuaBinder>();
-                        if (childBinder == null)
-                        {
-                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
-                        }
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        luaState.LuaGetField(-1, "text");
-                        var t = luaState.ToVariant(-1) as string;
-                        childBinder.GetComponent<Text>().text = t;
-                        luaState.LuaPop(2);
                         break;
                     case ComponentSuffix.ScrollView:
                         childBinder = child.GetComponent<GameObjectLuaBinder>();
@@ -122,38 +107,7 @@ namespace Framework.LuaUI.Components
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
                         childBinder.Container = childBinder.transform.Find("Viewport/Content");
-                        luaState.LuaPop(1);
-                        break;
-                    case ComponentSuffix.Image:
-                        childBinder = child.GetComponent<GameObjectLuaBinder>();
-                        if (childBinder == null)
-                        {
-                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
-                        }
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        luaState.LuaGetField(-1, "imageStr");
-                        var imageStr = luaState.LuaToString(-1);
-                        luaState.LuaPop(2);
-                        if (imageStr == "")
-                        {
-                            break;
-                        }
-                        var strParams = imageStr.Split('|');
-                        switch (strParams.Length)
-                        {
-                            case 1:
-                                LoaderManager.LoadImage(lt, strParams[0]);
-                                break;
-                            case 2:
-                                LoaderManager.LoadAtlasImage(lt, strParams[0], strParams[1]);
-                                break;
-                            default:
-                                break;
-                        }
                         break;
                     default:
                         childBinder = child.GetComponent<GameObjectLuaBinder>();
@@ -163,13 +117,11 @@ namespace Framework.LuaUI.Components
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        luaState.LuaPop(1);
                         break;
                 }
-
+                childBinder.BindLuaTable(lt);
+                luaState.LuaSetTop(curTop);
                 BTLog.Debug("bind {0}. name:{1} childName:{2}", suffix, trans.name, childName);
-
             }
         }
         
@@ -184,7 +136,19 @@ namespace Framework.LuaUI.Components
             {
                 CreatePrefabAndBindLuaClass(MainGame.Ins.LuaState);
             }
-//            BTLog.Error("documentclass contextID:{0}", contextID);
+            BTLog.Error("SET CONTAINER:{0}", name);
+            Container = transform;
+
+            var ls = GetLuaState();
+            PushLuaTable();
+            ls.LuaGetField(-1, "parent");
+            ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
+            var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
+            if (parentGo != null)
+            {
+                transform.parent = parentGo.Container;
+            }
+            ls.LuaPop(2);
         }
 
 //        通过在cs端创建lua的Prefab对象进行绑定

@@ -7,6 +7,7 @@
 Event = class("Framework.event.Event")
 Event.COMPLETE = "COMPLETE"
 Event.INIT = "INIT"
+Event.ON_BIND = "OnBind"
 
 
 function Event:ctor(name, data)

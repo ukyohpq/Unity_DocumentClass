@@ -10,6 +10,7 @@ function logic_04:ctor()
     self.numClick = 0
     self.ui = UI_04.New()
     self.ui.m_Button:AddEventListener("click", self, self.onClick)
+    --self.ui.m_Button:SetActive(false)
 end
 
 ---onClick
