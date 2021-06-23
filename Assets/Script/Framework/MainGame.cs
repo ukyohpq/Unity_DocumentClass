@@ -93,7 +93,7 @@ public class MainGame : MonoBehaviour
         ;
         luaState.DoFile("Framework\\Main.lua");
         RequireBaseFiles();
-        LuaUIManager.InitLuaUI(luaState);
+        LuaUIExtendManager.InitExtends(luaState);
         CallMain();
     }
 

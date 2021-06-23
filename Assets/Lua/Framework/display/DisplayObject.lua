@@ -4,16 +4,18 @@ local super = require("Framework.event.EventDispatcher")
 ---@field private isDestroyed boolean
 ---@field private name string
 ---@field private parent Framework.display.DisplayObjectContainer
+---@field private draggable boolean
 DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
     super.ctor(self)
     self.isDestroyed = false
+    self.draggable = false
 end
 
 function DisplayObject:Destroy()
     self:RemoveAllEventListeners()
-    LogUtil.LogError("try CSDestroy:%s", self:GetName())
+    --LogUtil.LogError("try CSDestroy:%s", self:GetName())
     self.isDestroyed = true
     if self.DestroyToCS then
         self:DestroyToCS()
@@ -38,6 +40,10 @@ function DisplayObject:DispatchEvent(evt)
     if evt:IsBubble() and self.parent then
         self.parent:DispatchEvent(evt)
     end
+end
+
+function DisplayObject:SetDraggable(draggable)
+    self.draggable = draggable
 end
 
 return DisplayObject

@@ -90,10 +90,10 @@ namespace Framework.LuaUI.Components
                         childDoc.Container = childDoc.transform;
                         break;
                     case ComponentSuffix.Button:
-                        var childBtn = child.GetComponent<LuaButton>();
+                        var childBtn = child.GetComponent<PointerEventHandler>();
                         if (childBtn == null)
                         {
-                            childBtn = child.gameObject.AddComponent<LuaButton>();
+                            childBtn = child.gameObject.AddComponent<PointerEventHandler>();
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
