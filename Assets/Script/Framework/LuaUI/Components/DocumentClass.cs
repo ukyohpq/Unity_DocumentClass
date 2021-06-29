@@ -107,7 +107,6 @@ namespace Framework.LuaUI.Components
                         }
                         luaState.LuaGetField(topIdx, childName);
                         lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.Container = childBinder.transform.Find("Viewport/Content");
                         break;
                     default:
                         childBinder = child.GetComponent<GameObjectLuaBinder>();
@@ -136,8 +135,6 @@ namespace Framework.LuaUI.Components
             {
                 CreatePrefabAndBindLuaClass(MainGame.Ins.LuaState);
             }
-            BTLog.Error("SET CONTAINER:{0}", name);
-            Container = transform;
 
             var ls = GetLuaState();
             PushLuaTable();
@@ -146,7 +143,15 @@ namespace Framework.LuaUI.Components
             var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
             if (parentGo != null)
             {
-                transform.parent = parentGo.Container;
+                if (parentGo.Container != null)
+                {
+                    transform.parent = parentGo.Container;
+                }
+                else
+                {
+                    transform.parent = parentGo.transform;
+                }
+                
             }
             ls.LuaPop(2);
         }
