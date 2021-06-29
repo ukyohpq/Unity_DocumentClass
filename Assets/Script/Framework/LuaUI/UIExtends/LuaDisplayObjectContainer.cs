@@ -1,5 +1,6 @@
 using System;
 using Babeltime.Log;
+using Framework.core.Components;
 using LuaInterface;
 using UnityEngine;
 
@@ -24,7 +25,6 @@ namespace Framework.LuaUI.UIExtends
         {
             try
             {
-                BTLog.Error("before AddChildExtend");
                 ToLua.CheckArgsCount(L, 2);
                 LuaDLL.lua_pushvalue(L, -2);
                 LuaDLL.lua_pushvalue(L, -2);
@@ -36,22 +36,10 @@ namespace Framework.LuaUI.UIExtends
                     return 0;
                 }
                 var childBinder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
-                BTLog.Error("childBinder:{0}", childBinder == null);
-                if (childBinder != null)
-                {
-                    BTLog.Error("child:{0}", childBinder.name);
-                }
                 LuaDLL.lua_pop(L, 1);
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
-                var parentBinder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
-                BTLog.Error("parent:{0}", parentBinder == null);
-                if (parentBinder != null)
-                {
-                    BTLog.Error("parentBinder:{0}", parentBinder.name);
-                }
-                BTLog.Error("parent:{0}, child:{0}", parentBinder.name, childBinder.name);
-                childBinder.transform.parent = parentBinder.transform;
-                BTLog.Error("after AddChildExtend");
+                var parentBinder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                childBinder.transform.parent = parentBinder.Container;
             }
             catch (Exception e)
             { 

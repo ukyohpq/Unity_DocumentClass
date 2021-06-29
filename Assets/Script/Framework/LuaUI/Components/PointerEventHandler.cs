@@ -48,7 +48,7 @@ namespace Framework.LuaUI.Components
 
         public void DispatchEvent(string eventName, PointerEventData eventData, bool isBubble)
         {
-            BTLog.Error("DispatchEvent:{0} pressPosition:{1} position:{2} delta:{3} dragging:{4}", eventName, eventData.pressPosition, eventData.position, eventData.delta, eventData.dragging);
+//            BTLog.Error("DispatchEvent:{0} pressPosition:{1} position:{2} delta:{3} dragging:{4}", eventName, eventData.pressPosition, eventData.position, eventData.delta, eventData.dragging);
             var ls = GetLuaState();
             PushLuaTable();
             ls.LuaGetField(-1, "DispatchEvent");
