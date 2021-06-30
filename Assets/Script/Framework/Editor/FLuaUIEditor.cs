@@ -13,12 +13,26 @@ namespace Framework.Editor
 {
     public class FLuaUIEditor
     {
-        private static void CommonCreate<T>() where T:GameObjectLuaBinder
+        private static void CommonCreate<T>(string menuPath) where T:GameObjectLuaBinder
         {
+            var parent = Selection.activeGameObject;
+            EditorApplication.ExecuteMenuItem(menuPath);
             var go = Selection.activeGameObject;
+            if (parent != null)
+            {
+                go.transform.parent = parent.transform;
+                var canvas = parent.transform.Find("Canvas");
+                if (canvas != null)
+                {
+                    canvas.parent = null;
+                    GameObject.Destroy(canvas.gameObject);
+                }
+            }
+            
             var binder = go.AddComponent<T>();
             binder.Container = go.transform;
             go.transform.localPosition = Vector3.zero;
+            
         }
         
         [MenuItem("GameObject/FLuaUI/make scene", false, 1)]
@@ -48,52 +62,41 @@ namespace Framework.Editor
         [MenuItem("GameObject/FLuaUI/text", false, 1)]
         public static void FLuaUIText()
         {
-            EditorApplication.ExecuteMenuItem("GameObject/UI/Text");
-            CommonCreate<FLuaText>();
+            CommonCreate<FLuaText>("GameObject/UI/Text");
         }
 
         [MenuItem("GameObject/FLuaUI/Button")]
         public static void FLuaUIButton()
         {
-            EditorApplication.ExecuteMenuItem("GameObject/UI/Button");
-            CommonCreate<FLuaButton>();
+            CommonCreate<FLuaButton>("GameObject/UI/Button");
         }
         
         [MenuItem("GameObject/FLuaUI/Image")]
         public static void FLuaUIImage()
         {
-            EditorApplication.ExecuteMenuItem("GameObject/UI/Image");
-            CommonCreate<FLuaImage>();
+            CommonCreate<FLuaImage>("GameObject/UI/Image");
         }
         
         [MenuItem("GameObject/FLuaUI/DocumentClass")]
         public static void FLuaUIDocumentClass()
         {
-            var parent = Selection.activeGameObject;
-            EditorApplication.ExecuteMenuItem("GameObject/Create Empty");
-            var go = Selection.activeGameObject;
-            if (parent != null)
-            {
-                go.transform.parent = parent.transform;
-            }
-            CommonCreate<DocumentClass>();
+            CommonCreate<DocumentClass>("GameObject/Create Empty");
         }
         
         [MenuItem("GameObject/FLuaUI/Scroll View", false, 1)]
         public static void FLuaUIScrollView()
         {
-            EditorApplication.ExecuteMenuItem("GameObject/UI/Scroll View");
+            CommonCreate<FLuaScrollView>("GameObject/UI/Scroll View");
             var go = Selection.activeGameObject;
             var sr = go.GetComponent<ScrollRect>();
             sr.horizontalScrollbar = null;
             sr.verticalScrollbar = null;
             go.transform.Find("Scrollbar Horizontal").gameObject.SetActive(false);
             go.transform.Find("Scrollbar Vertical").gameObject.SetActive(false);
-            var binder = go.AddComponent<GameObjectLuaBinder>();
+            var binder = go.GetComponent<FLuaScrollView>();
             var content = go.transform.Find("Viewport/Content");
             binder.Container = content;
             content.gameObject.AddComponent<GridLayoutGroup>();
-            go.transform.localPosition = Vector3.zero;
             content.localPosition = Vector3.zero;
         }
     }
