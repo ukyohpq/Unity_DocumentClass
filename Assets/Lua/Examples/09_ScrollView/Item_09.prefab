@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47afd76c531f2240806b5cf3272f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   LuaClass: Examples.09_ScrollView.Item_09
 --- !u!1 &7100851327257746015
 GameObject:
@@ -61,6 +62,7 @@ GameObject:
   - component: {fileID: 7081274934735830930}
   - component: {fileID: 5271671174580509592}
   - component: {fileID: 8859643557213050108}
+  - component: {fileID: 5444141967403800069}
   m_Layer: 5
   m_Name: icon_Image
   m_TagString: Untagged
@@ -122,3 +124,16 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &5444141967403800069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100851327257746015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b723d7a6592145a3b8fbfac632d7f03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 7081274934735830930}

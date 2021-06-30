@@ -1,9 +1,12 @@
 using System;
+using Babeltime.Log;
 using Framework.core.Components;
 using Framework.LuaUI.Components;
 using Script.Framework.LuaUI.Components;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Framework.Editor
@@ -16,6 +19,30 @@ namespace Framework.Editor
             var binder = go.AddComponent<T>();
             binder.Container = go.transform;
             go.transform.localPosition = Vector3.zero;
+        }
+        
+        [MenuItem("GameObject/FLuaUI/make scene", false, 1)]
+//        TODO 不知道怎么在当前目录下创建场景，就只能先手动创建场景，再代码添加gameobject和component
+        public static void FLuaUImakeScene()
+        {
+            EditorApplication.ExecuteMenuItem("GameObject/UI/Canvas");
+            Selection.activeGameObject.name = "UIRoot";
+            EditorApplication.ExecuteMenuItem("GameObject/Create Empty");
+            var main = Selection.activeGameObject;
+            main.name = "MainGame";
+            var cmp = main.AddComponent<MainGame>();
+            var scene = EditorSceneManager.GetActiveScene();
+            var path = scene.path;
+            var luaIndex = path.IndexOf("/Lua/");
+            if (luaIndex != -1)
+            {
+                path = path.Substring(luaIndex + 5);
+            }
+            path = path.Replace(scene.name + ".unity", "");
+            path = path.Replace("/", ".");
+            path += "Logic";
+            cmp.luaLogicPath = path;
+            EditorSceneManager.SaveOpenScenes();
         }
         
         [MenuItem("GameObject/FLuaUI/text", false, 1)]
@@ -42,7 +69,13 @@ namespace Framework.Editor
         [MenuItem("GameObject/FLuaUI/DocumentClass")]
         public static void FLuaUIDocumentClass()
         {
+            var parent = Selection.activeGameObject;
             EditorApplication.ExecuteMenuItem("GameObject/Create Empty");
+            var go = Selection.activeGameObject;
+            if (parent != null)
+            {
+                go.transform.parent = parent.transform;
+            }
             CommonCreate<DocumentClass>();
         }
         

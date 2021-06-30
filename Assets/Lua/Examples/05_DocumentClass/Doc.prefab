@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 39697208311587109}
   - component: {fileID: 8286962688022849748}
   - component: {fileID: 9124939744776372002}
+  - component: {fileID: 5298906167537271149}
   m_Layer: 5
   m_Name: m_Text
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &5298906167537271149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003807899517420270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c499a1305fd41adae2ed774dc0477fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 0}
 --- !u!1 &3615581467571921870
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +180,7 @@ GameObject:
   - component: {fileID: 867714118020761418}
   - component: {fileID: 9041126079897502058}
   - component: {fileID: 5798363262486487993}
-  - component: {fileID: 8303502041357496137}
+  - component: {fileID: 5788430319195507894}
   m_Layer: 5
   m_Name: m_Button
   m_TagString: Untagged
@@ -269,7 +283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8303502041357496137
+--- !u!114 &5788430319195507894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,9 +292,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7433911648878892721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801635edfca6d9b4a97fdbb875020808, type: 3}
+  m_Script: {fileID: 11500000, guid: 5704aa48f08f408a95668d22fe632324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
 --- !u!1 &8126361536562129907
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,4 +346,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47afd76c531f2240806b5cf3272f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   LuaClass: Examples.05_DocumentClass.UI_Doc

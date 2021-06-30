@@ -6,6 +6,7 @@ using Babeltime.Log;
 using UnityEditor;
 using UnityEngine;
 using Framework.core;
+using Framework.core.Components;
 using Framework.LuaUI.Components;
 using UnityEditor.Experimental.SceneManagement;
 
@@ -169,32 +170,31 @@ return {0}", className));
             for (var i = 0; i < numChildren; i++)
             {
                 var child = trans.GetChild(i);
+                var binder = child.GetComponent<GameObjectLuaBinder>();
+                if (binder == null)
+                {
+                    createLuaFieldByTrans(child, classDesc);
+                    continue;
+                }
                 var childName = child.name;
                 if (nameList.Contains(childName))
                 {
                     throw new Exception(string.Format("组件命名重复:{0}", childName));
                 }
                 nameList.Add(childName);
-                var suffix = Utils.GetSuffixOfGoName(childName);
-//                如果不是合法后缀，则直接进入下一级，继续生成子go的fields
-                if (!Utils.IsValidSuffix(suffix))
-                {
-                    createLuaFieldByTrans(child, classDesc);
-                    continue;
-                }
 
-                var typeName = Utils.GetTypeNameByComponentSuffix(suffix, child);
+                var typeName = binder.GetLuaClassName();
                 classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, typeName));
-                _fields.Add(new []{childName, typeName.Substring(typeName.LastIndexOf(".") + 1), suffix == ComponentSuffix.Doc?"false":""});
+                _fields.Add(new []{childName, typeName.Substring(typeName.LastIndexOf(".") + 1), binder is DocumentClass?"false":""});
 //                _Doc不用对其子go生成field
-                if (suffix != "_Doc")
-                {
-                    createLuaFieldByTrans(child, classDesc);
-                }
-                else
+                if (binder is DocumentClass)
                 {
 //                    _Doc需要require一下
                     classDesc.Insert(1, string.Format("require(\"{0}\")", typeName));
+                }
+                else
+                {
+                    createLuaFieldByTrans(child, classDesc);
                 }
             }
         }

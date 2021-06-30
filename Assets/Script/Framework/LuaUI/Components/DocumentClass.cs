@@ -3,7 +3,6 @@ using LuaInterface;
 using UnityEngine;
 using Framework.core;
 using Framework.core.Components;
-using UnityEngine.UI;
 
 namespace Framework.LuaUI.Components
 {
@@ -68,68 +67,19 @@ namespace Framework.LuaUI.Components
                 var child = trans.GetChild(i);
                 var childName = child.name;
 //                TODO 可以使用组件，而不是命名的方式来进行luafield绑定
-                var binder = child.GetComponent<GameObjectLuaBinder>();
-                if (binder != null)
-                {
-                    BTLog.Error("binder:{0} {1}", binder.name, binder.GetType());  
-                }
-                if (childName == "") continue;
-                var suffix = Utils.GetSuffixOfGoName(childName);
-//                如果不是合法后缀，则直接进入下一级，检测子go有没有需要绑定的
-                if (!Utils.IsValidSuffix(suffix))
+                var childBinder = child.GetComponent<GameObjectLuaBinder>();
+                if (childBinder == null)
                 {
                     BindFieldsOnTrans(child, luaState, topIdx);
                     continue;
                 }
 
-                GameObjectLuaBinder childBinder;
-                LuaTable lt = null;
                 var curTop = luaState.LuaGetTop();
-//                对Doc进行特殊处理，这个不能直接绑定cs组件，需要创建一个lua对象，然后进行绑定
-                switch (suffix)
-                {
-                    case ComponentSuffix.Doc:
-                        var childDoc = child.GetComponent<DocumentClass>();
-                        childBinder = childDoc;
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        childDoc.BindLuaClass(luaState);
-                        break;
-                    case ComponentSuffix.Button:
-                        var childBtn = child.GetComponent<PointerEventHandler>();
-                        if (childBtn == null)
-                        {
-                            childBtn = child.gameObject.AddComponent<PointerEventHandler>();
-                        }
-                        childBinder = childBtn;
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        break;
-                    case ComponentSuffix.ScrollView:
-                        childBinder = child.GetComponent<GameObjectLuaBinder>();
-                        if (childBinder == null)
-                        {
-                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
-                        }
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        break;
-                    default:
-                        childBinder = child.GetComponent<GameObjectLuaBinder>();
-                        if (childBinder == null)
-                        {
-                            childBinder = child.gameObject.AddComponent<GameObjectLuaBinder>();
-                        }
-                        luaState.LuaGetField(topIdx, childName);
-                        lt = luaState.ToVariant(-1) as LuaTable;
-                        childBinder.BindLuaTable(lt);
-                        break;
-                }
+                luaState.LuaGetField(topIdx, childName);
+                var lt = luaState.ToVariant(-1) as LuaTable;
+                childBinder.BindLuaTable(lt);
+                childBinder.OnBindFields(luaState);
                 luaState.LuaSetTop(curTop);
-                BTLog.Debug("bind {0}. name:{1} childName:{2}", suffix, trans.name, childName);
             }
         }
         
@@ -152,15 +102,7 @@ namespace Framework.LuaUI.Components
             var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
             if (parentGo != null)
             {
-                if (parentGo.Container != null)
-                {
-                    transform.parent = parentGo.Container;
-                }
-                else
-                {
-                    transform.parent = parentGo.transform;
-                }
-                
+                transform.parent = parentGo.Container;
             }
             ls.LuaPop(2);
         }
@@ -183,7 +125,12 @@ namespace Framework.LuaUI.Components
         {
             base.OnDestroy();
         }
-        
+
+        public override void OnBindFields(LuaState luaState)
+        {
+            base.OnBindFields(luaState);
+            BindLuaClass(luaState);
+        }
     }
 }
 

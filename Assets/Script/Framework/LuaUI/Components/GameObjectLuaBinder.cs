@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using Babeltime.Log;
 using LuaInterface;
 using UnityEngine;
@@ -171,6 +170,11 @@ namespace Framework.core.Components
         public virtual string GetLuaClassName()
         {
             throw new Exception("must be override");
+        }
+
+        public virtual void OnBindFields(LuaState luaState)
+        {
+            
         }
     }
 }

@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47afd76c531f2240806b5cf3272f296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   LuaClass: Examples.06_Image.UI_06
 --- !u!1 &6061808577673184981
 GameObject:
@@ -62,6 +63,7 @@ GameObject:
   - component: {fileID: 2951677523453227396}
   - component: {fileID: 1057310515352578977}
   - component: {fileID: 5743638543810161584}
+  - component: {fileID: 6439334889408620950}
   m_Layer: 5
   m_Name: m_Image
   m_TagString: Untagged
@@ -123,6 +125,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &6439334889408620950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6061808577673184981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b723d7a6592145a3b8fbfac632d7f03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 0}
 --- !u!1 &6321330253058158724
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +150,7 @@ GameObject:
   - component: {fileID: 4822860269858113301}
   - component: {fileID: 4601624875160416461}
   - component: {fileID: 4195803429961601216}
+  - component: {fileID: 5307239671687494907}
   m_Layer: 5
   m_Name: m_Button
   m_TagString: Untagged
@@ -237,6 +253,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5307239671687494907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6321330253058158724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5704aa48f08f408a95668d22fe632324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 0}
 --- !u!1 &7183252124409254620
 GameObject:
   m_ObjectHideFlags: 0
