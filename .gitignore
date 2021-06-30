@@ -28,7 +28,7 @@ sysinfo.txt
 /Assets/Script/Framework/core/Utils.cs.meta
 
 # .meta
-*.meta
+#*.meta
 
 # .idea相关需要排除
 .idea/
