@@ -31,7 +31,7 @@ namespace Framework.LuaUI.Components
 #endif
         }
 
-        public string GetLuaClassName()
+        public override string GetLuaClassName()
         {
             return LuaClass;
         }
@@ -183,7 +183,6 @@ namespace Framework.LuaUI.Components
         {
             base.OnDestroy();
         }
-        
         
     }
 }

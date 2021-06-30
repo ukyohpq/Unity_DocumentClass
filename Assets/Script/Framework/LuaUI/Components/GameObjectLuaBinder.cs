@@ -167,5 +167,10 @@ namespace Framework.core.Components
         {
             return 0;
         }
+
+        public virtual string GetLuaClassName()
+        {
+            throw new Exception("must be override");
+        }
     }
 }

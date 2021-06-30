@@ -46,7 +46,7 @@ namespace Framework.LuaUI.Components
             DispatchEvent("OnDrop", eventData, false);
         }
 
-        public void DispatchEvent(string eventName, PointerEventData eventData, bool isBubble)
+        private void DispatchEvent(string eventName, PointerEventData eventData, bool isBubble)
         {
 //            BTLog.Error("DispatchEvent:{0} pressPosition:{1} position:{2} delta:{3} dragging:{4}", eventName, eventData.pressPosition, eventData.position, eventData.delta, eventData.dragging);
             var ls = GetLuaState();
