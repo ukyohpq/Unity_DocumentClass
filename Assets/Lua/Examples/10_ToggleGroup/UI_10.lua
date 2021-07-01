@@ -4,12 +4,15 @@ local super = require("Examples.common.CommonPrefab")
 
 ---@class Examples.10_ToggleGroup.UI_10:Examples.common.CommonPrefab
 ---@field Image Framework.UI.Image
+---@field Button Framework.UI.Button
 UI_10 = class("Examples.10_ToggleGroup.UI_10", super)
 
 function UI_10:ctor(autoBind)
     super.ctor(self, autoBind)
 	self.Image = Image.New()
 	self:AddChild(self.Image)
+	self.Button = Button.New()
+	self:AddChild(self.Button)
 end
 
 function UI_10:GetAssetPath()
@@ -20,10 +23,11 @@ function UI_10:GetAssetPath()
     end
 end
 
-return UI_10
 ----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------
----@return Framework.event.Event
+---@field Framework.event.Event
 function UI_10:OnInit(evt)
     super.OnInit(self, evt)
-    LogUtil.LogError("xxxxxxxxxx")
+    LogUtil.LogError("dfgf")
 end
+
+return UI_10

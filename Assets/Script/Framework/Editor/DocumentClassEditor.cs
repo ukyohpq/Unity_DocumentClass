@@ -25,7 +25,7 @@ namespace Framework.Editor
         private const string SUPER_CLASS_TEMPLATE = @"local super = require(""Framework.UI.Prefab"")
 
 ---@class {0}:Framework.UI.Prefab
-CommonPrefab = class(""{0}"")
+CommonPrefab = class(""{0}"", Prefab)
 
 function {1}:ctor(autobind)
     super.ctor(self, autobind)
@@ -143,7 +143,10 @@ return {1}";
                             }
                             break;
                         case 2:
-                            logicLines.Add(line);
+                            if (line.IndexOf("return") != 0)
+                            {
+                                logicLines.Add(line);
+                            }
                             break;
                     }
                 }
@@ -212,10 +215,10 @@ end", className, assetPath,2));
             classDesc = classDesc.Concat(CtorFunction).ToList();
 //            onCompletedFunction.Add("");
             classDesc = classDesc.Concat(GetAssetPathFunction).ToList();
-            classDesc.Add(string.Format(@"
-return {0}", className));
+            classDesc.Add("");
             classDesc.Add(UI_END_CODE);
             classDesc = classDesc.Concat(logicLines).ToList();
+            classDesc.Add(string.Format("return {0}", className));
             File.WriteAllLines(fileName, classDesc);
         }
 
