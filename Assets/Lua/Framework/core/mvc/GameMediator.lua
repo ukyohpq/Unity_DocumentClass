@@ -1,4 +1,4 @@
-super = require("puremvc.patterns.mediator.Mediator")
+local super = require("puremvc.patterns.mediator.Mediator")
 
 ---@class Framework.core.mvc.GameMediator:Mediator
 GameMediator = class("Framework.core.mvc.GameMediator", super)

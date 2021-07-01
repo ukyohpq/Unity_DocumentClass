@@ -24,11 +24,6 @@ function Prefab:ctor(autoBind)
     if autoBind ~= false then
         self:bindExtend()
     end
-    --self:LoadResource()
-end
-
-function Prefab:start()
-    self:StartLogic()
 end
 
 ---OnComplete
@@ -36,10 +31,6 @@ end
 function Prefab:OnInit(evt)
     self.status = 2
     LogUtil.LogError("OnInit:%s", self:GetName())
-end
-
-function Prefab:StartLogic()
-    error("must override!")
 end
 
 function Prefab:GetAssetPath()

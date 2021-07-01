@@ -1,22 +1,15 @@
-------------------------------------------------------------------------------------------
-----------
-----------    不要修改ui代码！
-----------    不要修改ui代码！！
-----------    不要修改ui代码！！！
-----------
-------------------------------------------------------------------------------------------
+----------------------------- 以下为 UI代码 可以修改 -----------------------------------
+---@type Examples.common.CommonPrefab
+local super = require("Examples.common.CommonPrefab")
 
----@type Framework.UI.Prefab
-local super = require("Framework.UI.Prefab")
-
----@class Examples.10_ToggleGroup.UI_10:Framework.UI.Prefab
----@field Button Framework.UI.Button
+---@class Examples.10_ToggleGroup.UI_10:Examples.common.CommonPrefab
+---@field Image Framework.UI.Image
 UI_10 = class("Examples.10_ToggleGroup.UI_10", super)
 
 function UI_10:ctor(autoBind)
     super.ctor(self, autoBind)
-	self.Button = Button.New()
-	self:AddChild(self.Button)
+	self.Image = Image.New()
+	self:AddChild(self.Image)
 end
 
 function UI_10:GetAssetPath()
@@ -28,3 +21,9 @@ function UI_10:GetAssetPath()
 end
 
 return UI_10
+----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------
+---@return Framework.event.Event
+function UI_10:OnInit(evt)
+    super.OnInit(self, evt)
+    LogUtil.LogError("xxxxxxxxxx")
+end

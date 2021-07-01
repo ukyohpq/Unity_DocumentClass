@@ -16,18 +16,30 @@ namespace Framework.Editor
     public class DocumentClassEditor:UnityEditor.Editor
     {
         private SerializedProperty m_LuaClass;
-//        private SerializedProperty m_SuperClass;
+        private SerializedProperty m_SuperClass;
 
         private List<string[]> _fields;
+        private const string UI_BEGIN_CODE = "----------------------------- 以下为 UI代码 可以修改 -----------------------------------";
+        private const string UI_END_CODE = "----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------";
+
+        private const string SUPER_CLASS_TEMPLATE = @"local super = require(""Framework.UI.Prefab"")
+
+---@class {0}:Framework.UI.Prefab
+CommonPrefab = class(""{0}"")
+
+function {1}:ctor(autobind)
+    super.ctor(self, autobind)
+end
+
+return {1}";
         private void OnEnable()
         {
             m_LuaClass = serializedObject.FindProperty("LuaClass");
-//            m_SuperClass = serializedObject.FindProperty("SuperClass");
+            m_SuperClass = serializedObject.FindProperty("SuperClass");
             if (m_LuaClass.stringValue == "")
             {
                 m_LuaClass.stringValue = serializedObject.targetObject.name;
             }
-            
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -45,14 +57,15 @@ namespace Framework.Editor
 文档类: _Doc
 ");
             EditorGUILayout.EndHorizontal();
+//            SuperClassName
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(m_SuperClass, new GUIContent("SuperClass"));
+            EditorGUILayout.EndHorizontal();
 //            LuaClassName
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(m_LuaClass, new GUIContent("LuaClass"));
             EditorGUILayout.EndHorizontal();
-//            SuperClassName
-//            EditorGUILayout.BeginHorizontal();
-//            EditorGUILayout.PropertyField(m_SuperClass, new GUIContent("SuperClass"));
-//            EditorGUILayout.EndHorizontal();
+
             
 //            saveAndCreate
             EditorGUILayout.BeginHorizontal();
@@ -64,40 +77,82 @@ namespace Framework.Editor
             
             serializedObject.ApplyModifiedProperties();
         }
-        
+
+        private void checkSuperClass(string superClassName)
+        {
+            var fileName = getFilePathByClassName(superClassName);
+            if (File.Exists(fileName))
+            {
+                foreach (var line in File.ReadLines(fileName))
+                {
+                    if (line.IndexOf("---@class " + superClassName) != -1)
+                    {
+                        if (line != "---@class " + superClassName + ":Framework.UI.Prefab")
+                        {
+                            EditorUtility.DisplayDialog("警告!",
+                                "在父类中没有找到继承自Framework.UI.Prefab的标记，请确认Prefab绑定类必须继承自Framework.UI.Prefab类型","确定");
+                            return;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (EditorUtility.DisplayDialog("警告!",
+                    string.Format("没有找到类{0}，请确认是否创建？", superClassName), "确定"))
+                {
+                    File.WriteAllText(fileName, string.Format(SUPER_CLASS_TEMPLATE, superClassName, Utils.MakeClassName(superClassName)));
+                }
+            }
+        }
         private void saveAndCreate()
         {
             var go = (target as DocumentClass).gameObject;
             var trans = go.transform;
             var classFullName = m_LuaClass.stringValue.Replace("/", ".");
+            if (classFullName == "")
+            {
+                EditorUtility.DisplayDialog("错误！", "LuaClass不能为空", "确定");
+                return;
+            }
             var className = Utils.MakeClassName(classFullName);
             var fileName = getFilePathByClassName(classFullName);
+            var superClassName = m_SuperClass.stringValue;
+            if (superClassName == "")
+            {
+                superClassName = "Framework.UI.Prefab";
+            }
+            else
+            {
+                checkSuperClass(superClassName);
+            }
+            
+            var logicLines = new List<string>();
             if (File.Exists(fileName))
             {
-                if(EditorUtility.DisplayDialog("警告!", "源文件已经存在，点击确定将进行覆盖", "覆盖", "放弃"))
+                var state = 1;
+                foreach (var line in File.ReadLines(fileName))
                 {
-                    File.Delete(fileName);
-                }
-                else
-                {
-                    return;
+                    switch (state)
+                    {
+                        case 1:
+                            if (line == UI_END_CODE)
+                            {
+                                state = 2;
+                            }
+                            break;
+                        case 2:
+                            logicLines.Add(line);
+                            break;
+                    }
                 }
             }
 
-            var head = @"------------------------------------------------------------------------------------------
-----------
-----------    不要修改ui代码！
-----------    不要修改ui代码！！
-----------    不要修改ui代码！！！
-----------
-------------------------------------------------------------------------------------------
-";
+            var head = UI_BEGIN_CODE;
 //            类描述，包含类定义，继承，字段声明
             var classDesc = new List<string>();
             classDesc.Add(head);
-//            var superClassName = m_SuperClass.stringValue;
-            var superClassName = "Framework.UI.Prefab";
-
             classDesc.Add(string.Format("---@type {0}", superClassName));
             classDesc.Add(string.Format("local super = require(\"{0}\")\n", superClassName));
             classDesc.Add(string.Format("---@class {0}:{1}", classFullName, superClassName));
@@ -159,6 +214,8 @@ end", className, assetPath,2));
             classDesc = classDesc.Concat(GetAssetPathFunction).ToList();
             classDesc.Add(string.Format(@"
 return {0}", className));
+            classDesc.Add(UI_END_CODE);
+            classDesc = classDesc.Concat(logicLines).ToList();
             File.WriteAllLines(fileName, classDesc);
         }
 
@@ -179,7 +236,8 @@ return {0}", className));
                 var childName = child.name;
                 if (nameList.Contains(childName))
                 {
-                    throw new Exception(string.Format("组件命名重复:{0}", childName));
+                    EditorUtility.DisplayDialog("错误!", string.Format("组件命名重复:{0}", childName), "确定");
+                    return;
                 }
                 nameList.Add(childName);
 

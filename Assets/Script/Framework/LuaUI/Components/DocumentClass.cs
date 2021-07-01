@@ -10,8 +10,9 @@ namespace Framework.LuaUI.Components
     {
         [SerializeField]
         private string LuaClass = "";
+        [SerializeField]
+        private string SuperClass = "";
         
-        [NoToLua]
         public void SetLuaTable(LuaTable value)
         {
             BindLuaTable(value);
