@@ -1,4 +1,4 @@
------------------------------ 以下为 UI代码 可以修改 -----------------------------------
+----------------------------- 以下为 UI代码 不可修改 -----------------------------------
 ---@type Examples.common.CommonPrefab
 local super = require("Examples.common.CommonPrefab")
 

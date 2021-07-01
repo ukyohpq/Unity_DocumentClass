@@ -1,11 +1,4 @@
-------------------------------------------------------------------------------------------
-----------
-----------    不要修改ui代码！
-----------    不要修改ui代码！！
-----------    不要修改ui代码！！！
-----------
-------------------------------------------------------------------------------------------
-
+----------------------------- 以下为 UI代码 不可修改 -----------------------------------
 ---@type Framework.UI.Prefab
 local super = require("Framework.UI.Prefab")
 
@@ -14,8 +7,8 @@ local super = require("Framework.UI.Prefab")
 ---@field m_Text Framework.UI.TextField
 UI_04 = class("Examples.04_Button.UI_04", super)
 
-function UI_04:ctor()
-    super.ctor(self)
+function UI_04:ctor(autoBind)
+    super.ctor(self, autoBind)
 	self.m_Button = Button.New()
 	self:AddChild(self.m_Button)
 	self.m_Text = TextField.New()
@@ -30,4 +23,5 @@ function UI_04:GetAssetPath()
     end
 end
 
+----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------
 return UI_04

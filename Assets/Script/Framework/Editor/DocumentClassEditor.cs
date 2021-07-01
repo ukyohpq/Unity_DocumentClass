@@ -19,7 +19,7 @@ namespace Framework.Editor
         private SerializedProperty m_SuperClass;
 
         private List<string[]> _fields;
-        private const string UI_BEGIN_CODE = "----------------------------- 以下为 UI代码 可以修改 -----------------------------------";
+        private const string UI_BEGIN_CODE = "----------------------------- 以下为 UI代码 不可修改 -----------------------------------";
         private const string UI_END_CODE = "----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------";
 
         private const string SUPER_CLASS_TEMPLATE = @"local super = require(""Framework.UI.Prefab"")

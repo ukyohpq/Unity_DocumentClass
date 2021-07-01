@@ -103,7 +103,14 @@ namespace Framework.LuaUI.Components
             var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
             if (parentGo != null)
             {
-                transform.parent = parentGo.Container;
+                if (parentGo.Container != null)
+                {
+                    transform.parent = parentGo.Container;
+                }
+                else
+                {
+                    transform.parent = parentGo.transform;
+                }
             }
             ls.LuaPop(2);
         }
