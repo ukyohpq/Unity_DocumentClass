@@ -1,18 +1,24 @@
 ----------------------------- 以下为 UI代码 不可修改 -----------------------------------
----@type Examples.common.CommonPrefab
-local super = require("Examples.common.CommonPrefab")
+---@type Framework.UI.Prefab
+local super = require("Framework.UI.Prefab")
 
----@class Examples.10_ToggleGroup.UI_10:Examples.common.CommonPrefab
----@field Image Framework.UI.Image
----@field Button Framework.UI.Button
+---@class Examples.10_ToggleGroup.UI_10:Framework.UI.Prefab
+---@field ToggleGroup Framework.UI.ToggleGroup
+---@field Toggle1 Framework.UI.Toggle
+---@field Toggle2 Framework.UI.Toggle
+---@field Text Framework.UI.TextField
 UI_10 = class("Examples.10_ToggleGroup.UI_10", super)
 
 function UI_10:ctor(autoBind)
     super.ctor(self, autoBind)
-	self.Image = Image.New()
-	self:AddChild(self.Image)
-	self.Button = Button.New()
-	self:AddChild(self.Button)
+	self.ToggleGroup = ToggleGroup.New()
+	self:AddChild(self.ToggleGroup)
+	self.Toggle1 = Toggle.New()
+	self:AddChild(self.Toggle1)
+	self.Toggle2 = Toggle.New()
+	self:AddChild(self.Toggle2)
+	self.Text = TextField.New()
+	self:AddChild(self.Text)
 end
 
 function UI_10:GetAssetPath()
@@ -27,7 +33,6 @@ end
 ---@field Framework.event.Event
 function UI_10:OnInit(evt)
     super.OnInit(self, evt)
-    LogUtil.LogError("dfgf")
 end
 
 return UI_10

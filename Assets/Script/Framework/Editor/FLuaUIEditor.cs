@@ -21,7 +21,7 @@ namespace Framework.Editor
             if (parent != null)
             {
                 go.transform.parent = parent.transform;
-                var canvas = parent.transform.Find("Canvas");
+                var canvas = go.transform.root.Find("Canvas");
                 if (canvas != null)
                 {
                     canvas.parent = null;
@@ -98,6 +98,27 @@ namespace Framework.Editor
             binder.Container = content;
             content.gameObject.AddComponent<GridLayoutGroup>();
             content.localPosition = Vector3.zero;
+        }
+
+        [MenuItem("GameObject/FLuaUI/Toggle Group", false, 1)]
+        public static void FLuaUIToggleGroup()
+        {
+            CommonCreate<FLuaToggleGroup>("GameObject/Create Empty");
+            var obj = Selection.activeGameObject;
+            obj.AddComponent<ToggleGroup>();
+            obj.name = "ToggleGroup";
+        }
+        
+        [MenuItem("GameObject/FLuaUI/Toggle", false, 1)]
+        public static void FLuaUIToggle()
+        {
+            CommonCreate<FLuaToggle>("GameObject/UI/Toggle");
+            var toggle = Selection.activeGameObject;
+            var parentGroup = toggle.transform.parent.GetComponent<ToggleGroup>();
+            if (parentGroup != null)
+            {
+                toggle.GetComponent<Toggle>().group = parentGroup;
+            }
         }
     }
 }

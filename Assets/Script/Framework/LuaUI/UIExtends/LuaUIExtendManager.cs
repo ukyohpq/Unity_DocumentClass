@@ -11,6 +11,7 @@ namespace Framework.LuaUI.UIExtends
             LuaDisplayObjectContainer.Extend(ls);
             LuaTextField.Extend(ls);
             LuaDisplayObject.Extend(ls);
+            LuaToggle.Extend(ls);
         }
     }
 }

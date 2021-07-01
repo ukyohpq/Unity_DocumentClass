@@ -38,6 +38,15 @@ function DisplayObjectContainer:GetChildAt(index)
     return self.children[index]
 end
 
+function DisplayObjectContainer:GetChildIndex(child)
+    for i, v in ipairs(self.children) do
+        if v == child then
+            return i
+        end
+    end
+    return -1
+end
+
 function DisplayObjectContainer:GetChildByName(name)
     --TODO
 end

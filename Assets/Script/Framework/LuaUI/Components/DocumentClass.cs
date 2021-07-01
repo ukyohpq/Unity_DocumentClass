@@ -67,11 +67,11 @@ namespace Framework.LuaUI.Components
             {
                 var child = trans.GetChild(i);
                 var childName = child.name;
+                BindFieldsOnTrans(child, luaState, topIdx);
 //                TODO 可以使用组件，而不是命名的方式来进行luafield绑定
                 var childBinder = child.GetComponent<GameObjectLuaBinder>();
                 if (childBinder == null)
                 {
-                    BindFieldsOnTrans(child, luaState, topIdx);
                     continue;
                 }
 

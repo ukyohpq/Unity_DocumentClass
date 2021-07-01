@@ -1,15 +1,28 @@
 local super = DisplayObject
 
----@class Toggle:Framework.display.DisplayObject
-Toggle = class("Toggle", DisplayObject)
+---@class Framework.UI.Toggle:Framework.display.DisplayObject
+---@field isOn boolean
+Toggle = class("Framework.UI.Toggle", DisplayObject)
 
 function Toggle:ctor()
-    
+    super.ctor(self)
+    self.isOn = false
 end
 
----@return boolean
-function Toggle:IsOn()
-    return false
+function Toggle:onBind()
+    self:SetIsOnExtend(self.isOn)
+end
+
+function Toggle:GetIsOn()
+    return self.isOn
+end
+
+function Toggle:SetIsOn(isOn)
+    if self.isOn == isOn then
+        return
+    end
+    self.isOn = isOn
+    self.SetIsOnExtend(isOn)
 end
 
 return Toggle
