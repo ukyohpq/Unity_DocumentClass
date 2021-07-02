@@ -1,6 +1,6 @@
-local super = DisplayObjectContainer
----@class Framework.UI.ToggleGroup:Framework.display.DisplayObjectContainer
+local super = DisplayObject
+---@class Framework.UI.ToggleGroup:Framework.display.DisplayObject
 ---@field activeIndex number
-ToggleGroup = class("Framework.UI.ToggleGroup", DisplayObjectContainer)
+ToggleGroup = class("Framework.UI.ToggleGroup", super)
 
 return ToggleGroup
