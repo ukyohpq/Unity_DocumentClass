@@ -9,6 +9,7 @@ using Framework.core;
 using Framework.core.Components;
 using Framework.LuaUI.Components;
 using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 
 namespace Framework.Editor
 {
@@ -38,7 +39,10 @@ return {1}";
             m_SuperClass = serializedObject.FindProperty("SuperClass");
             if (m_LuaClass.stringValue == "")
             {
-                m_LuaClass.stringValue = serializedObject.targetObject.name;
+                var str = EditorSceneManager.GetActiveScene().path;
+                str = str.Replace(".unity", "");
+                str = str.Replace("/", ".");
+                m_LuaClass.stringValue = str;
             }
             serializedObject.ApplyModifiedProperties();
         }

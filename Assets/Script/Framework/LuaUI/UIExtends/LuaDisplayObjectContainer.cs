@@ -32,7 +32,6 @@ namespace Framework.LuaUI.UIExtends
                 if (LuaDLL.lua_isnil(L, -1))
                 {
                     LuaDLL.lua_pop(L, 2);
-//                    此时child的gameobject还没有创建出来，就不用设置parent了
                     return 0;
                 }
                 var childBinder = ToLua.ToVarObject(L, -1) as MonoBehaviour;

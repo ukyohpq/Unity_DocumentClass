@@ -12,6 +12,7 @@ namespace Framework.LuaUI.UIExtends
             LuaTextField.Extend(ls);
             LuaDisplayObject.Extend(ls);
             LuaToggle.Extend(ls);
+            LuaInputField.Extend(ls);
         }
     }
 }

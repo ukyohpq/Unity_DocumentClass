@@ -53,6 +53,7 @@ function DisplayObject:SetActive(active)
     if self.active == active then
         return
     end
+    self.active = active
     self:SetActiveExtend(active)
 end
 

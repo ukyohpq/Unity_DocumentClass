@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 namespace Framework.LuaUI.UIExtends
 {
-    public class LuaTextField
+    public class LuaInputField
     {
         public static void Extend(LuaState ls)
         {
-            ls.LuaGetGlobal("TextField");
+            ls.LuaGetGlobal("InputField");
             if (ls.LuaIsNil(-1))
             {
                 ls.LuaPop(1);
-                throw new Exception("can not find lua Class: TextField");
+                throw new Exception("can not find lua Class: InputField");
             }
-            ls.LuaPushFunction(SetTextExtend);
-            ls.LuaSetField(-2, "SetTextExtend");
+            ls.LuaPushFunction(SetInteractableExtend);
+            ls.LuaSetField(-2, "SetInteractableExtend");
             ls.LuaPop(1);
         }
 
-        private static int SetTextExtend(IntPtr L)
+        private static int SetInteractableExtend(IntPtr L)
         {
             try
             {
@@ -32,19 +32,17 @@ namespace Framework.LuaUI.UIExtends
                     LuaDLL.lua_pop(L, 1);
                     return 0;
                 }
-
-                var binder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
+                var mono = ToLua.ToVarObject(L, -1) as MonoBehaviour;
                 LuaDLL.lua_pop(L, 1);
-                var text = LuaDLL.lua_tostring(L, -1);
-                var textField = binder.gameObject.GetComponent<Text>();
-                textField.text = text;
+                var input = mono.gameObject.GetComponent<InputField>();
+                var b = LuaDLL.lua_toboolean(L, -1);
+                input.interactable = b;
+                return 0;
             }
             catch (Exception e)
             {
                 return LuaDLL.toluaL_exception(L, e);
             }
-
-            return 0;
         }
     }
 }

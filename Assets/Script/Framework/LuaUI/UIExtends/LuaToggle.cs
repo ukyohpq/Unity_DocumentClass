@@ -27,6 +27,11 @@ namespace Framework.LuaUI.UIExtends
                 ToLua.CheckArgsCount(L, 2);
                 LuaDLL.lua_pushvalue(L, -2);
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                if (LuaDLL.lua_isnil(L, -1))
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
                 var binder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
                 LuaDLL.lua_pop(L, 1);
                 var toggle = binder.gameObject.GetComponent<Toggle>();

@@ -35,7 +35,7 @@ namespace Framework.Editor
             
         }
         
-        [MenuItem("GameObject/FLuaUI/make scene", false, 1)]
+        [MenuItem("GameObject/FLuaUI/Make scene", false, 1)]
 //        TODO 不知道怎么在当前目录下创建场景，就只能先手动创建场景，再代码添加gameobject和component
         public static void FLuaUImakeScene()
         {
@@ -59,7 +59,7 @@ namespace Framework.Editor
             EditorSceneManager.SaveOpenScenes();
         }
         
-        [MenuItem("GameObject/FLuaUI/text", false, 1)]
+        [MenuItem("GameObject/FLuaUI/Text", false, 1)]
         public static void FLuaUIText()
         {
             CommonCreate<FLuaText>("GameObject/UI/Text");
@@ -119,6 +119,12 @@ namespace Framework.Editor
             {
                 toggle.GetComponent<Toggle>().group = parentGroup;
             }
+        }
+        
+        [MenuItem("GameObject/FLuaUI/Input Field", false, 1)]
+        public static void FLuaUIInput()
+        {
+            CommonCreate<FLuaInputField>("GameObject/UI/Input Field");
         }
     }
 }
