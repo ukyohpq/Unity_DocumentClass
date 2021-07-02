@@ -10,6 +10,7 @@ function requireLuaUIFramework(isEditor)
 	end
 	--require顺序不要改变，HotFix要位于所有class前
 	require("Framework.event.Event")
+	require("Framework.event.Delegate")
 	require("Framework.UI.UIImporter")
 end
 

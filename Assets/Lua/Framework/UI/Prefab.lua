@@ -33,6 +33,15 @@ function Prefab:OnInit(evt)
     LogUtil.LogError("OnInit:%s", self:GetName())
 end
 
+---AddInitEvent
+---@param handler fun(evt:Framework.event.Event)
+---@param handlerOwner table
+function Prefab:AddInitEvent(handler, handlerOwner)
+    self:AddEventListener(Event.INIT, handlerOwner, handler)
+end
+
+
+
 function Prefab:GetAssetPath()
     error("must override!")
 end

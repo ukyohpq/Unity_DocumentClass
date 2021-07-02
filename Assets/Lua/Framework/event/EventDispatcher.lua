@@ -1,6 +1,6 @@
 require("Framework.event.Event")
 
-local emptyCaller = {}
+local emptyOwner = {}
 
 
 
@@ -20,17 +20,17 @@ function EventDispatcher:DispatchEvent(evt)
     end
     evt:SetCurrentTarget(self)
     local eventName = evt:GetEventName()
-    local callerMap = self.nameMap[eventName]
-    if callerMap == nil then
-        callerMap = {}
-        self.nameMap[eventName] = callerMap
+    local ownerMap = self.nameMap[eventName]
+    if ownerMap == nil then
+        ownerMap = {}
+        self.nameMap[eventName] = ownerMap
     end
-    for caller, handlerMap in pairs(callerMap) do
+    for owner, handlerMap in pairs(ownerMap) do
         for handler, _ in pairs(handlerMap) do
-            if caller == emptyCaller then
+            if owner == emptyOwner then
                 handler(evt)
             else
-                handler(caller, evt)
+                handler(owner, evt)
             end
         end
     end
@@ -42,29 +42,29 @@ function EventDispatcher:DispatchMessage(eventName, ...)
     self:DispatchEvent(evt)
 end
 
-function EventDispatcher:HasEventHandler(eventName, caller)
-    local callerMap = self.nameMap[eventName]
-    if callerMap == nil then
+function EventDispatcher:HasEventHandler(eventName, owner)
+    local ownerMap = self.nameMap[eventName]
+    if ownerMap == nil then
         return false
     end
-    local curCaller = caller or emptyCaller
-    return callerMap[curCaller] ~= nil
+    local curOwner = owner or emptyOwner
+    return ownerMap[curOwner] ~= nil
 end
 
-function EventDispatcher:AddEventListener(eventName, caller, handler)
+function EventDispatcher:AddEventListener(eventName, handlerOwner, handler)
     if handler == nil then
         return
     end
-    local callerMap = self.nameMap[eventName]
-    if callerMap == nil then
-        callerMap = {}
-        self.nameMap[eventName] = callerMap
+    local ownerMap = self.nameMap[eventName]
+    if ownerMap == nil then
+        ownerMap = {}
+        self.nameMap[eventName] = ownerMap
     end
-    local curCaller = caller or emptyCaller
-    local handlerMap = callerMap[curCaller]
+    local curOwner = handlerOwner or emptyOwner
+    local handlerMap = ownerMap[curOwner]
     if handlerMap == nil then
         handlerMap = {}
-        callerMap[curCaller] = handlerMap
+        ownerMap[curOwner] = handlerMap
     end
     if handlerMap[handler] ~= nil then
         return
@@ -72,16 +72,16 @@ function EventDispatcher:AddEventListener(eventName, caller, handler)
     handlerMap[handler] = 1
 end
 
-function EventDispatcher:RemoveEventListener(eventName, caller, handler)
+function EventDispatcher:RemoveEventListener(eventName, handlerOwner, handler)
     if handler == nil then
         return
     end
-    local callerMap = self.nameMap[eventName]
-    if callerMap == nil then
+    local ownerMap = self.nameMap[eventName]
+    if ownerMap == nil then
         return
     end
-    local curCaller = caller or emptyCaller
-    local handlerMap = callerMap[curCaller]
+    local curOwner = handlerOwner or emptyOwner
+    local handlerMap = ownerMap[curOwner]
     if handlerMap == nil then
         return
     end
