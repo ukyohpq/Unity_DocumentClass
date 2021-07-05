@@ -6,7 +6,10 @@ local super = require("Framework.UI.Prefab")
 UI_02 = class("Examples.02_Event.UI_02", super)
 
 function UI_02:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function UI_02:GetAssetPath()

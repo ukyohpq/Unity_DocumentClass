@@ -7,9 +7,12 @@ local super = require("Framework.UI.Prefab")
 UI_11 = class("Examples.11_TextInput.UI_11", super)
 
 function UI_11:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
 	self.InputField = InputField.New()
 	self:AddChild(self.InputField)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function UI_11:GetAssetPath()

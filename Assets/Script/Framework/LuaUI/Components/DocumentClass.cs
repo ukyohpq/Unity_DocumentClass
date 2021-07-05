@@ -67,11 +67,10 @@ namespace Framework.LuaUI.Components
             {
                 var child = trans.GetChild(i);
                 var childName = child.name;
-                BindFieldsOnTrans(child, luaState, topIdx);
-//                TODO 可以使用组件，而不是命名的方式来进行luafield绑定
                 var childBinder = child.GetComponent<GameObjectLuaBinder>();
                 if (childBinder == null)
                 {
+                    BindFieldsOnTrans(child, luaState, topIdx);
                     continue;
                 }
 
@@ -79,12 +78,18 @@ namespace Framework.LuaUI.Components
                 luaState.LuaGetField(topIdx, childName);
                 var lt = luaState.ToVariant(-1) as LuaTable;
                 childBinder.BindLuaTable(lt);
-                childBinder.OnBindFields(luaState);
+                if (childBinder is DocumentClass)
+                {
+                    (childBinder as DocumentClass).BindLuaClass(luaState);
+                }
+                else
+                {
+                    BindFieldsOnTrans(child, luaState, topIdx);
+                }
                 luaState.LuaSetTop(curTop);
             }
         }
         
-//        TODO 目前暂时确定父类一定是Framework.UI.Prefab类，不使用自定义父类，因为检测自定义父类是从Framework.UI.Prefab继承而来，比较麻烦，而且考虑使用状态而不是继承来重用Prefab
 //        [SerializeField]
 //        private string SuperClass = "";
         // Start is called before the first frame update
@@ -134,11 +139,6 @@ namespace Framework.LuaUI.Components
             base.OnDestroy();
         }
 
-        public override void OnBindFields(LuaState luaState)
-        {
-            base.OnBindFields(luaState);
-            BindLuaClass(luaState);
-        }
     }
 }
 

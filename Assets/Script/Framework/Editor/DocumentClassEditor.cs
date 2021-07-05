@@ -199,7 +199,10 @@ return {1}";
             var CtorFunction = new List<string>();
             CtorFunction.Add(string.Format(
 @"function {0}:ctor(autoBind)
-    super.ctor(self, autoBind){1}
+    super.ctor(self){1}
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 ", className, fieldsStr));
             var GetAssetPathFunction = new List<string>();

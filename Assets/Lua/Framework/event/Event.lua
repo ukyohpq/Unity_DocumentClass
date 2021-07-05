@@ -1,6 +1,6 @@
 ---@class Framework.event.Event
----@field private target
----@field private currentTarget
+---@field private target Framework.event.EventDispatcher
+---@field private currentTarget Framework.event.EventDispatcher
 ---@field private name string
 ---@field private data table
 ---@field private isBubble boolean

@@ -7,9 +7,12 @@ local super = require("Framework.UI.Prefab")
 Child = class("Examples.08_Container.Child", super)
 
 function Child:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
 	self.m_Button = Button.New()
 	self:AddChild(self.m_Button)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function Child:GetAssetPath()

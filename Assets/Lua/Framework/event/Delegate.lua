@@ -1,13 +1,14 @@
 ---@class Framework.event.Delegate
----@field dispatcher Framework.event.EventDispatcher
 ---@field eventName string
+---@field dispatcher Framework.event.EventDispatcher
 Delegate = class("Framework.event.Delegate")
 
 ---ctor
 ---@param eventName string
-function Delegate:ctor(eventName)
+---@param dispatcher Framework.event.EventDispatcher
+function Delegate:ctor(eventName, dispatcher)
     self.eventName = eventName
-    self.dispatcher = EventDispatcher.New()
+    self.dispatcher = dispatcher
 end
 
 ---Add

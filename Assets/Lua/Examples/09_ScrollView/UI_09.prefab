@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 7066097779613871914}
   - component: {fileID: 6024344742459281338}
   - component: {fileID: 7406080244339846067}
-  - component: {fileID: 4096489695303816658}
+  - component: {fileID: 7960129340140547202}
   m_Layer: 5
   m_Name: m_SV
   m_TagString: Untagged
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &4096489695303816658
+--- !u!114 &7960129340140547202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1358995103001683376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd4fd10153ba45399963b004583f70ac, type: 3}
+  m_Script: {fileID: 11500000, guid: a6b599f378d542cc8969f8e0576f37d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Container: {fileID: 3214943390926210309}
@@ -509,6 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container: {fileID: 0}
   LuaClass: Examples.09_ScrollView.UI_09
+  SuperClass: 
 --- !u!1 &5178888117387001683
 GameObject:
   m_ObjectHideFlags: 0

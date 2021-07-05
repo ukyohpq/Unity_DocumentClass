@@ -10,9 +10,9 @@ function logic_05:ctor()
     self.numClick = 0
     self.ui = UI_05.New()
     self.ui.m1_Doc.m_Text:SetText("按钮1")
-    self.ui.m1_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m1_Doc.m_Button.OnClick:Add(self, self.onClick)
     self.ui.m2_Doc.m_Text:SetText("按钮2")
-    self.ui.m2_Doc.m_Button:AddEventListener("click", self, self.onClick)
+    self.ui.m2_Doc.m_Button.OnClick:Add(self, self.onClick)
     --self.ui:Destroy()
     --self.ui = null
 end

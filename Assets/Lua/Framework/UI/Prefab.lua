@@ -15,20 +15,19 @@
 local super = require("Framework.display.DisplayObjectContainer")
 ---@class Framework.UI.Prefab:Framework.display.DisplayObjectContainer
 ---@field private status number
+---@field OnInit Framework.event.Delegate
 Prefab = class("Framework.UI.Prefab", super)
 
-function Prefab:ctor(autoBind)
+function Prefab:ctor()
     super.ctor(self)
     self.status = 0
-    self:AddEventListener(Event.INIT, self, self.OnInit)
-    if autoBind ~= false then
-        self:bindExtend()
-    end
+    self.OnInit = Delegate.New(Event.INIT, self)
+    self.OnInit:Add(self, self.onInit)
 end
 
 ---OnComplete
 ---@param evt Framework.event.Event
-function Prefab:OnInit(evt)
+function Prefab:onInit(evt)
     self.status = 2
     LogUtil.LogError("OnInit:%s", self:GetName())
 end

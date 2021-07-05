@@ -8,11 +8,14 @@ local super = require("Framework.UI.Prefab")
 UI_Doc = class("Examples.05_DocumentClass.UI_Doc", super)
 
 function UI_Doc:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
 	self.m_Button = Button.New()
 	self:AddChild(self.m_Button)
 	self.m_Text = TextField.New()
 	self:AddChild(self.m_Text)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function UI_Doc:GetAssetPath()

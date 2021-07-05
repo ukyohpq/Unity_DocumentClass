@@ -7,7 +7,7 @@ logic_02 = class("Examples.02_Event.logic_02")
 
 function logic_02:ctor()
     self.ui = UI_02.New()
-    self.ui:AddEventListener(Event.INIT, self, self.onInit)
+    self.ui.OnInit:Add(self, self.onInit)
 end
 
 ---onComplete

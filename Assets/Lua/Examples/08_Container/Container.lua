@@ -6,7 +6,10 @@ local super = require("Framework.UI.Prefab")
 Container = class("Examples.08_Container.Container", super)
 
 function Container:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function Container:GetAssetPath()

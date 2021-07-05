@@ -171,10 +171,6 @@ namespace Framework.core.Components
         {
             throw new Exception("must be override");
         }
-
-        public virtual void OnBindFields(LuaState luaState)
-        {
-            
-        }
+        
     }
 }

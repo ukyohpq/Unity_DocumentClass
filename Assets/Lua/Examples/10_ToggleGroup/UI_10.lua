@@ -10,7 +10,7 @@ local super = require("Framework.UI.Prefab")
 UI_10 = class("Examples.10_ToggleGroup.UI_10", super)
 
 function UI_10:ctor(autoBind)
-    super.ctor(self, autoBind)
+    super.ctor(self)
 	self.ToggleGroup = ToggleGroup.New()
 	self:AddChild(self.ToggleGroup)
 	self.Toggle1 = Toggle.New()
@@ -19,6 +19,9 @@ function UI_10:ctor(autoBind)
 	self:AddChild(self.Toggle2)
 	self.Text = TextField.New()
 	self:AddChild(self.Text)
+    if autoBind ~= false then
+        self:bindExtend()
+    end
 end
 
 function UI_10:GetAssetPath()
@@ -30,7 +33,7 @@ function UI_10:GetAssetPath()
 end
 
 ----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------
----@field Framework.event.Event
+---@param evt Framework.event.Event
 function UI_10:OnInit(evt)
     super.OnInit(self, evt)
 end
