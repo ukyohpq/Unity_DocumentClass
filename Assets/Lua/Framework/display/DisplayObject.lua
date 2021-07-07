@@ -6,6 +6,7 @@ local super = require("Framework.event.EventDispatcher")
 ---@field private parent Framework.display.DisplayObjectContainer
 ---@field private draggable boolean
 ---@field private active boolean
+---@field EventBind Framework.event.Delegate
 DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
@@ -13,10 +14,12 @@ function DisplayObject:ctor()
     self.isDestroyed = false
     self.draggable = false
     self.active = true
-    self:AddEventListener(Event.ON_BIND, self, self.onBind)
+    self.EventBind = Delegate.New(Event.ON_BIND, self)
+    self.EventBind:Add(self, self.onBind)
 end
 
 function DisplayObject:Destroy()
+    self.EventBind:Clear()
     self:RemoveAllEventListeners()
     --LogUtil.LogError("try CSDestroy:%s", self:GetName())
     self.isDestroyed = true

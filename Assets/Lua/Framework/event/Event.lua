@@ -11,8 +11,8 @@ Event.ON_BIND = "OnBind"
 
 
 function Event:ctor(name, data)
-    self.name = name
-    self.data = data
+    self.name = name or ""
+    self.data = data or {}
 end
 
 function Event:GetTarget()

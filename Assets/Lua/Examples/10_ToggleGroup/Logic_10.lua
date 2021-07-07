@@ -6,9 +6,9 @@ Logic_10 = class("Logic_10")
 
 function Logic_10:ctor()
     self.ui = UI_10.New()
-    self.ui.ToggleGroup:AddEventListener("ToggleGroupChanged", self, self.onToggleGroupChanged)
-    self.ui.Toggle1:AddEventListener("ToggleChanged", self, self.onToggleChanged)
-    self.ui.Toggle2:AddEventListener("ToggleChanged", self, self.onToggleChanged)
+    self.ui.ToggleGroup.EventToggleGroupChanged:Add(self, self.onToggleGroupChanged)
+    self.ui.Toggle1.EventToggleChanged:Add(self, self.onToggleChanged)
+    self.ui.Toggle2.EventToggleChanged:Add(self, self.onToggleChanged)
     self.ui.Text:SetText("还没点呢")
 end
 

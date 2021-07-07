@@ -1,11 +1,31 @@
 require("Framework.event.Event")
 
 local emptyOwner = {}
+---@class EventHandler
+---@field owner table
+---@field handler fun(evt:Framework.event.Event)
+local EventHandler = class("EventHandler")
+function EventHandler:ctor(owner, handler)
+    self.owner = owner
+    self.handler = handler
+end
 
+---call
+---@param evt Framework.event.Event
+function EventHandler:call(evt)
+    if self.owner then
+        self.handler(self.owner, evt)
+    else
+        self.handler(evt)
+    end
+end
 
+function EventHandler:Equals(owner, handler)
+    return (self.owner == owner) and (self.handler == handler)
+end
 
 ---@class Framework.event.EventDispatcher
----@field private nameMap table<string, table<Framework.event.EventDispatcher, table<function, number>>>
+---@field private nameMap table<string, EventHandler[]>
 EventDispatcher = class("Framework.event.EventDispatcher")
 
 function EventDispatcher:ctor()
@@ -20,19 +40,13 @@ function EventDispatcher:DispatchEvent(evt)
     end
     evt:SetCurrentTarget(self)
     local eventName = evt:GetEventName()
-    local ownerMap = self.nameMap[eventName]
-    if ownerMap == nil then
-        ownerMap = {}
-        self.nameMap[eventName] = ownerMap
+    local handlerMap = self.nameMap[eventName]
+    if handlerMap == nil then
+        handlerMap = {}
+        self.nameMap[eventName] = handlerMap
     end
-    for owner, handlerMap in pairs(ownerMap) do
-        for handler, _ in pairs(handlerMap) do
-            if owner == emptyOwner then
-                handler(evt)
-            else
-                handler(owner, evt)
-            end
-        end
+    for _, eventHandler in ipairs(handlerMap) do
+        eventHandler:call(evt)
     end
 end
 
@@ -42,34 +56,25 @@ function EventDispatcher:DispatchMessage(eventName, ...)
     self:DispatchEvent(evt)
 end
 
-function EventDispatcher:HasEventHandler(eventName, owner)
-    local ownerMap = self.nameMap[eventName]
-    if ownerMap == nil then
-        return false
-    end
-    local curOwner = owner or emptyOwner
-    return ownerMap[curOwner] ~= nil
+function EventDispatcher:HasEventHandler(eventName)
+    return self.nameMap[eventName] ~= nil
 end
 
 function EventDispatcher:AddEventListener(eventName, handlerOwner, handler)
     if handler == nil then
         return
     end
-    local ownerMap = self.nameMap[eventName]
-    if ownerMap == nil then
-        ownerMap = {}
-        self.nameMap[eventName] = ownerMap
-    end
-    local curOwner = handlerOwner or emptyOwner
-    local handlerMap = ownerMap[curOwner]
+    local handlerMap = self.nameMap[eventName]
     if handlerMap == nil then
         handlerMap = {}
-        ownerMap[curOwner] = handlerMap
+        self.nameMap[eventName] = handlerMap
     end
-    if handlerMap[handler] ~= nil then
-        return
+    for _, v in ipairs(handlerMap) do
+        if v:Equals(handlerOwner, handler) then
+            return
+        end
     end
-    handlerMap[handler] = 1
+    table.insert(handlerMap, EventHandler.New(handlerOwner, handler))
 end
 
 function EventDispatcher:RemoveEventListener(eventName, handlerOwner, handler)
@@ -80,12 +85,12 @@ function EventDispatcher:RemoveEventListener(eventName, handlerOwner, handler)
     if ownerMap == nil then
         return
     end
-    local curOwner = handlerOwner or emptyOwner
-    local handlerMap = ownerMap[curOwner]
-    if handlerMap == nil then
-        return
+    for i, v in ipairs(ownerMap) do
+        if v:Equals(handlerOwner, handler) then
+            table.remove(ownerMap, i)
+            break
+        end 
     end
-    handlerMap[handler] = nil
 end
 
 function EventDispatcher:RemoveAllEventListeners()
@@ -96,6 +101,12 @@ end
 ---@private
 function EventDispatcher:reset()
     self.nameMap = {}
+end
+
+---RemoveAllEventsByName
+---@param eventName string
+function EventDispatcher:RemoveAllEventsByName(eventName)
+    self.nameMap[eventName] = nil
 end
 
 return EventDispatcher

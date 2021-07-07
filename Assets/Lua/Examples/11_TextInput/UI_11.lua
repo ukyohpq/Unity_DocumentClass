@@ -4,12 +4,15 @@ local super = require("Framework.UI.Prefab")
 
 ---@class Examples.11_TextInput.UI_11:Framework.UI.Prefab
 ---@field InputField Framework.UI.InputField
+---@field Text Framework.UI.TextField
 UI_11 = class("Examples.11_TextInput.UI_11", super)
 
 function UI_11:ctor(autoBind)
     super.ctor(self)
 	self.InputField = InputField.New()
 	self:AddChild(self.InputField)
+	self.Text = TextField.New()
+	self:AddChild(self.Text)
     if autoBind ~= false then
         self:bindExtend()
     end

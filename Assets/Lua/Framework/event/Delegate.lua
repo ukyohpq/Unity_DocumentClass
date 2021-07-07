@@ -26,7 +26,7 @@ function Delegate:Remove(owner, handler)
 end
 
 function Delegate:Clear()
-    self.dispatcher:RemoveAllEventListeners()    
+    self.dispatcher:RemoveAllEventsByName(self.eventName)    
 end
 
 return Delegate

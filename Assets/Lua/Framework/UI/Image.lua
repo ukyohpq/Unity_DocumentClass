@@ -2,11 +2,13 @@ local super = require("Framework.display.DisplayObject")
 
 ---@class Framework.UI.Image:Framework.display.DisplayObject
 ---@field imageStr string
+---@field EventComplete Framework.event.Delegate
 Image = class("Framework.UI.Image", super)
 
 function Image:ctor()
     super.ctor(self)
     self.imageStr = ""
+    self.EventComplete = Delegate.New(Event.COMPLETE, self)
 end
 
 function Image:SetImage(imagePath)

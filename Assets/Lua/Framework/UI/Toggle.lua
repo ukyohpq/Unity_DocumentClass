@@ -2,11 +2,13 @@ local super = DisplayObject
 
 ---@class Framework.UI.Toggle:Framework.display.DisplayObject
 ---@field isOn boolean
+---@field EventToggleChanged Framework.event.Delegate
 Toggle = class("Framework.UI.Toggle", DisplayObject)
 
 function Toggle:ctor()
     super.ctor(self)
     self.isOn = false
+    self.EventToggleChanged = Delegate.New("ToggleChanged", self)
 end
 
 function Toggle:onBind()

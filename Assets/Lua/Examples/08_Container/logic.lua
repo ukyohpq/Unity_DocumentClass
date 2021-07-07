@@ -11,7 +11,7 @@ function logic_08:ctor()
     local child = Child.New()
     self.ui:AddChild(child)
     self.ui:AddEventListener("click", self, self.onClickUI)
-    child.m_Button:AddEventListener("click", self, self.onClickBtn)
+    child.m_Button.EventClick:Add(self, self.onClickBtn)
     child:AddEventListener("click", self, self.onClickChild)
 end
 

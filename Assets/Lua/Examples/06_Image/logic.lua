@@ -9,8 +9,8 @@ logic_06 = class("Examples.05_DocumentClass.logic_06")
 function logic_06:ctor()
     self.ui = UI_06.New()
     self.imgSwitch = true
-    self.ui.m_Button:AddEventListener("click", self, self.onClick)
-    self.ui.m_Image:AddEventListener(Event.COMPLETE, self, self.onSpriteComplete)
+    self.ui.m_Button.EventClick:Add(self, self.onClick)
+    self.ui.m_Image.EventComplete:Add(self, self.onSpriteComplete)
 end
 
 ---onClick
