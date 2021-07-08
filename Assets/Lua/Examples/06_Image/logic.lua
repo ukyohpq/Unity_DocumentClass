@@ -27,7 +27,8 @@ end
 ---onSpriteComplete
 ---@param evt Framework.event.Event
 function logic_06:onSpriteComplete(evt)
-    LogUtil.LogError("onComplete:%s", evt:GetEventName())
+    local w, h = self.ui.m_Image:GetSize()
+    LogUtil.LogError("w:%s h:%s", w, h)
 end
 
 return logic_06

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container: {fileID: 0}
   LuaClass: Examples.06_Image.UI_06
+  SuperClass: 
 --- !u!1 &6061808577673184981
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b723d7a6592145a3b8fbfac632d7f03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: {fileID: 0}
+  Container: {fileID: 2951677523453227396}
+  AutoNativeSize: 0
 --- !u!1 &6321330253058158724
 GameObject:
   m_ObjectHideFlags: 0

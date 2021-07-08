@@ -94,9 +94,12 @@ namespace Framework.Editor
             go.transform.Find("Scrollbar Horizontal").gameObject.SetActive(false);
             go.transform.Find("Scrollbar Vertical").gameObject.SetActive(false);
             var binder = go.GetComponent<FLuaScrollView>();
-            var content = go.transform.Find("Viewport/Content");
+            var content = go.transform.Find("Viewport/Content") as RectTransform;
             binder.Container = content;
             content.gameObject.AddComponent<GridLayoutGroup>();
+            var fitter = content.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.MinSize;
+            fitter.verticalFit = ContentSizeFitter.FitMode.MinSize;
             content.localPosition = Vector3.zero;
         }
 

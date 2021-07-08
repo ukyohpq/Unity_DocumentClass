@@ -1,7 +1,7 @@
 local super = GameProxy
 
 ---@class CustomGame.fu.globalfu.SceneManagerProxy:Framework.core.mvc.GameProxy
----@field history []string
+---@field history string[]
 ---@field curIndex number
 ---@field maxIndex number
 SceneManagerProxy = class("CustomGame.fu.globalfu.SceneManagerProxy", super)

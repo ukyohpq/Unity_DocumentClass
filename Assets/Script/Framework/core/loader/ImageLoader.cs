@@ -1,5 +1,6 @@
 using Babeltime.Log;
 using LuaInterface;
+using Script.Framework.LuaUI.Components;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +21,13 @@ namespace Framework.core.loader
             lt.Push();
             ls.LuaPushValue(-1);
             ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
-            var binder = ls.ToVariant(-1) as MonoBehaviour;
-            var unityImage = binder.gameObject.GetComponent<Image>(); 
+            var binder = ls.ToVariant(-1) as FLuaImage;
+            var unityImage = binder.gameObject.GetComponent<Image>();
             unityImage.sprite = t;
+            if (binder.AutoNativeSize)
+            {
+                unityImage.SetNativeSize();
+            }
             ls.LuaPop(1);
             ls.LuaGetField(-1, "DispatchMessage");
             if (ls.LuaIsNil(-1))

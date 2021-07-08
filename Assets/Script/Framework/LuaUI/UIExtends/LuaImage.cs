@@ -1,6 +1,9 @@
 using System;
 using Framework.core;
 using LuaInterface;
+using Script.Framework.LuaUI.Components;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Framework.LuaUI.UIExtends
 {
@@ -16,6 +19,10 @@ namespace Framework.LuaUI.UIExtends
             }
             ls.LuaPushFunction(SetImageExtend);
             ls.LuaSetField(-2, "SetImageExtend");
+            ls.LuaPushFunction(SetFillAmountExtend);
+            ls.LuaSetField(-2, "SetFillAmountExtend");
+            ls.LuaPushFunction(GetSizeExtend);
+            ls.LuaSetField(-2, "GetSizeExtend");
             ls.LuaPop(1);
         }
 
@@ -45,6 +52,46 @@ namespace Framework.LuaUI.UIExtends
                 }
 
                 return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+
+        private static int SetFillAmountExtend(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 2);
+                LuaDLL.lua_pushvalue(L, -2);
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                var binder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
+                var img = binder.GetComponent<Image>();
+                var fillAmout = LuaDLL.lua_tonumber(L, -2);
+                img.fillAmount = (float)fillAmout;
+                LuaDLL.lua_pop(L, 1);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+
+        private static int GetSizeExtend(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                var binder = ToLua.ToVarObject(L, -1) as MonoBehaviour;
+                LuaDLL.lua_pop(L, 1);
+                var rect = binder.GetComponent<Image>().sprite.rect;
+                LuaDLL.lua_pushnumber(L, rect.width);
+                LuaDLL.lua_pushnumber(L, rect.height);
+                return 2;
             }
             catch (Exception e)
             {
