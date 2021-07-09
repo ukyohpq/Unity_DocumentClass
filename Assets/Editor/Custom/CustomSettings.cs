@@ -5,8 +5,6 @@ using LuaInterface;
 using UnityEditor;
 
 using BindType = ToLuaMenu.BindType;
-using System.Reflection;
-using Framework.core;
 using UnityEngine.UI;
 
 public static class CustomSettings
