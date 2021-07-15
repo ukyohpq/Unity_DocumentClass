@@ -1,15 +1,15 @@
 version: 2
 importPivots: 1
 tpsheetFileNames:
-- Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
+- Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 - Assets/Lua/Examples/07_ImageWithAtlas/Arena.tpsheet
 - Assets/Lua/Examples/09_ScrollView/Arena.tpsheet
 textureFileNames:
-- Assets/codeandweb.com/Example/SpriteSheet/sprites.png
+- Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites.png
 - Assets/Lua/Examples/07_ImageWithAtlas/Arena.png
 - Assets/Lua/Examples/09_ScrollView/Arena.png
 normalmapFileNames:
-- Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
+- Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites_n.png
 - 
 - 
 enableDebugOutput: 0

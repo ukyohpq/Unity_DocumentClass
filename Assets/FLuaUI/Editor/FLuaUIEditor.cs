@@ -37,7 +37,7 @@ namespace FLuaUI.Editor
         {
             AssetDatabase.ExportPackage(new []
             {
-                "Assets/codeandweb.com/Editor",
+                "Assets/Addons",
                 "Assets/Editor",
                 "Assets/FLuaUI",
                 "Assets/Lua",
