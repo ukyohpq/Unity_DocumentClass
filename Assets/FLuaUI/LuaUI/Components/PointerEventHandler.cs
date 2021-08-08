@@ -1,9 +1,10 @@
+using Babeltime.Log;
 using FLuaUI.Components;
 using UnityEngine.EventSystems;
 
 namespace FLuaUI.LuaUI.Components
 {
-    public class PointerEventHandler:GameObjectLuaBinder, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+    public class PointerEventHandler:GameObjectLuaBinder, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
     {
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -18,26 +19,6 @@ namespace FLuaUI.LuaUI.Components
         public void OnPointerUp(PointerEventData eventData)
         {
             DispatchEvent("up", eventData, true);
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            DispatchEvent("BeginDrag", eventData, false);
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            DispatchEvent("OnEndDrag", eventData, false);
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            DispatchEvent("OnDrag", eventData, false);
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            DispatchEvent("OnDrop", eventData, false);
         }
 
         private void DispatchEvent(string eventName, PointerEventData eventData, bool isBubble)

@@ -4,8 +4,8 @@ local super = require("Framework.event.EventDispatcher")
 ---@field private isDestroyed boolean
 ---@field private name string
 ---@field private parent Framework.display.DisplayObjectContainer
----@field private draggable boolean
 ---@field private active boolean
+---@field private dragging boolean
 ---@field EventBind Framework.event.Delegate
 DisplayObject = class("Framework.display.DisplayObject", super)
 
@@ -48,10 +48,6 @@ function DisplayObject:DispatchEvent(evt)
     end
 end
 
-function DisplayObject:SetDraggable(draggable)
-    self.draggable = draggable
-end
-
 function DisplayObject:SetActive(active)
     if self.active == active then
         return
@@ -63,7 +59,28 @@ end
 ---onInit
 ---@param evt Framework.event.Event
 function DisplayObject:onBind(evt)
-    self:SetActiveExtend(self.active)    
+    self:SetActiveExtend(self.active)  
+end
+
+function DisplayObject:StartDrag()
+    if self.dragging then
+        LogUtil.LogWarning("is dragging already.")
+        return
+    end
+    self.dragging = true
+    self:StartDragExtend()
+end
+
+function DisplayObject:StopDrag()
+    if not self.dragging then
+        return
+    end
+    self.dragging = false
+    self:StopDragExtend()
+end
+
+function DisplayObject:BackToDragStartPoint()
+    self:BackToStartPointExtend()
 end
 
 return DisplayObject

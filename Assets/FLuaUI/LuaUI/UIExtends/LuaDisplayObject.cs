@@ -1,6 +1,8 @@
 using System;
 using FLuaUI.Components;
+using FLuaUI.LuaUI.Components;
 using LuaInterface;
+using UnityEngine;
 
 namespace FLuaUI.LuaUI.UIExtends
 {
@@ -16,6 +18,12 @@ namespace FLuaUI.LuaUI.UIExtends
             }
             ls.LuaPushFunction(SetActiveExtend);
             ls.LuaSetField(-2, "SetActiveExtend");
+            ls.LuaPushFunction(StartDragExtend);
+            ls.LuaSetField(-2, "StartDragExtend");
+            ls.LuaPushFunction(StopDragExtend);
+            ls.LuaSetField(-2, "StopDragExtend");
+            ls.LuaPushFunction(BackToStartPointExtend);
+            ls.LuaSetField(-2, "BackToStartPointExtend");
             ls.LuaPop(1);
         }
 
@@ -43,6 +51,100 @@ namespace FLuaUI.LuaUI.UIExtends
 
             return 0;
         }
-        
+
+        private static int StartDragExtend(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                if (LuaDLL.lua_isnil(L, -1))
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
+
+                var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var dragHandler = binder.gameObject.GetComponent<DragHandler>();
+                if (dragHandler == null)
+                {
+                    dragHandler = binder.gameObject.AddComponent<DragHandler>();
+                }
+
+                dragHandler.StartDrag();
+                LuaDLL.lua_pop(L, 1);
+            }
+            catch (Exception err)
+            {
+                return LuaDLL.toluaL_exception(L, err);
+            }
+
+            return 0;
+        }
+
+        private static int StopDragExtend(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                if (LuaDLL.lua_isnil(L, -1))
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
+
+                var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var dragHandler = binder.gameObject.GetComponent<DragHandler>();
+                if (dragHandler == null)
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
+
+                dragHandler.StopDrag();
+                LuaDLL.lua_pop(L, 1);
+            }
+            catch (Exception err)
+            {
+                return LuaDLL.toluaL_exception(L, err);
+            }
+
+            return 0; 
+        }
+
+        private static int BackToStartPointExtend(IntPtr L)
+        {
+            try
+            {
+                ToLua.CheckArgsCount(L, 1);
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
+                if (LuaDLL.lua_isnil(L, -1))
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
+
+                var binder = ToLua.ToVarObject(L, -1) as GameObjectLuaBinder;
+                var dragHandler = binder.gameObject.GetComponent<DragHandler>();
+                if (dragHandler == null)
+                {
+                    LuaDLL.lua_pop(L, 1);
+                    return 0;
+                }
+
+                dragHandler.BackToDragStartPoint();
+                LuaDLL.lua_pop(L, 1);
+            }
+            catch (Exception err)
+            {
+                return LuaDLL.toluaL_exception(L, err);
+            }
+
+            return 0;
+        }
     }
 }
