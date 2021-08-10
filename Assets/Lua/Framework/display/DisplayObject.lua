@@ -1,5 +1,10 @@
 local super = require("Framework.event.EventDispatcher")
 
+--ui显示对象的生命监控
+local instanceMap = {}
+--ui显示对象数量
+local numInstance = 0
+
 ---@class Framework.display.DisplayObject:Framework.event.EventDispatcher
 ---@field private isDestroyed boolean
 ---@field private name string
@@ -16,6 +21,8 @@ function DisplayObject:ctor()
     self.active = true
     self.EventBind = Delegate.New(Event.ON_BIND, self)
     self.EventBind:Add(self, self.onBind)
+    instanceMap[self] = true
+    numInstance = numInstance + 1
 end
 
 function DisplayObject:Destroy()
@@ -26,6 +33,8 @@ function DisplayObject:Destroy()
     if self.DestroyToCS then
         self:DestroyToCS()
     end
+    instanceMap[self] = nil
+    numInstance = numInstance - 1
 end
 
 function DisplayObject:GetParent()
