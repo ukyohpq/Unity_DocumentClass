@@ -15,30 +15,22 @@ namespace FLuaUI.LuaUI.Components
         private Vector3 _startPosition;
         private Vector2 _startMousePosition;
         private PointerEventHandler _dropObj;
+        private Transform originParent;
         public void StartDrag()
         {
             _dragging = true;
+            originParent = transform.parent;
+            MainGame.Ins.MoveToDraggingStage(gameObject);
             _startMousePosition = EventSystem.current.currentInputModule.input.mousePosition;
             _startPosition = transform.position;
             _current = this;
-            ActiveCanvasGroup(false);
         }
-
-        private void ActiveCanvasGroup(bool active)
-        {
-            var cg = gameObject.GetComponent<CanvasGroup>();
-            if (cg == null)
-            {
-                cg = gameObject.AddComponent<CanvasGroup>();
-            }
-            cg.interactable = active;
-            cg.blocksRaycasts = active;
-        }
+        
         public bool StopDrag()
         {
+            transform.parent = originParent;
             _dragging = false;
             _current = null;
-            ActiveCanvasGroup(true);
             if (_dropObj != null)
             {
                 var evt = new PointerEventData(EventSystem.current);

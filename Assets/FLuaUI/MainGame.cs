@@ -27,6 +27,9 @@ namespace FLuaUI
 
         private GameObject uiRoot;
 
+        private GameObject normalUIStage;
+
+        private GameObject draggingUIStage;
 //    private GameObject uiStage;
 //    private GameObject uiBackstage;
         private void Awake()
@@ -230,7 +233,25 @@ namespace FLuaUI
             {
                 throw new Exception("can not find UIRoot");
             }
-
+            
+            normalUIStage = GameObject.Find("UIRoot/NormalUIStage");
+            if (normalUIStage == null)
+            {
+                normalUIStage = new GameObject("NormalUIStage");
+                normalUIStage.transform.parent = uiRoot.transform;
+                normalUIStage.transform.localPosition = Vector3.zero;
+            }
+            
+            draggingUIStage = GameObject.Find("UIRoot/DraggingUIStage");
+            if (draggingUIStage == null)
+            {
+                draggingUIStage = new GameObject("DraggingUIStage");
+                draggingUIStage.transform.parent = uiRoot.transform;
+                draggingUIStage.transform.localPosition = Vector3.zero;
+                var cg = draggingUIStage.AddComponent<CanvasGroup>();
+                cg.interactable = false;
+                cg.blocksRaycasts = false;
+            }
 //        uiStage = GameObject.Find("UIStage");
 //        if (uiStage == null)
 //        {
@@ -252,9 +273,12 @@ namespace FLuaUI
         public void AddChild2Stage(GameObject child)
         {
 //        child.transform.parent = uiStage.transform;
-            child.transform.parent = uiRoot.transform;
+            child.transform.parent = normalUIStage.transform;
         }
 
-
+        public void MoveToDraggingStage(GameObject obj)
+        {
+            obj.transform.parent = draggingUIStage.transform;
+        }
     }
 }
