@@ -7,9 +7,8 @@ function Logic_12:ctor()
     self.ui = UI_12.New()
     self.ui.Image.EventDown:Add(self, self.onDown)
     self.ui.Image.EventUp:Add(self, self.onUp)
-    self.ui.Image_1.EventEnter:Add(self, self.onEnter)
-    self.ui.Image_1.EventExit:Add(self, self.onExit)
-    self.ui.Image_1.EventDrop:Add(self, self.onDrop)
+    self.ui.Image_1.EventDragEnter:Add(self, self.onEnter)
+    self.ui.Image_1.EventDragExit:Add(self, self.onExit)
 end
 
 function Logic_12:onDown(evt)
@@ -17,7 +16,9 @@ function Logic_12:onDown(evt)
 end
 
 function Logic_12:onUp(evt)
-    if self.ui.Image:StopDrag() then
+    local dropObj = self.ui.Image:StopDrag()
+    if dropObj ~= nil then
+        LogUtil.LogError("drop:%s", dropObj:GetName())
         self.ui.Image:BackToDragStartPoint()
     end
 end
@@ -28,10 +29,6 @@ end
 
 function Logic_12:onExit(evt)
     LogUtil.LogError("exit")
-end
-
-function Logic_12:onDrop(evt)
-    LogUtil.LogError("drop")
 end
 
 return Logic_12

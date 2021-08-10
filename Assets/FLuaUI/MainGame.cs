@@ -272,7 +272,6 @@ namespace FLuaUI
 
         public void AddChild2Stage(GameObject child)
         {
-//        child.transform.parent = uiStage.transform;
             child.transform.parent = normalUIStage.transform;
         }
 

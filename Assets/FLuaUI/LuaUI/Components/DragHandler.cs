@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,6 +17,12 @@ namespace FLuaUI.LuaUI.Components
         private Vector2 _startMousePosition;
         private PointerEventHandler _dropObj;
         private Transform originParent;
+
+        private void Start()
+        {
+            _startPosition = transform.position;
+        }
+
         public void StartDrag()
         {
             _dragging = true;
@@ -26,20 +33,14 @@ namespace FLuaUI.LuaUI.Components
             _current = this;
         }
         
-        public bool StopDrag()
+        public PointerEventHandler StopDrag()
         {
             transform.parent = originParent;
             _dragging = false;
             _current = null;
-            if (_dropObj != null)
-            {
-                var evt = new PointerEventData(EventSystem.current);
-                _dropObj.Drop(evt);
-                _dropObj = null;
-                return true;
-            }
-
-            return false;
+            var obj = _dropObj;
+            _dropObj = null;
+            return obj;
         }
 
         public void BackToDragStartPoint()

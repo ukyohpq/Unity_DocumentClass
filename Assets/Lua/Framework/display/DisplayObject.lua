@@ -80,9 +80,11 @@ function DisplayObject:StartDrag()
     self:StartDragExtend()
 end
 
+---StopDrag
+---@return Framework.display.InterActiveObject
 function DisplayObject:StopDrag()
     if not self.dragging then
-        return false
+        return nil
     end
     self.dragging = false
     return self:StopDragExtend()

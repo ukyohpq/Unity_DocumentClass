@@ -25,7 +25,7 @@ namespace FLuaUI.LuaUI.Components
             if (DragHandler.IsDragging)
             {
                 DragHandler.Current.SetCurrentDropObj(this);
-                DispatchEvent("enter", eventData, false);
+                DispatchEvent("dragEnter", eventData, false);
             }
         }
 
@@ -34,15 +34,10 @@ namespace FLuaUI.LuaUI.Components
             if (DragHandler.IsDragging)
             {
                 DragHandler.Current.SetCurrentDropObj(null);
-                DispatchEvent("exit", eventData, false);
+                DispatchEvent("dragExit", eventData, false);
             }
         }
 
-        public void Drop(PointerEventData eventData)
-        {
-            DispatchEvent("drop", eventData, false);
-        }
-        
         private void DispatchEvent(string eventName, PointerEventData eventData, bool isBubble)
         {
 //            BTLog.Error("DispatchEvent:{0} pressPosition:{1} position:{2} delta:{3} dragging:{4}", eventName, eventData.pressPosition, eventData.position, eventData.delta, eventData.dragging);

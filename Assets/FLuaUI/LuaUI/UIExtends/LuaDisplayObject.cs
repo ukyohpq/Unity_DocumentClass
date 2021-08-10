@@ -103,9 +103,17 @@ namespace FLuaUI.LuaUI.UIExtends
                     return 0;
                 }
 
-                var ret = dragHandler.StopDrag();
+                var obj = dragHandler.StopDrag();
                 LuaDLL.lua_pop(L, 1);
-                LuaDLL.lua_pushboolean(L, ret);
+                if (obj == null)
+                {
+                    LuaDLL.lua_pushnil(L);
+                }
+                else
+                {
+                    obj.PushLuaTable();
+                }
+                
             }
             catch (Exception err)
             {
