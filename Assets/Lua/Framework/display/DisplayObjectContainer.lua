@@ -1,6 +1,6 @@
-local super = require("Framework.display.DisplayObject")
+local super = require("Framework.display.InterActiveObject")
 
----@class Framework.display.DisplayObjectContainer:Framework.display.DisplayObject
+---@class Framework.display.DisplayObjectContainer:Framework.display.InterActiveObject
 ---@field private children Framework.display.DisplayObject[]
 DisplayObjectContainer = class("Framework.display.DisplayObjectContainer", super)
 

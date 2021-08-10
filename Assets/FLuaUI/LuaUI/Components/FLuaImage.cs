@@ -1,8 +1,6 @@
-using FLuaUI.Components;
-
 namespace FLuaUI.LuaUI.Components
 {
-    public class FLuaImage:GameObjectLuaBinder
+    public class FLuaImage:PointerEventHandler
     {
         public bool AutoNativeSize;
         public override string GetLuaClassName()

@@ -1,6 +1,6 @@
-local super = require("Framework.display.DisplayObject")
+local super = require("Framework.display.InterActiveObject")
 
----@class Framework.UI.Image:Framework.display.DisplayObject
+---@class Framework.UI.Image:Framework.display.InterActiveObject
 ---@field imageStr string
 ---@field EventComplete Framework.event.Delegate
 ---@field fillAmount number

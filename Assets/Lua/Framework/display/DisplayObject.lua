@@ -82,10 +82,10 @@ end
 
 function DisplayObject:StopDrag()
     if not self.dragging then
-        return
+        return false
     end
     self.dragging = false
-    self:StopDragExtend()
+    return self:StopDragExtend()
 end
 
 function DisplayObject:BackToDragStartPoint()

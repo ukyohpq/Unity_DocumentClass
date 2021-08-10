@@ -2,7 +2,6 @@ using System;
 using FLuaUI.Components;
 using FLuaUI.LuaUI.Components;
 using LuaInterface;
-using UnityEngine;
 
 namespace FLuaUI.LuaUI.UIExtends
 {
@@ -104,15 +103,16 @@ namespace FLuaUI.LuaUI.UIExtends
                     return 0;
                 }
 
-                dragHandler.StopDrag();
+                var ret = dragHandler.StopDrag();
                 LuaDLL.lua_pop(L, 1);
+                LuaDLL.lua_pushboolean(L, ret);
             }
             catch (Exception err)
             {
                 return LuaDLL.toluaL_exception(L, err);
             }
 
-            return 0; 
+            return 1; 
         }
 
         private static int BackToStartPointExtend(IntPtr L)
