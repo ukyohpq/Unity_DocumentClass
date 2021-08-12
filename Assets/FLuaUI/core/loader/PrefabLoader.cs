@@ -17,7 +17,11 @@ namespace FLuaUI.core.loader
         {
             var fc = lt["GetAssetPath"] as LuaFunction;
             var path = fc.Invoke<string>();
+#if UNITY_EDITOR
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+#else
+            var prefab = Resources.Load<GameObject>(path);
+#endif
             if (prefab == null)
             {
                 BTLog.Error("can not find prefab in path:{0}", path);
