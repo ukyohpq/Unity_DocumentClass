@@ -18,12 +18,7 @@ namespace FLuaUI.core.loader
 
         public override void Load()
         {
-#if UNITY_EDITOR
-            var texs = AssetDatabase.LoadAllAssetsAtPath(atlas);
-#else
-            var texs = Resources.LoadAll<Sprite>(atlas);
-#endif
-            
+            var texs = LoaderManager.AssetsAPI.LoadAtlas(atlas);
             if (texs == null)
             {
                 BTLog.Error("can not find atlas:{0}", atlas);

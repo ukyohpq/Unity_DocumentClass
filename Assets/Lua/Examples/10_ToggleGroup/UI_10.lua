@@ -26,7 +26,7 @@ end
 
 function UI_10:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/10_ToggleGroup/UI_10.prefab"
+        return "Assets/UI/Prefab/Example/UI_10.prefab"
     else
         return "2"
     end

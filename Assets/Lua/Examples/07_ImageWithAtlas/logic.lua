@@ -18,9 +18,9 @@ end
 function logic_07:onClick(evt)
     self.imgSwitch = not self.imgSwitch
     if self.imgSwitch then
-        self.ui.m_Image:SetAtlasImage("Assets/Lua/Examples/07_ImageWithAtlas/Arena.png", "text_ping")
+        self.ui.m_Image:SetAtlasImage("Assets/UI/Atlas/Example/Arena.png", "text_ping")
     else
-        self.ui.m_Image:SetAtlasImage("Assets/Lua/Examples/07_ImageWithAtlas/Arena.png", "text_sheng")
+        self.ui.m_Image:SetAtlasImage("Assets/UI/Atlas/Example/Arena.png", "text_sheng")
     end
 end
 

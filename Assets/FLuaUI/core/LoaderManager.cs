@@ -6,6 +6,7 @@ namespace FLuaUI.core
 {
     public class LoaderManager
     {
+        public static IAssetsAPI AssetsAPI;
         private static List<BaseLoader> loaderContexts = new List<BaseLoader>();
         public static void LoadPrefab(LuaTable lt)
         {

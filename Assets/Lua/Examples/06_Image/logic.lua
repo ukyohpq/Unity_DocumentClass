@@ -18,9 +18,9 @@ end
 function logic_06:onClick(evt)
     self.imgSwitch = not self.imgSwitch
     if self.imgSwitch then
-        self.ui.m_Image:SetImage("Assets/Lua/Examples/06_Image/ButtonAcceleratorOverSprite.png")
+        self.ui.m_Image:SetImage("Assets/UI/Atlas/Example/ButtonAcceleratorOverSprite.png")
     else
-        self.ui.m_Image:SetImage("Assets/Lua/Examples/06_Image/img_fenghuang_03.png")
+        self.ui.m_Image:SetImage("Assets/UI/Atlas/Example/img_fenghuang_03.png")
     end
 end
 

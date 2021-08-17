@@ -17,7 +17,7 @@ end
 
 function Item_09:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/09_ScrollView/Item_09.prefab"
+        return "Assets/UI/Prefab/Example/Item_09.prefab"
     else
         return "2"
     end

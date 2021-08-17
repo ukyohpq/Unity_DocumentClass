@@ -36,7 +36,7 @@ namespace FLuaUI.LuaUI.UIExtends
 //                        通过路径加载
                         var path = LuaDLL.lua_tostring(L, -1);
                         tb = ToLua.ToVarObject(L, -2) as LuaTable;
-                        LoaderManager.LoadImage(tb, path);
+                        LoaderManager.LoadImage(tb,  path);
                         break;
                     case 3:
 //                        通过图集加载

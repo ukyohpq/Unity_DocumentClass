@@ -20,7 +20,7 @@ end
 
 function UI_12:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/12_DragAndDrop/UI_12.prefab"
+        return "Assets/UI/Prefab/Example/UI_12.prefab"
     else
         return "2"
     end

@@ -14,7 +14,7 @@ end
 
 function Container:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/08_Container/Container.prefab"
+        return "Assets/UI/Prefab/Example/Container.prefab"
     else
         return "2"
     end

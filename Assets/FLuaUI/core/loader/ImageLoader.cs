@@ -16,12 +16,7 @@ namespace FLuaUI.core.loader
         }
         public override void Load()
         {
-#if UNITY_EDITOR
-            var t = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-#else
-            var t = Resources.Load<Sprite>(path);
-#endif
-            
+            var t = LoaderManager.AssetsAPI.LoadSprite(path);
             var ls = lt.GetLuaState();
             lt.Push();
             ls.LuaPushValue(-1);

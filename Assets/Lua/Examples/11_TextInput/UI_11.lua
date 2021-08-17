@@ -20,7 +20,7 @@ end
 
 function UI_11:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/11_TextInput/UI_11.prefab"
+        return "Assets/UI/Prefab/Example/UI_11.prefab"
     else
         return "2"
     end

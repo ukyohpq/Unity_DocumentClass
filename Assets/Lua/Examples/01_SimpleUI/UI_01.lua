@@ -14,7 +14,7 @@ end
 
 function UI_01:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/01_SimpleUI/UI_01.prefab"
+        return "Assets/UI/Prefab/Example/UI_01.prefab"
     else
         return "2"
     end

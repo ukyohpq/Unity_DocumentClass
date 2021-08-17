@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using Babeltime.Log;
 using FLuaUI.core;
+using FLuaUI.core.loader;
 using FLuaUI.LuaUI.UIExtends;
 
 namespace FLuaUI
@@ -34,6 +35,7 @@ namespace FLuaUI
 //    private GameObject uiBackstage;
         private void Awake()
         {
+            InitBundleAPI();
             var t = Time.realtimeSinceStartup;
             BTLog.Error("start:{0}", t);
             if (ins == null)
@@ -58,6 +60,15 @@ namespace FLuaUI
 #endif
         }
 
+        private void InitBundleAPI()
+        {
+#if UNITY_EDITOR && USE_BUNDLE
+            LoaderManager.AssetsAPI = new EditorAssetsAPI();
+#else
+            LoaderManager.AssetsAPI = new AssetsAssetApi();
+#endif
+            
+        }
         protected virtual void OpenLibs()
         {
             luaState.OpenLibs(LuaDLL.luaopen_pb);

@@ -20,7 +20,7 @@ end
 
 function UI_Doc:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/05_DocumentClass/Doc.prefab"
+        return "Assets/UI/Prefab/Example/Doc.prefab"
     else
         return "2"
     end

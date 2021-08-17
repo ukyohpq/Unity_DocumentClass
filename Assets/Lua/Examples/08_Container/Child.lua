@@ -17,7 +17,7 @@ end
 
 function Child:GetAssetPath()
     if IsEditor then
-        return "Assets/Lua/Examples/08_Container/child.prefab"
+        return "Assets/UI/Prefab/Example/child.prefab"
     else
         return "2"
     end
