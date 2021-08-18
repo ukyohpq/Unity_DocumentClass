@@ -53,7 +53,7 @@ namespace FLuaUI
             LoadLuaFiles();
             var t2 = Time.realtimeSinceStartup;
             BTLog.Error("after call lua:{0} cost:{1}", t2, t2 - t);
-#if UNITY_EDITOR && !LOADFROM_BUNDLE
+#if UNITY_EDITOR
             BTLog.Debug("open HotFixLua");
             var hot = this.gameObject.AddComponent<HotFixLua>();
             hot.LuaPath = "/Lua/";
