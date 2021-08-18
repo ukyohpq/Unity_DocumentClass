@@ -62,12 +62,7 @@ namespace FLuaUI
 
         private void InitBundleAPI()
         {
-#if UNITY_EDITOR && USE_BUNDLE
-            LoaderManager.AssetsAPI = new EditorAssetsAPI();
-#else
-            LoaderManager.AssetsAPI = new AssetsAssetApi();
-#endif
-            
+            LoaderManager.AssetsAPI = new AssetsAssetAPI();
         }
         protected virtual void OpenLibs()
         {

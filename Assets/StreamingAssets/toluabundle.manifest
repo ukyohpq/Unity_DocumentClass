@@ -1,0 +1,82 @@
+ManifestFileVersion: 0
+CRC: 3891095915
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: decd58c6af52f7588d1c877b83909d0a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/luatemp/ToLua/Lua/jit/dis_mipsel.txt
+- Assets/luatemp/ToLua/Lua/socket/ftp.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_mips64el.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Profiler.txt
+- Assets/luatemp/ToLua/Lua/tolua.txt
+- Assets/luatemp/ToLua/Lua/System/Injection/LuaInjectionStation.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_arm.txt
+- Assets/luatemp/ToLua/Lua/System/Timer.txt
+- Assets/luatemp/ToLua/Lua/protobuf/listener.txt
+- Assets/luatemp/ToLua/Lua/System/Reflection/BindingFlags.txt
+- Assets/luatemp/ToLua/Lua/slot.txt
+- Assets/luatemp/ToLua/Lua/socket/mbox.txt
+- Assets/luatemp/ToLua/Lua/protobuf/descriptor.txt
+- Assets/luatemp/ToLua/Lua/System/ValueType.txt
+- Assets/luatemp/ToLua/Lua/socket/http.txt
+- Assets/luatemp/ToLua/Lua/jit/p.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_mips64.txt
+- Assets/luatemp/ToLua/Lua/cjson/util.txt
+- Assets/luatemp/ToLua/Lua/System/coroutine.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Color.txt
+- Assets/luatemp/ToLua/Lua/protobuf/text_format.txt
+- Assets/luatemp/ToLua/Lua/jit/dump.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_arm64.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Vector2.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_mips.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_ppc.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_x64.txt
+- Assets/luatemp/ToLua/Lua/protobuf/decoder.txt
+- Assets/luatemp/ToLua/Lua/jit/zone.txt
+- Assets/luatemp/ToLua/Lua/protobuf/wire_format.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Touch.txt
+- Assets/luatemp/ToLua/Lua/mime.txt
+- Assets/luatemp/ToLua/Lua/jit/bc.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Ray.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/RaycastHit.txt
+- Assets/luatemp/ToLua/Lua/lpeg/re.txt
+- Assets/luatemp/ToLua/Lua/socket/tp.txt
+- Assets/luatemp/ToLua/Lua/typeof.txt
+- Assets/luatemp/ToLua/Lua/socket.txt
+- Assets/luatemp/ToLua/Lua/socket/smtp.txt
+- Assets/luatemp/ToLua/Lua/protobuf/encoder.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_arm64be.txt
+- Assets/luatemp/ToLua/Lua/socket/url.txt
+- Assets/luatemp/ToLua/Lua/ltn12.txt
+- Assets/luatemp/ToLua/Lua/event.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Vector3.txt
+- Assets/luatemp/ToLua/Lua/System/Injection/InjectionBridgeInfo.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Quaternion.txt
+- Assets/luatemp/ToLua/Lua/socket/headers.txt
+- Assets/luatemp/ToLua/Lua/list.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Bounds.txt
+- Assets/luatemp/ToLua/Examples/02_ScriptsFromFile/ScriptsFromFile.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Plane.txt
+- Assets/luatemp/ToLua/Lua/protobuf/type_checkers.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Mathf.txt
+- Assets/luatemp/ToLua/Lua/protobuf/containers.txt
+- Assets/luatemp/ToLua/Lua/protobuf/protobuf.txt
+- Assets/luatemp/ToLua/Lua/jit/bcsave.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Time.txt
+- Assets/luatemp/ToLua/Lua/misc/strict.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/Vector4.txt
+- Assets/luatemp/ToLua/Lua/jit/v.txt
+- Assets/luatemp/ToLua/Lua/misc/functions.txt
+- Assets/luatemp/ToLua/Lua/UnityEngine/LayerMask.txt
+- Assets/luatemp/ToLua/Lua/jit/dis_x86.txt
+- Assets/luatemp/ToLua/Lua/System/Injection/LuaInjectionBus.txt
+- Assets/luatemp/ToLua/Lua/misc/utf8.txt
+Dependencies: []

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using FLuaUI.Components;
+using System.IO;
+using Babeltime.Log;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Script.Tools.Editor
             BuildAtlas();
             BuildLua();
             BuildUI();
+            BTLog.Error("Build All OK.");
         }
 
         [MenuItem("Tools/AssetBundle/BuildAtlas")]
@@ -21,7 +23,27 @@ namespace Script.Tools.Editor
         {
             try
             {
+                var builds = new List<AssetBundleBuild>();
+                var opertion = BuildAssetBundleOptions.ChunkBasedCompression |
+                               BuildAssetBundleOptions.DeterministicAssetBundle;
+                var path = Application.dataPath + "/UI/Atlas";
+                foreach (var directory in Directory.GetDirectories(path))
+                {
+                    var build = new AssetBundleBuild();
+                    build.assetBundleName = "Atlas_" + directory.Replace(path + "\\", "");
+                    var fileList = new List<string>();
+                    foreach (var filePath in Directory.GetFiles(directory, "*.png", SearchOption.AllDirectories))
+                    {
+                        fileList.Add(filePath.Replace(Application.dataPath, "Assets"));
+                    }
 
+                    build.assetNames = fileList.ToArray();
+                    builds.Add(build);
+                }
+                BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, builds.ToArray(), opertion,
+                    BuildTarget.Android);
+                AssetDatabase.Refresh();
+                BTLog.Error("build Atlas ok.");
             }
             catch (Exception e)
             {
@@ -37,14 +59,24 @@ namespace Script.Tools.Editor
             {
                 var luaPath = Application.dataPath + "/Lua";
                 var toluaPath = Application.dataPath + "/ToLua";
+                var tempPath = Application.dataPath + "/luatemp";
+                if (Directory.Exists(tempPath))
+                {
+                    Directory.Delete(tempPath, true);
+                }
+                Directory.CreateDirectory(tempPath);
                 var builds = new List<AssetBundleBuild>();
-                var luaBuilder = new AssetBundleBuild();
-                var toluaBuilder = new AssetBundleBuild();
+                var luaBuilder = MakeLuaABBuild(luaPath, "luaBundle", tempPath);
+                var toluaBuilder = MakeLuaABBuild(toluaPath, "toluaBundle", tempPath);
                 builds.Add(luaBuilder);
                 builds.Add(toluaBuilder);
                 var opertion = BuildAssetBundleOptions.ChunkBasedCompression |
                                BuildAssetBundleOptions.DeterministicAssetBundle;
-                BuildPipeline.BuildAssetBundles("", builds.ToArray(),opertion, BuildTarget.Android);
+                AssetDatabase.Refresh();
+                BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, builds.ToArray(),opertion, BuildTarget.Android);
+                Directory.Delete(tempPath, true);
+                AssetDatabase.Refresh();
+                BTLog.Error("build lua ok.");
             }
             catch (Exception e)
             {
@@ -53,12 +85,55 @@ namespace Script.Tools.Editor
             }
         }
 
+        private static AssetBundleBuild MakeLuaABBuild(string path, string bundleName, string tempPath)
+        {
+            var builder = new AssetBundleBuild();
+            var fileList = new List<string>();
+            foreach (var filePath in Directory.GetFiles(path, "*.lua", SearchOption.AllDirectories))
+            {
+                var txtPath = tempPath + filePath.Replace(Application.dataPath, "");
+                txtPath = txtPath.Replace(".lua", ".txt");
+                var directory = txtPath.Substring(0, txtPath.LastIndexOf("\\"));
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                File.Copy(filePath, txtPath);
+                txtPath = txtPath.Replace(Application.dataPath, "Assets");
+                fileList.Add(txtPath);
+            }
+
+            builder.assetNames = fileList.ToArray();
+            builder.assetBundleName = bundleName;
+            return builder;
+        }
+        
         [MenuItem("Tools/AssetBundle/BuildUI")]
         private static void BuildUI()
         {
             try
             {
+                var builds = new List<AssetBundleBuild>();
+                var opertion = BuildAssetBundleOptions.ChunkBasedCompression |
+                               BuildAssetBundleOptions.DeterministicAssetBundle;
+                var path = Application.dataPath + "/UI/Prefab";
+                foreach (var directory in Directory.GetDirectories(path))
+                {
+                    var build = new AssetBundleBuild();
+                    build.assetBundleName = "UI_" + directory.Replace(path + "\\", "");
+                    var fileList = new List<string>();
+                    foreach (var filePath in Directory.GetFiles(directory, "*.prefab", SearchOption.AllDirectories))
+                    {
+                        fileList.Add(filePath.Replace(Application.dataPath, "Assets"));
+                    }
 
+                    build.assetNames = fileList.ToArray();
+                    builds.Add(build);
+                }
+                BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, builds.ToArray(), opertion,
+                    BuildTarget.Android);
+                AssetDatabase.Refresh();
+                BTLog.Error("build UI ok.");
             }
             catch (Exception e)
             {

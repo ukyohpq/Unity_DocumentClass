@@ -14,7 +14,7 @@ function Logic_09:ctor()
         if i % 2 == 0 then
             iconName = "item_basic"
         end
-        item.icon_Image:SetAtlasImage("Assets/Lua/Examples/09_ScrollView/Arena.png", iconName)
+        item.icon_Image:SetAtlasImage("Assets/UI/Atlas/Example/Arena.png", iconName)
         self.ui.m_SV:AddChild(item)
     end
 end
