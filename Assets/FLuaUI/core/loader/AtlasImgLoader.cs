@@ -1,3 +1,4 @@
+using System.Collections;
 using Babeltime.Log;
 using LuaInterface;
 using UnityEditor;
@@ -16,13 +17,13 @@ namespace FLuaUI.core.loader
             this.name = name;
         }
 
-        public override void Load()
+        public override IEnumerator Load()
         {
             var texs = LoaderManager.AssetsAPI.LoadAtlas(atlas);
             if (texs == null)
             {
                 BTLog.Error("can not find atlas:{0}", atlas);
-                return;
+                yield break;
             }
 
             Sprite t = null;
@@ -37,7 +38,7 @@ namespace FLuaUI.core.loader
             if (t == null)
             {
                 BTLog.Error("can not find sprite:{0} in atlas:{1}", name, atlas);
-                return;
+                yield break;
             }
             var ls = lt.GetLuaState();
             lt.Push();
@@ -52,7 +53,7 @@ namespace FLuaUI.core.loader
             {
                 ls.LuaPop(1);
                 BTLog.Warning("Prefab Lua must has Method:DispatchMessage");
-                return;
+                yield break;
             }
             ls.LuaInsert(-2);
             ls.Push("COMPLETE");

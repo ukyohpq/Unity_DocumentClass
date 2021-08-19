@@ -6,7 +6,7 @@ namespace FLuaUI.core
 {
     public class LoaderManager
     {
-        public static IAssetsAPI AssetsAPI;
+        public static AssetsAssetAPI AssetsAPI;
         private static List<BaseLoader> loaderContexts = new List<BaseLoader>();
         public static void LoadPrefab(LuaTable lt)
         {
@@ -44,9 +44,9 @@ namespace FLuaUI.core
                 if (loaderContexts.Count == 0) return;
                 var context = loaderContexts[0];
                 loaderContexts.RemoveAt(0);
+                MainGame.Ins.StartCoroutine(context.Load());
                 context.Load();
             }
-            
         }
     }
 }

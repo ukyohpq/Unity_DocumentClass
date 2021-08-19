@@ -1,3 +1,4 @@
+using System.Collections;
 using Babeltime.Log;
 using FLuaUI.LuaUI.Components;
 using LuaInterface;
@@ -14,9 +15,17 @@ namespace FLuaUI.core.loader
         {
             this.path = path;
         }
-        public override void Load()
+        public override IEnumerator Load()
         {
-            var t = LoaderManager.AssetsAPI.LoadSprite(path);
+#if UNITY_EDITOR && !USE_BUNDLE
+            var t = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/UI/Atlas/" + path);
+#else
+            var bundleName = path.Substring(0, path.IndexOf("\\")).ToLower();
+            var request = AssetBundle.LoadFromFileAsync(Application.streamingAssetsPath + "/atlas_" + bundleName);
+            yield return request;
+            var sprites = request.assetBundle.LoadAllAssets<Sprite>();
+            var t = sprites[0];
+#endif
             var ls = lt.GetLuaState();
             lt.Push();
             ls.LuaPushValue(-1);
@@ -34,7 +43,7 @@ namespace FLuaUI.core.loader
             {
                 ls.LuaPop(1);
                 BTLog.Warning("Prefab Lua must has Method:DispatchMessage");
-                return;
+                yield break;
             }
             ls.LuaInsert(-2);
             ls.Push("COMPLETE");

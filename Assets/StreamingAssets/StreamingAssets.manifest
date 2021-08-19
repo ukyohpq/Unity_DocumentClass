@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2257376293
+CRC: 1842597163
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: atlas_example
+      Name: ui_example
       Dependencies: {}

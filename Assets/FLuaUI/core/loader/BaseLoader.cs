@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using LuaInterface;
 
 namespace FLuaUI.core.loader
@@ -15,8 +17,9 @@ namespace FLuaUI.core.loader
         {
             return this.lt == lt;
         }
-        public virtual void Load()
+        public virtual IEnumerator Load()
         {
+            throw new Exception("Must override");
         }
     }
 }
