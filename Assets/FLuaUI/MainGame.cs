@@ -35,32 +35,32 @@ namespace FLuaUI
 //    private GameObject uiBackstage;
         private void Awake()
         {
-            InitBundleAPI();
-            var t = Time.realtimeSinceStartup;
-            BTLog.Error("start:{0}", t);
             if (ins == null)
             {
                 ins = this;
             }
 
             CreateUIStage();
+            InitAssetAPI();
+            InitLua();
+        }
+
+        private void InitLua()
+        {
             luaState = new LuaState();
             OpenLibs();
             luaState.LuaSetTop(0);
             Bind();
-            t = Time.realtimeSinceStartup;
-            BTLog.Error("before call lua:{0}", t);
+            BtLuaScripts.Init(luaState);
             LoadLuaFiles();
-            var t2 = Time.realtimeSinceStartup;
-            BTLog.Error("after call lua:{0} cost:{1}", t2, t2 - t);
 #if UNITY_EDITOR
             BTLog.Debug("open HotFixLua");
             var hot = this.gameObject.AddComponent<HotFixLua>();
             hot.LuaPath = "/Lua/";
 #endif
         }
-
-        private void InitBundleAPI()
+        
+        private void InitAssetAPI()
         {
             LoaderManager.AssetsAPI = new AssetsAssetAPI();
         }
@@ -103,7 +103,8 @@ namespace FLuaUI
         {
             luaState.AddSearchPath(LuaConst.luaDir);
             luaState.AddSearchPath(LuaConst.toluaDir);
-            ;
+//            var mainPath = "Framework\\Main.lua";
+//            luaState.LuaLoadBuffer(BtLuaScripts.ReqireLua(mainPath), mainPath.Length,mainPath);
             luaState.DoFile("Framework\\Main.lua");
             RequireBaseFiles();
             LuaUIExtendManager.InitExtends(luaState);

@@ -88,7 +88,8 @@ namespace Script.Tools.Editor
         private static AssetBundleBuild MakeLuaABBuild(string path, string bundleName, string tempPath)
         {
             var builder = new AssetBundleBuild();
-            var fileList = new List<string>();
+            var assetNames = new List<string>();
+            var addressableNames = new List<string>();
             foreach (var filePath in Directory.GetFiles(path, "*.lua", SearchOption.AllDirectories))
             {
                 var txtPath = tempPath + filePath.Replace(Application.dataPath, "");
@@ -100,10 +101,14 @@ namespace Script.Tools.Editor
                 }
                 File.Copy(filePath, txtPath);
                 txtPath = txtPath.Replace(Application.dataPath, "Assets");
-                fileList.Add(txtPath);
+                assetNames.Add(txtPath);
+                var assetNamePath = txtPath.Replace("\\", ".");
+                assetNamePath = assetNamePath.Replace("/", ".");
+                addressableNames.Add(assetNamePath);
             }
 
-            builder.assetNames = fileList.ToArray();
+            builder.assetNames = assetNames.ToArray();
+            builder.addressableNames = addressableNames.ToArray();
             builder.assetBundleName = bundleName;
             return builder;
         }
