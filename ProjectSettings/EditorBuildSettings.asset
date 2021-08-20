@@ -11,7 +11,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scene/New Scene.unity
     guid: f86b7a4ee5c39784aa33b4b209d4f93e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Lua/Examples/01_SimpleUI/01_SimpleUI.unity
     guid: 5dd130d033e807e4f95c46b1867c2e29
+  - enabled: 0
+    path: Assets/Lua/Examples/06_Image/06_Image.unity
+    guid: 1854bb8a72451dc4badb8d84daf2eaf2
+  - enabled: 0
+    path: Assets/Lua/Examples/12_DragAndDrop/12_DragAndDrop.unity
+    guid: 7c5dc63e5e18c784783934bd8fe6dbfe
+  - enabled: 0
+    path: Assets/Lua/Examples/05_DocumentClass/05_DocumentClass.unity
+    guid: b6f3bd14580d4ae408c21d38f6e7e8d1
+  - enabled: 1
+    path: Assets/Lua/Examples/09_ScrollView/09_ScrollView.unity
+    guid: 59671aaaa676f66488ee98fdda4dea1d
   m_configObjects: {}

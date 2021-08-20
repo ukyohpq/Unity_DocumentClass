@@ -24,17 +24,6 @@ public class BtLuaScripts
         ToLuaScriptBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/toluabundle");
         LuaScriptBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/luabundle");
         AddLoader(ls);
-        foreach (var VARIABLE in ToLuaScriptBundle.GetAllAssetNames())
-        {
-            BTLog.Error("tolua:{0}", VARIABLE);
-        }
-
-        foreach (var v in LuaScriptBundle.GetAllAssetNames())
-        {
-            BTLog.Error("lua:{0}", v);
-        }
-
-        BTLog.Error("{0}", LuaScriptBundle.LoadAsset("assets/luatemp/lua/testpool.txt") != null);
 #endif
     }
     

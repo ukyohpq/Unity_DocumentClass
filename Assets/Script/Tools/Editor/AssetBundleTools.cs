@@ -58,7 +58,7 @@ namespace Script.Tools.Editor
             try
             {
                 var luaPath = Application.dataPath + "/Lua";
-                var toluaPath = Application.dataPath + "/ToLua";
+                var toluaPath = Application.dataPath + "/ToLua/Lua";
                 var tempPath = Application.dataPath + "/luatemp";
                 if (Directory.Exists(tempPath))
                 {
@@ -102,7 +102,9 @@ namespace Script.Tools.Editor
                 File.Copy(filePath, txtPath);
                 txtPath = txtPath.Replace(Application.dataPath, "Assets");
                 assetNames.Add(txtPath);
-                var assetNamePath = txtPath.Replace("\\", ".");
+                var assetNamePath = txtPath.Replace("\\", "/");
+                assetNamePath = assetNamePath.Replace("ToLua/", "");
+                assetNamePath = assetNamePath.Replace("Assets/luatemp/Lua/", "");
                 assetNamePath = assetNamePath.Replace("/", ".");
                 addressableNames.Add(assetNamePath);
             }

@@ -41,7 +41,6 @@ namespace FLuaUI
             }
 
             CreateUIStage();
-            InitAssetAPI();
             InitLua();
         }
 
@@ -60,10 +59,6 @@ namespace FLuaUI
 #endif
         }
         
-        private void InitAssetAPI()
-        {
-            LoaderManager.AssetsAPI = new AssetsAssetAPI();
-        }
         protected virtual void OpenLibs()
         {
             luaState.OpenLibs(LuaDLL.luaopen_pb);

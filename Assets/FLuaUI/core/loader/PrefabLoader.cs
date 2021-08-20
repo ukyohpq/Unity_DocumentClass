@@ -10,38 +10,59 @@ namespace FLuaUI.core.loader
 {
     public class PrefabLoader:BaseLoader
     {
+        private static int c = 0;
+        private int flag;
         public PrefabLoader(LuaTable lt):base(lt)
         {
-            
+            flag = c++;
         }
         public override IEnumerator Load()
         {
             var fc = lt["GetAssetPath"] as LuaFunction;
-            var path = fc.Invoke<string>();
+            var originPath = fc.Invoke<string>();
 #if UNITY_EDITOR && !USE_BUNDLE
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/UI/Prefab/" + path);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(originPath);
 #else
-            path = path.Replace("Assets/UI/Prefab/", "");
-            var bundleName = path.Substring(0, path.IndexOf("/")).ToLower();
-            var goName = path.Substring(path.LastIndexOf("/") + 1);
-            goName = goName.Replace(".prefab", "");
-            var request = AssetBundle.LoadFromFileAsync(Application.streamingAssetsPath + "/ui_" + bundleName);
-            yield return request;
-            var prefabs = request.assetBundle.LoadAllAssets<GameObject>();
             GameObject prefab = null;
-            foreach (var p in prefabs)
+            if (!AssetsManager.Prefabs.TryGetValue(originPath, out prefab))
             {
-                if (p.name == goName)
+                var path = originPath.Replace("Assets/UI/Prefab/", "");
+                var bundleName = "ui_" + path.Substring(0, path.IndexOf("/")).ToLower();
+                AssetBundle ab = null;
+                if(!AssetsManager.Bundles.TryGetValue(bundleName, out ab))
                 {
-                    prefab = p;
-                    break;
+                    AssetBundleCreateRequest request = null;
+                    if (!AssetsManager.Requests.TryGetValue(bundleName, out request))
+                    {
+                        request = AssetBundle.LoadFromFileAsync(Application.streamingAssetsPath + "/" + bundleName);
+                        AssetsManager.Requests[bundleName] = request;
+                    }
+                    while (!request.isDone)
+                    {
+                        yield return null;
+                    }
+                    AssetsManager.Requests.Remove(bundleName);
+                    ab = request.assetBundle;
+                    if (ab == null)
+                    {
+                        BTLog.Warning("can not load bundle:{0}", bundleName);
+                        yield break;
+                    }
+
+                    AssetsManager.Bundles[bundleName] = ab;
                 }
+                var goName = path.Substring(path.LastIndexOf("/") + 1);
+                goName = goName.Replace(".prefab", "");
+                
+                prefab = ab.LoadAsset<GameObject>(goName);
+                AssetsManager.Prefabs[originPath] = prefab;
             }
+            
 #endif
             
             if (prefab == null)
             {
-                BTLog.Error("can not find prefab in path:{0}", path);
+                BTLog.Error("can not find prefab in path:{0}", originPath);
                 yield break;
             }
 

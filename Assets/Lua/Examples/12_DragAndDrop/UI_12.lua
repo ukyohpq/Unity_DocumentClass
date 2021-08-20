@@ -19,11 +19,7 @@ function UI_12:ctor(autoBind)
 end
 
 function UI_12:GetAssetPath()
-    if IsEditor then
-        return "Assets/UI/Prefab/Example/UI_12.prefab"
-    else
-        return "2"
-    end
+    return "Assets/UI/Prefab/Example/UI_12.prefab"
 end
 
 ----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------

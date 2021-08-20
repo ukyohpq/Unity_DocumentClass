@@ -13,11 +13,7 @@ function Container:ctor(autoBind)
 end
 
 function Container:GetAssetPath()
-    if IsEditor then
-        return "Assets/UI/Prefab/Example/Container.prefab"
-    else
-        return "2"
-    end
+    return "Assets/UI/Prefab/Example/Container.prefab"
 end
 
 ----------------------------- 以下为 逻辑代码 可以修改 -----------------------------------

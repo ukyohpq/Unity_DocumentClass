@@ -208,12 +208,8 @@ end
             var GetAssetPathFunction = new List<string>();
             GetAssetPathFunction.Add(string.Format(
 @"function {0}:GetAssetPath()
-    if IsEditor then
-        return ""{1}""
-    else
-        return ""{2}""
-    end
-end", className, assetPath,2));
+    return ""{1}""
+end", className, assetPath));
             
 //            调试代码
 //            printClassLines(GetAssetPathFunction);
