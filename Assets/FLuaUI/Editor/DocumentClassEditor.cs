@@ -155,6 +155,12 @@ LuaClass:文档类，会在指定目录下生成对应的lua类
                 }
             }
 
+            var directoryPath = fileName.Substring(0, fileName.LastIndexOf("/"));
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             var head = UI_BEGIN_CODE;
 //            类描述，包含类定义，继承，字段声明
             var classDesc = new List<string>();
