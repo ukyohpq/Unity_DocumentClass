@@ -58,7 +58,7 @@ return {1}";
             GUILayout.Label(@"要从Prefab上导出组件，需要遵守如下命名规范:
 SuperClass:该文档类的父类，可以不填，默认为Framework.UI.Prefab
 LuaClass:文档类，会在指定目录下生成对应的lua类
-");
+", EditorStyles.wordWrappedLabel);
             EditorGUILayout.EndHorizontal();
 //            SuperClassName
             EditorGUILayout.BeginHorizontal();
