@@ -44,7 +44,8 @@ namespace FLuaUI.Editor
                 "Assets/LuaAPI",
                 "Assets/Plugins",
                 "Assets/Source",
-                "Assets/ToLua"
+                "Assets/ToLua",
+                "Assets/UI",
             }, "Assets/FLuaUI.unitypackage", ExportPackageOptions.Interactive | ExportPackageOptions.Recurse | ExportPackageOptions.IncludeDependencies);
         }
         
