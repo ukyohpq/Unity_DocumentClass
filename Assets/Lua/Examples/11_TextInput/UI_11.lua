@@ -10,9 +10,9 @@ UI_11 = class("Examples.11_TextInput.UI_11", super)
 function UI_11:ctor(autoBind)
     super.ctor(self)
 	self.InputField = InputField.New()
-	self:AddChild(self.InputField)
+	self:InsertChild(self.InputField)
 	self.Text = TextField.New()
-	self:AddChild(self.Text)
+	self:InsertChild(self.Text)
     if autoBind ~= false then
         self:bindExtend()
     end

@@ -9,7 +9,7 @@ UI_03 = class("Examples.03_Text.UI_03", super)
 function UI_03:ctor(autoBind)
     super.ctor(self)
 	self.m_Text = TextField.New()
-	self:AddChild(self.m_Text)
+	self:InsertChild(self.m_Text)
     if autoBind ~= false then
         self:bindExtend()
     end

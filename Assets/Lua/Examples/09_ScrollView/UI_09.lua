@@ -9,7 +9,7 @@ UI_09 = class("Examples.09_ScrollView.UI_09", super)
 function UI_09:ctor(autoBind)
     super.ctor(self)
 	self.m_SV = ScrollView.New()
-	self:AddChild(self.m_SV)
+	self:InsertChild(self.m_SV)
     if autoBind ~= false then
         self:bindExtend()
     end

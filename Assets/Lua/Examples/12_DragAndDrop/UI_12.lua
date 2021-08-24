@@ -10,9 +10,9 @@ UI_12 = class("Examples.12_DragAndDrop.UI_12", super)
 function UI_12:ctor(autoBind)
     super.ctor(self)
 	self.Image = Image.New()
-	self:AddChild(self.Image)
+	self:InsertChild(self.Image)
 	self.Image_1 = Image.New()
-	self:AddChild(self.Image_1)
+	self:InsertChild(self.Image_1)
     if autoBind ~= false then
         self:bindExtend()
     end

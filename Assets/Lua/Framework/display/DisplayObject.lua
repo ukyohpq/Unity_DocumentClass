@@ -11,6 +11,7 @@ local numInstance = 0
 ---@field private parent Framework.display.DisplayObjectContainer
 ---@field private active boolean
 ---@field private dragging boolean
+---@field private parentTransform boolean
 ---@field EventBind Framework.event.Delegate
 DisplayObject = class("Framework.display.DisplayObject", super)
 
@@ -23,6 +24,7 @@ function DisplayObject:ctor()
     self.EventBind:Add(self, self.onBind)
     instanceMap[self] = true
     numInstance = numInstance + 1
+    self.parentTransform = false
 end
 
 function DisplayObject:Destroy()
@@ -33,6 +35,8 @@ function DisplayObject:Destroy()
     if self.DestroyToCS then
         self:DestroyToCS()
     end
+    self.parent = nil
+    self.parentTransform = false
     instanceMap[self] = nil
     numInstance = numInstance - 1
 end

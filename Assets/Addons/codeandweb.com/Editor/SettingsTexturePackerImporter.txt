@@ -4,12 +4,15 @@ tpsheetFileNames:
 - Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 - Assets/Lua/Examples/07_ImageWithAtlas/Arena.tpsheet
 - Assets/Lua/Examples/09_ScrollView/Arena.tpsheet
+- Assets/UI/Atlas/Example/Arena.tpsheet
 textureFileNames:
 - Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites.png
 - Assets/Lua/Examples/07_ImageWithAtlas/Arena.png
 - Assets/Lua/Examples/09_ScrollView/Arena.png
+- Assets/UI/Atlas/Example/Arena.png
 normalmapFileNames:
 - Assets/Addons/codeandweb.com/Example/SpriteSheet/sprites_n.png
+- 
 - 
 - 
 enableDebugOutput: 0

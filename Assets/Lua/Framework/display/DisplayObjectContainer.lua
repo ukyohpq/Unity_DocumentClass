@@ -9,7 +9,25 @@ function DisplayObjectContainer:ctor()
     self.children = {}
 end
 
----AddChild
+---InsertChild 仅在lua端建立父子关系，不影响unity端
+---@param child Framework.display.InterActiveObject
+function DisplayObjectContainer:InsertChild(child)
+    return self:InsertChildAt(child, #self.children + 1)
+end
+
+---InsertChildAt
+---@param child Framework.display.InterActiveObject
+---@param index number
+function DisplayObjectContainer:InsertChildAt(child, index)
+    if child.parent == self then
+        return false
+    end
+    child.parent = self
+    table.insert(self.children, index, child)
+    return true
+end
+
+---AddChild 不仅在lua端建立父子关系，也为unity端指定了父transform
 ---@param child Framework.display.DisplayObject
 function DisplayObjectContainer:AddChild(child)
     return self:AddChildAt(child, #self.children + 1)
@@ -19,11 +37,10 @@ end
 ---@param child Framework.display.DisplayObject
 ---@param index number
 function DisplayObjectContainer:AddChildAt(child, index)
-    if self.children[index] == child then
+    if not self:InsertChildAt(child, index) then
         return
     end
-    child.parent = self
-    table.insert(self.children, index, child)
+    child.parentTransform = true
     if self.AddChildExtend then
         self:AddChildExtend(child)
     end
@@ -51,10 +68,14 @@ function DisplayObjectContainer:GetChildByName(name)
     --TODO
 end
 
+---RemoveChild
+---@param child Framework.display.DisplayObject
 function DisplayObjectContainer:RemoveChild(child)
     for i, v in ipairs(self.children) do
         if v == child then
             table.remove(self.children, i)
+            child.parent = nil
+            child.parentTransform = false
             return child
         end
     end
@@ -67,6 +88,8 @@ function DisplayObjectContainer:RemoveChildAt(index)
         return child
     end
     table.remove(self.children, index)
+    child.parent = nil
+    child.parentTransform = false
     return child
 end
 

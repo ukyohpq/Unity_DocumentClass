@@ -12,9 +12,9 @@ UI_05 = class("Examples.05_DocumentClass.UI_05", super)
 function UI_05:ctor(autoBind)
     super.ctor(self)
 	self.m1_Doc = UI_Doc.New(false)
-	self:AddChild(self.m1_Doc)
+	self:InsertChild(self.m1_Doc)
 	self.m2_Doc = UI_Doc.New(false)
-	self:AddChild(self.m2_Doc)
+	self:InsertChild(self.m2_Doc)
     if autoBind ~= false then
         self:bindExtend()
     end

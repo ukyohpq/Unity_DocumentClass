@@ -10,9 +10,9 @@ UI_07 = class("Examples.07_ImageWithAtlas.UI_07", super)
 function UI_07:ctor(autoBind)
     super.ctor(self)
 	self.m_Image = Image.New()
-	self:AddChild(self.m_Image)
+	self:InsertChild(self.m_Image)
 	self.m_Button = Button.New()
-	self:AddChild(self.m_Button)
+	self:InsertChild(self.m_Button)
     if autoBind ~= false then
         self:bindExtend()
     end

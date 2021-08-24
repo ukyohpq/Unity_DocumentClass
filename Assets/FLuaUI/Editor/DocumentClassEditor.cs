@@ -199,7 +199,7 @@ LuaClass:文档类，会在指定目录下生成对应的lua类
             var fieldsStr = "";
             foreach (var field in _fields)
             {
-                fieldsStr = fieldsStr + string.Format("\n\tself.{0} = {1}.New({2})\n\tself:AddChild(self.{0})", field[0], field[1], field[2]);
+                fieldsStr = fieldsStr + string.Format("\n\tself.{0} = {1}.New({2})\n\tself:InsertChild(self.{0})", field[0], field[1], field[2]);
             }
             var CtorFunction = new List<string>();
             CtorFunction.Add(string.Format(

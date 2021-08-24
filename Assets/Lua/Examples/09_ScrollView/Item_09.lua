@@ -9,7 +9,7 @@ Item_09 = class("Examples.09_ScrollView.Item_09", super)
 function Item_09:ctor(autoBind)
     super.ctor(self)
 	self.icon_Image = Image.New()
-	self:AddChild(self.icon_Image)
+	self:InsertChild(self.icon_Image)
     if autoBind ~= false then
         self:bindExtend()
     end

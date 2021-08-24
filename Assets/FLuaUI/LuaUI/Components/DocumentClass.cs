@@ -103,21 +103,26 @@ namespace FLuaUI.LuaUI.Components
 
             var ls = GetLuaState();
             PushLuaTable();
-            ls.LuaGetField(-1, "parent");
-            ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
-            var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
-            if (parentGo != null)
+            ls.LuaGetField(-1, "parentTransform");
+            if (ls.LuaToBoolean(-1))
             {
-                if (parentGo.Container != null)
+                ls.LuaPop(1);
+                ls.LuaGetField(-1, "parent");
+                ls.LuaGetTable(LuaIndexes.LUA_REGISTRYINDEX);
+                var parentGo = ls.ToVariant(-1) as GameObjectLuaBinder;
+                if (parentGo != null)
                 {
-                    transform.parent = parentGo.Container;
+                    if (parentGo.Container != null)
+                    {
+                        transform.parent = parentGo.Container;
+                    }
+                    else
+                    {
+                        transform.parent = parentGo.transform;
+                    }
                 }
-                else
-                {
-                    transform.parent = parentGo.transform;
-                }
+                ls.LuaPop(2);
             }
-            ls.LuaPop(2);
         }
 
 //        通过在cs端创建lua的Prefab对象进行绑定
