@@ -23,7 +23,6 @@ namespace FLuaUI.LuaUI.UIExtends
 
         private static int AddChildExtend(IntPtr L)
         {
-            BTLog.Error("AddChildExtend");
             try
             {
                 ToLua.CheckArgsCount(L, 2);
