@@ -13,6 +13,7 @@ local numInstance = 0
 ---@field private dragging boolean
 ---@field private parentTransform boolean
 ---@field EventBind Framework.event.Delegate
+---@field state number
 DisplayObject = class("Framework.display.DisplayObject", super)
 
 function DisplayObject:ctor()
@@ -25,6 +26,7 @@ function DisplayObject:ctor()
     instanceMap[self] = true
     numInstance = numInstance + 1
     self.parentTransform = false
+    self:SetState(0)
 end
 
 function DisplayObject:Destroy()
@@ -96,6 +98,12 @@ end
 
 function DisplayObject:BackToDragStartPoint()
     self:BackToStartPointExtend()
+end
+
+function DisplayObject:SetState(state)
+    if not self.state == state then
+        self.state = state
+    end
 end
 
 return DisplayObject
