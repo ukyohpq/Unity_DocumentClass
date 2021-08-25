@@ -26,7 +26,6 @@ function DisplayObject:ctor()
     instanceMap[self] = true
     numInstance = numInstance + 1
     self.parentTransform = false
-    self:SetState(0)
 end
 
 function DisplayObject:Destroy()
@@ -75,6 +74,7 @@ end
 ---@param evt Framework.event.Event
 function DisplayObject:onBind(evt)
     self:SetActiveExtend(self.active)  
+    self:SetState(0)
 end
 
 function DisplayObject:StartDrag()
@@ -101,8 +101,15 @@ function DisplayObject:BackToDragStartPoint()
 end
 
 function DisplayObject:SetState(state)
-    if not self.state == state then
+    if self.state ~= state then
+        self:OnState(state)
         self.state = state
+    end
+end
+
+function DisplayObject:OnState(state)
+    if state ~= 0 then
+        error("state error.")
     end
 end
 
