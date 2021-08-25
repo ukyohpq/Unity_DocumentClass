@@ -55,8 +55,10 @@ namespace FLuaUI.Components
                 ls.LuaGetField(-1, "DispatchMessage");
                 if (ls.LuaIsNil(-1))
                 {
+                    ls.LuaGetField(-2, "__cname");
+                    var cname = ls.LuaToString(-1);
                     ls.LuaSetTop(curTop);
-                    throw new LuaException("can not find function DispatchMessage");
+                    throw new LuaException(string.Format("can not find function DispatchMessage cname:{0}", cname));
                 }
                 ls.LuaInsert(-2);
                 ls.LuaPushString("OnBind");
