@@ -233,6 +233,7 @@ end", className, assetPath));
         private void createLuaFieldByTrans(Transform trans, List<string> classDesc)
         {
             BTLog.Debug("createLuaFieldByTrans:{0}", trans.name);
+            var requiredClassNames = new List<string>();
             var numChildren = trans.childCount;
             var nameList = new List<string>();
             for (var i = 0; i < numChildren; i++)
@@ -256,10 +257,11 @@ end", className, assetPath));
                 classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, typeName));
                 _fields.Add(new []{childName, typeName.Substring(typeName.LastIndexOf(".") + 1), binder is DocumentClass?"false":""});
 //                _Doc不用对其子go生成field
-                if (binder is DocumentClass)
+                if (binder is DocumentClass && !requiredClassNames.Contains(typeName))
                 {
 //                    _Doc需要require一下
                     classDesc.Insert(1, string.Format("require(\"{0}\")", typeName));
+                    requiredClassNames.Add(typeName);
                 }
                 else
                 {
