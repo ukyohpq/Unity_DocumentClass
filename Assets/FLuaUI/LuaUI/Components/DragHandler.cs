@@ -23,12 +23,16 @@ namespace FLuaUI.LuaUI.Components
             _startPosition = transform.position;
         }
 
-        public void StartDrag()
+        public void StartDrag(bool snap2Mouse)
         {
             _dragging = true;
             originParent = transform.parent;
             MainGame.Ins.MoveToDraggingStage(gameObject);
             _startMousePosition = EventSystem.current.currentInputModule.input.mousePosition;
+            if (snap2Mouse)
+            {
+                transform.position = _startMousePosition;
+            }
             _startPosition = transform.position;
             _current = this;
         }

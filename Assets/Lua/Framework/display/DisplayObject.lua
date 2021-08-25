@@ -77,13 +77,13 @@ function DisplayObject:onBind(evt)
     self:SetState(0)
 end
 
-function DisplayObject:StartDrag()
+function DisplayObject:StartDrag(snap2Mouse)
     if self.dragging then
         LogUtil.LogWarning("is dragging already.")
         return
     end
     self.dragging = true
-    self:StartDragExtend()
+    self:StartDragExtend(snap2Mouse)
 end
 
 ---StopDrag

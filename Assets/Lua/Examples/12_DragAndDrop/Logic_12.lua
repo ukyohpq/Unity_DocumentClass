@@ -12,7 +12,7 @@ function Logic_12:ctor()
 end
 
 function Logic_12:onDown(evt)
-    self.ui.Image:StartDrag()
+    self.ui.Image:StartDrag(true)
 end
 
 function Logic_12:onUp(evt)

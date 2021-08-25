@@ -55,8 +55,8 @@ namespace FLuaUI.LuaUI.UIExtends
         {
             try
             {
-                ToLua.CheckArgsCount(L, 1);
-                LuaDLL.lua_pushvalue(L, -1);
+                ToLua.CheckArgsCount(L, 2);
+                LuaDLL.lua_pushvalue(L, -2);
                 LuaDLL.lua_gettable(L, LuaIndexes.LUA_REGISTRYINDEX);
                 if (LuaDLL.lua_isnil(L, -1))
                 {
@@ -71,7 +71,8 @@ namespace FLuaUI.LuaUI.UIExtends
                     dragHandler = binder.gameObject.AddComponent<DragHandler>();
                 }
 
-                dragHandler.StartDrag();
+                var snap2Mouse = LuaDLL.lua_toboolean(L, -2);
+                dragHandler.StartDrag(snap2Mouse);
                 LuaDLL.lua_pop(L, 1);
             }
             catch (Exception err)
