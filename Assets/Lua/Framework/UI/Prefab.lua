@@ -29,7 +29,7 @@ end
 ---@param evt Framework.event.Event
 function Prefab:onInit(evt)
     self.status = 2
-    LogUtil.LogError("OnInit:%s", self:GetName())
+    --LogUtil.LogError("OnInit:%s", self:GetName())
 end
 
 ---AddInitEvent
