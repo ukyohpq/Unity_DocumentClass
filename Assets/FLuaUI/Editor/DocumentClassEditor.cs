@@ -257,7 +257,7 @@ end", className, assetPath));
                 classDesc.Insert(classDesc.Count - 1, string.Format("---@field {0} {1}", childName, typeName));
                 _fields.Add(new []{childName, typeName.Substring(typeName.LastIndexOf(".") + 1), binder is DocumentClass?"false":""});
 //                _Doc不用对其子go生成field
-                if (binder is DocumentClass && !requiredClassNames.Contains(typeName))
+                if (binder is DocumentClass)
                 {
 //                    _Doc需要require一下
                     if(!requiredClassNames.Contains(typeName))
