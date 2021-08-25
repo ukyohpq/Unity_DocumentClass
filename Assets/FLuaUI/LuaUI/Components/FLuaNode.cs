@@ -6,7 +6,7 @@ namespace FLuaUI.LuaUI.Components
     {
         public override string GetLuaClassName()
         {
-            return "Framework.display.Node";
+            return "Framework.UI.Node";
         }
     }
 }
