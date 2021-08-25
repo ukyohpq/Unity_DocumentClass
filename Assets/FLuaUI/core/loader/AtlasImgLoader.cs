@@ -103,6 +103,7 @@ namespace FLuaUI.core.loader
             var binder = ls.ToVariant(-1) as MonoBehaviour;
             var unityImage = binder.gameObject.GetComponent<Image>(); 
             unityImage.sprite = t;
+            unityImage.SetNativeSize();
             ls.LuaPop(1);
             ls.LuaGetField(-1, "DispatchMessage");
             if (ls.LuaIsNil(-1))

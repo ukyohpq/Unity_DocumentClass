@@ -79,6 +79,7 @@ namespace FLuaUI.core.loader
             var binder = ls.ToVariant(-1) as FLuaImage;
             var unityImage = binder.gameObject.GetComponent<Image>();
             unityImage.sprite = t as Sprite;
+            unityImage.SetNativeSize();
             if (binder.AutoNativeSize)
             {
                 unityImage.SetNativeSize();
