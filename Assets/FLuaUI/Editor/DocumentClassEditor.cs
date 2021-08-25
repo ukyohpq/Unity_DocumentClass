@@ -260,8 +260,11 @@ end", className, assetPath));
                 if (binder is DocumentClass && !requiredClassNames.Contains(typeName))
                 {
 //                    _Doc需要require一下
-                    classDesc.Insert(1, string.Format("require(\"{0}\")", typeName));
-                    requiredClassNames.Add(typeName);
+                    if(!requiredClassNames.Contains(typeName))
+                    {
+                        classDesc.Insert(1, string.Format("require(\"{0}\")", typeName));
+                        requiredClassNames.Add(typeName);
+                    }
                 }
                 else
                 {
