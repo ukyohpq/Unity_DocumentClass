@@ -5,6 +5,7 @@ local super = require("Framework.display.DisplayObject")
 ---@field EventUp Framework.event.Delegate
 ---@field EventDragEnter Framework.event.Delegate
 ---@field EventDragExit Framework.event.Delegate
+---@field EventLongDown Framework.event.Delegate
 InterActiveObject = class("Framework.display.InterActiveObject", super)
 
 function InterActiveObject:ctor()
@@ -14,6 +15,7 @@ function InterActiveObject:ctor()
     self.EventUp = Delegate.New("up", self)
     self.EventDragEnter = Delegate.New("dragEnter", self)
     self.EventDragExit = Delegate.New("dragExit", self)
+    self.EventLongDown = Delegate.New("longDown", self)
 end
 
 return InterActiveObject

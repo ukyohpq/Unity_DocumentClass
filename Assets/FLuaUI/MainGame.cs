@@ -5,6 +5,7 @@ using System.IO;
 using Babeltime.Log;
 using FLuaUI.core;
 using FLuaUI.core.loader;
+using FLuaUI.LuaUI.Components;
 using FLuaUI.LuaUI.UIExtends;
 
 namespace FLuaUI
@@ -198,6 +199,7 @@ namespace FLuaUI
         void Update()
         {
             LoaderManager.LoadAsset();
+            UpHandler.GetInstance().Update();
             luaState.LuaGetGlobal("LuaBridge");
             if (luaState.LuaIsNil(-1))
             {
