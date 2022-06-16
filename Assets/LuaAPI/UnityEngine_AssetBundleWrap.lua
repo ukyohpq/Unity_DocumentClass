@@ -1,5 +1,6 @@
 ---@class UnityEngine.AssetBundle : UnityEngine.Object
 ---@field isStreamedSceneAssetBundle bool
+---@field memoryBudgetKB uint
 local m = {}
 ---@param unloadAllObjects bool
 function m.UnloadAllAssetBundles(unloadAllObjects) end

@@ -24,6 +24,12 @@ function m.GetBuiltinResource(type, path) end
 function m.UnloadAsset(assetToUnload) end
 ---@return UnityEngine.AsyncOperation
 function m.UnloadUnusedAssets() end
+---@param instanceID int
+---@return UnityEngine.Object
+function m.InstanceIDToObject(instanceID) end
+---@param instanceIDs Unity.Collections.NativeArray
+---@param objects table
+function m.InstanceIDToObjectList(instanceIDs, objects) end
 UnityEngine = {}
 UnityEngine.Resources = m
 return m

@@ -6,6 +6,7 @@
 ---@field isStatic bool
 ---@field tag string
 ---@field scene UnityEngine.SceneManagement.Scene
+---@field sceneCullingMask ulong
 ---@field gameObject UnityEngine.GameObject
 local m = {}
 ---@param type UnityEngine.PrimitiveType
@@ -20,9 +21,11 @@ function m:GetComponent(type) end
 ---@param includeInactive bool
 ---@return UnityEngine.Component
 function m:GetComponentInChildren(type, includeInactive) end
+---@overload fun(type:System.Type):UnityEngine.Component
 ---@param type System.Type
+---@param includeInactive bool
 ---@return UnityEngine.Component
-function m:GetComponentInParent(type) end
+function m:GetComponentInParent(type, includeInactive) end
 ---@overload fun(type:System.Type, results:table):void
 ---@param type System.Type
 ---@return table
@@ -35,6 +38,10 @@ function m:GetComponentsInChildren(type) end
 ---@param type System.Type
 ---@return table
 function m:GetComponentsInParent(type) end
+---@param type System.Type
+---@param component UnityEngine.Component
+---@return bool
+function m:TryGetComponent(type, component) end
 ---@param tag string
 ---@return UnityEngine.GameObject
 function m.FindWithTag(tag) end

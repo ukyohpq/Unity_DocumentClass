@@ -1,6 +1,7 @@
 ---@class UnityEngine.Collider : UnityEngine.Component
 ---@field enabled bool
 ---@field attachedRigidbody UnityEngine.Rigidbody
+---@field attachedArticulationBody UnityEngine.ArticulationBody
 ---@field isTrigger bool
 ---@field contactOffset float
 ---@field bounds UnityEngine.Bounds

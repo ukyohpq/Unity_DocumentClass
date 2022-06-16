@@ -28,13 +28,15 @@
 ---@field maxDistance float
 ---@field rolloffMode UnityEngine.AudioRolloffMode
 local m = {}
----@overload fun():void
----@param delay ulong
-function m:Play(delay) end
+---@overload fun(delay:ulong):void
+function m:Play() end
 ---@param delay float
 function m:PlayDelayed(delay) end
 ---@param time double
 function m:PlayScheduled(time) end
+---@overload fun(clip:UnityEngine.AudioClip, volumeScale:float):void
+---@param clip UnityEngine.AudioClip
+function m:PlayOneShot(clip) end
 ---@param time double
 function m:SetScheduledStartTime(time) end
 ---@param time double
@@ -42,9 +44,6 @@ function m:SetScheduledEndTime(time) end
 function m:Stop() end
 function m:Pause() end
 function m:UnPause() end
----@overload fun(clip:UnityEngine.AudioClip, volumeScale:float):void
----@param clip UnityEngine.AudioClip
-function m:PlayOneShot(clip) end
 ---@overload fun(clip:UnityEngine.AudioClip, position:UnityEngine.Vector3, volume:float):void
 ---@param clip UnityEngine.AudioClip
 ---@param position UnityEngine.Vector3
@@ -73,11 +72,11 @@ function m:GetSpatializerFloat(index, value) end
 ---@param index int
 ---@param value float
 ---@return bool
-function m:SetAmbisonicDecoderFloat(index, value) end
+function m:GetAmbisonicDecoderFloat(index, value) end
 ---@param index int
 ---@param value float
 ---@return bool
-function m:GetAmbisonicDecoderFloat(index, value) end
+function m:SetAmbisonicDecoderFloat(index, value) end
 UnityEngine = {}
 UnityEngine.AudioSource = m
 return m

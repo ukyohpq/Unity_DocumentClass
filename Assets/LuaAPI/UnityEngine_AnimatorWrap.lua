@@ -172,6 +172,7 @@ function m:IsInTransition(layerIndex) end
 ---@return UnityEngine.AnimatorControllerParameter
 function m:GetParameter(index) end
 ---@overload fun(matchPosition:UnityEngine.Vector3, matchRotation:UnityEngine.Quaternion, targetBodyPart:UnityEngine.AvatarTarget, weightMask:UnityEngine.MatchTargetWeightMask, startNormalizedTime:float, targetNormalizedTime:float):void
+---@overload fun(matchPosition:UnityEngine.Vector3, matchRotation:UnityEngine.Quaternion, targetBodyPart:UnityEngine.AvatarTarget, weightMask:UnityEngine.MatchTargetWeightMask, startNormalizedTime:float, targetNormalizedTime:float, completeMatch:bool):void
 ---@param matchPosition UnityEngine.Vector3
 ---@param matchRotation UnityEngine.Quaternion
 ---@param targetBodyPart UnityEngine.AvatarTarget

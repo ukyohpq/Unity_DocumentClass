@@ -29,11 +29,13 @@ function m.Destroy(obj, t) end
 ---@param obj UnityEngine.Object
 ---@param allowDestroyingAssets bool
 function m.DestroyImmediate(obj, allowDestroyingAssets) end
+---@overload fun(type:System.Type, includeInactive:bool):table
 ---@param type System.Type
 ---@return table
 function m.FindObjectsOfType(type) end
 ---@param target UnityEngine.Object
 function m.DontDestroyOnLoad(target) end
+---@overload fun(type:System.Type, includeInactive:bool):UnityEngine.Object
 ---@param type System.Type
 ---@return UnityEngine.Object
 function m.FindObjectOfType(type) end

@@ -1,5 +1,4 @@
 ---@class UnityEngine.AnimationClip : UnityEngine.Object
----@field events table
 ---@field length float
 ---@field frameRate float
 ---@field wrapMode UnityEngine.WrapMode
@@ -11,9 +10,8 @@
 ---@field hasMotionFloatCurves bool
 ---@field hasMotionCurves bool
 ---@field hasRootCurves bool
+---@field events table
 local m = {}
----@param evt UnityEngine.AnimationEvent
-function m:AddEvent(evt) end
 ---@param go UnityEngine.GameObject
 ---@param time float
 function m:SampleAnimation(go, time) end
@@ -24,6 +22,8 @@ function m:SampleAnimation(go, time) end
 function m:SetCurve(relativePath, type, propertyName, curve) end
 function m:EnsureQuaternionContinuity() end
 function m:ClearCurves() end
+---@param evt UnityEngine.AnimationEvent
+function m:AddEvent(evt) end
 UnityEngine = {}
 UnityEngine.AnimationClip = m
 return m

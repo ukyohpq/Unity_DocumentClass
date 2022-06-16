@@ -5,8 +5,10 @@
 ---@field queriesHitTriggers bool
 ---@field queriesHitBackfaces bool
 ---@field bounceThreshold float
+---@field defaultMaxDepenetrationVelocity float
 ---@field defaultSolverIterations int
 ---@field defaultSolverVelocityIterations int
+---@field defaultMaxAngularSpeed float
 ---@field defaultPhysicsScene UnityEngine.PhysicsScene
 ---@field autoSimulation bool
 ---@field autoSyncTransforms bool
@@ -14,6 +16,7 @@
 ---@field interCollisionDistance float
 ---@field interCollisionStiffness float
 ---@field interCollisionSettingsToggle bool
+---@field clothGravity UnityEngine.Vector3
 ---@field IgnoreRaycastLayer int
 ---@field DefaultRaycastLayers int
 ---@field AllLayers int
@@ -32,6 +35,10 @@ function m.IgnoreLayerCollision(layer1, layer2, ignore) end
 ---@param layer2 int
 ---@return bool
 function m.GetIgnoreLayerCollision(layer1, layer2) end
+---@param collider1 UnityEngine.Collider
+---@param collider2 UnityEngine.Collider
+---@return bool
+function m.GetIgnoreCollision(collider1, collider2) end
 ---@overload fun(origin:UnityEngine.Vector3, direction:UnityEngine.Vector3, maxDistance:float, layerMask:int):bool
 ---@overload fun(origin:UnityEngine.Vector3, direction:UnityEngine.Vector3, maxDistance:float):bool
 ---@overload fun(origin:UnityEngine.Vector3, direction:UnityEngine.Vector3):bool
@@ -336,6 +343,9 @@ function m.OverlapCapsuleNonAlloc(point0, point1, radius, results, layerMask, qu
 ---@param worldBounds UnityEngine.Bounds
 ---@param subdivisions int
 function m.RebuildBroadphaseRegions(worldBounds, subdivisions) end
+---@param meshID int
+---@param convex bool
+function m.BakeMesh(meshID, convex) end
 UnityEngine = {}
 UnityEngine.Physics = m
 return m

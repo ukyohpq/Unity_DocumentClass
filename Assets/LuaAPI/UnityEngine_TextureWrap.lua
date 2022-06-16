@@ -1,6 +1,8 @@
 ---@class UnityEngine.Texture : UnityEngine.Object
 ---@field masterTextureLimit int
+---@field mipmapCount int
 ---@field anisotropicFiltering UnityEngine.AnisotropicFiltering
+---@field graphicsFormat UnityEngine.Experimental.Rendering.GraphicsFormat
 ---@field width int
 ---@field height int
 ---@field dimension UnityEngine.Rendering.TextureDimension
@@ -27,6 +29,8 @@
 ---@field streamingTextureLoadingCount ulong
 ---@field streamingTextureForceLoadAll bool
 ---@field streamingTextureDiscardUnusedMips bool
+---@field allowThreadedTextureCreation bool
+---@field GenerateAllMips int
 local m = {}
 ---@param forcedMin int
 ---@param globalMax int

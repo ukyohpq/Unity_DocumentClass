@@ -2,6 +2,7 @@
 ---@field defaultGraphicMaterial UnityEngine.Material
 ---@field color UnityEngine.Color
 ---@field raycastTarget bool
+---@field raycastPadding UnityEngine.Vector4
 ---@field depth int
 ---@field rectTransform UnityEngine.RectTransform
 ---@field canvas UnityEngine.Canvas

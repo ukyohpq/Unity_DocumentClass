@@ -2,7 +2,7 @@
 using System;
 using LuaInterface;
 
-public class Babeltime_Log_BTLogWrap
+public class FLua_Log_BTLogWrap
 {
 	public static void Register(LuaState L)
 	{
@@ -28,7 +28,7 @@ public class Babeltime_Log_BTLogWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			Babeltime.Log.BTLog.D(arg0);
+			FLua.Log.BTLog.D(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -44,7 +44,7 @@ public class Babeltime_Log_BTLogWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			Babeltime.Log.BTLog.I(arg0);
+			FLua.Log.BTLog.I(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -60,7 +60,7 @@ public class Babeltime_Log_BTLogWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			Babeltime.Log.BTLog.OnLineInfo(arg0);
+			FLua.Log.BTLog.OnLineInfo(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -77,7 +77,7 @@ public class Babeltime_Log_BTLogWrap
 			int count = LuaDLL.lua_gettop(L);
 			string arg0 = ToLua.CheckString(L, 1);
 			object[] arg1 = ToLua.ToParamsObject(L, 2, count - 1);
-			Babeltime.Log.BTLog.LogNetDebugInfo(arg0, arg1);
+			FLua.Log.BTLog.LogNetDebugInfo(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -93,7 +93,7 @@ public class Babeltime_Log_BTLogWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			Babeltime.Log.BTLog.W(arg0);
+			FLua.Log.BTLog.W(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -109,7 +109,7 @@ public class Babeltime_Log_BTLogWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			Babeltime.Log.BTLog.E(arg0);
+			FLua.Log.BTLog.E(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -128,19 +128,19 @@ public class Babeltime_Log_BTLogWrap
 			if (count == 1)
 			{
 				string arg0 = ToLua.CheckString(L, 1);
-				Babeltime.Log.BTLog.Exception(arg0);
+				FLua.Log.BTLog.Exception(arg0);
 				return 0;
 			}
 			else if (count == 2)
 			{
 				string arg0 = ToLua.CheckString(L, 1);
 				UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.CheckObject<UnityEngine.Object>(L, 2);
-				Babeltime.Log.BTLog.Exception(arg0, arg1);
+				FLua.Log.BTLog.Exception(arg0, arg1);
 				return 0;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Babeltime.Log.BTLog.Exception");
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: FLua.Log.BTLog.Exception");
 			}
 		}
 		catch (Exception e)
@@ -155,7 +155,7 @@ public class Babeltime_Log_BTLogWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 0);
-			int o = Babeltime.Log.BTLog.GetLogLevelMacro();
+			int o = FLua.Log.BTLog.GetLogLevelMacro();
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
@@ -170,7 +170,7 @@ public class Babeltime_Log_BTLogWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushinteger(L, Babeltime.Log.BTLog.level);
+			LuaDLL.lua_pushinteger(L, FLua.Log.BTLog.level);
 			return 1;
 		}
 		catch (Exception e)
@@ -184,7 +184,7 @@ public class Babeltime_Log_BTLogWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, Babeltime.Log.BTLog.OnLineDebugInfoOpen);
+			LuaDLL.lua_pushboolean(L, FLua.Log.BTLog.OnLineDebugInfoOpen);
 			return 1;
 		}
 		catch (Exception e)
@@ -198,7 +198,7 @@ public class Babeltime_Log_BTLogWrap
 	{
 		try
 		{
-			LuaDLL.lua_pushboolean(L, Babeltime.Log.BTLog.IsMainThread);
+			LuaDLL.lua_pushboolean(L, FLua.Log.BTLog.IsMainThread);
 			return 1;
 		}
 		catch (Exception e)
@@ -213,7 +213,7 @@ public class Babeltime_Log_BTLogWrap
 		try
 		{
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			Babeltime.Log.BTLog.level = arg0;
+			FLua.Log.BTLog.level = arg0;
 			return 0;
 		}
 		catch (Exception e)
@@ -228,7 +228,7 @@ public class Babeltime_Log_BTLogWrap
 		try
 		{
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			Babeltime.Log.BTLog.OnLineDebugInfoOpen = arg0;
+			FLua.Log.BTLog.OnLineDebugInfoOpen = arg0;
 			return 0;
 		}
 		catch (Exception e)

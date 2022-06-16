@@ -12,10 +12,9 @@
 ---@field name string
 ---@field blendMode UnityEngine.AnimationBlendMode
 local m = {}
----@overload fun(mix:UnityEngine.Transform):void
+---@overload fun(mix:UnityEngine.Transform, recursive:bool):void
 ---@param mix UnityEngine.Transform
----@param recursive bool
-function m:AddMixingTransform(mix, recursive) end
+function m:AddMixingTransform(mix) end
 ---@param mix UnityEngine.Transform
 function m:RemoveMixingTransform(mix) end
 UnityEngine = {}

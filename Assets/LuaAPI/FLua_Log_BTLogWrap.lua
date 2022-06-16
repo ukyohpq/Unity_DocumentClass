@@ -1,4 +1,4 @@
----@class Babeltime.Log.BTLog
+---@class FLua.Log.BTLog
 ---@field IsMainThread bool
 ---@field level int
 ---@field OnLineDebugInfoOpen bool
@@ -21,7 +21,7 @@ function m.E(message) end
 function m.Exception(message, context) end
 ---@return int
 function m.GetLogLevelMacro() end
-Babeltime = {}
-Babeltime.Log = {}
-Babeltime.Log.BTLog = m
+FLua = {}
+FLua.Log = {}
+FLua.Log.BTLog = m
 return m

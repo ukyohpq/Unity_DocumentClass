@@ -10,48 +10,38 @@
 local m = {}
 ---@overload fun(name:string):void
 function m:Stop() end
----@overload fun():void
----@param name string
-function m:Rewind(name) end
+---@overload fun(name:string):void
+function m:Rewind() end
 function m:Sample() end
 ---@param name string
 ---@return bool
 function m:IsPlaying(name) end
 ---@overload fun(mode:UnityEngine.PlayMode):bool
----@overload fun(animation:string, mode:UnityEngine.PlayMode):bool
 ---@overload fun(animation:string):bool
+---@overload fun(animation:string, mode:UnityEngine.PlayMode):bool
 ---@return bool
 function m:Play() end
 ---@overload fun(animation:string, fadeLength:float):void
----@overload fun(animation:string):void
+---@overload fun(animation:string, fadeLength:float, mode:UnityEngine.PlayMode):void
 ---@param animation string
----@param fadeLength float
----@param mode UnityEngine.PlayMode
-function m:CrossFade(animation, fadeLength, mode) end
+function m:CrossFade(animation) end
 ---@overload fun(animation:string, targetWeight:float):void
----@overload fun(animation:string):void
+---@overload fun(animation:string, targetWeight:float, fadeLength:float):void
 ---@param animation string
----@param targetWeight float
----@param fadeLength float
-function m:Blend(animation, targetWeight, fadeLength) end
----@overload fun(animation:string, fadeLength:float, queue:UnityEngine.QueueMode):UnityEngine.AnimationState
+function m:Blend(animation) end
 ---@overload fun(animation:string, fadeLength:float):UnityEngine.AnimationState
----@overload fun(animation:string):UnityEngine.AnimationState
+---@overload fun(animation:string, fadeLength:float, queue:UnityEngine.QueueMode):UnityEngine.AnimationState
+---@overload fun(animation:string, fadeLength:float, queue:UnityEngine.QueueMode, mode:UnityEngine.PlayMode):UnityEngine.AnimationState
 ---@param animation string
----@param fadeLength float
----@param queue UnityEngine.QueueMode
----@param mode UnityEngine.PlayMode
 ---@return UnityEngine.AnimationState
-function m:CrossFadeQueued(animation, fadeLength, queue, mode) end
+function m:CrossFadeQueued(animation) end
 ---@overload fun(animation:string, queue:UnityEngine.QueueMode):UnityEngine.AnimationState
----@overload fun(animation:string):UnityEngine.AnimationState
+---@overload fun(animation:string, queue:UnityEngine.QueueMode, mode:UnityEngine.PlayMode):UnityEngine.AnimationState
 ---@param animation string
----@param queue UnityEngine.QueueMode
----@param mode UnityEngine.PlayMode
 ---@return UnityEngine.AnimationState
-function m:PlayQueued(animation, queue, mode) end
----@overload fun(clip:UnityEngine.AnimationClip, newName:string, firstFrame:int, lastFrame:int, addLoopFrame:bool):void
+function m:PlayQueued(animation) end
 ---@overload fun(clip:UnityEngine.AnimationClip, newName:string, firstFrame:int, lastFrame:int):void
+---@overload fun(clip:UnityEngine.AnimationClip, newName:string, firstFrame:int, lastFrame:int, addLoopFrame:bool):void
 ---@param clip UnityEngine.AnimationClip
 ---@param newName string
 function m:AddClip(clip, newName) end

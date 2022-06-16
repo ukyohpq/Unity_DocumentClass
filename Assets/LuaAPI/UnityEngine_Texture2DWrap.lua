@@ -1,12 +1,18 @@
 ---@class UnityEngine.Texture2D : UnityEngine.Texture
----@field mipmapCount int
 ---@field format UnityEngine.TextureFormat
 ---@field whiteTexture UnityEngine.Texture2D
 ---@field blackTexture UnityEngine.Texture2D
+---@field redTexture UnityEngine.Texture2D
+---@field grayTexture UnityEngine.Texture2D
+---@field linearGrayTexture UnityEngine.Texture2D
+---@field normalTexture UnityEngine.Texture2D
 ---@field isReadable bool
+---@field vtOnly bool
 ---@field streamingMipmaps bool
 ---@field streamingMipmapsPriority int
 ---@field requestedMipmapLevel int
+---@field minimumMipmapLevel int
+---@field calculatedMipmapLevel int
 ---@field desiredMipmapLevel int
 ---@field loadingMipmapLevel int
 ---@field loadedMipmapLevel int
@@ -16,6 +22,7 @@ function m:Compress(highQuality) end
 function m:ClearRequestedMipmapLevel() end
 ---@return bool
 function m:IsRequestedMipmapLevelLoaded() end
+function m:ClearMinimumMipmapLevel() end
 ---@param nativeTex System.IntPtr
 function m:UpdateExternalTexture(nativeTex) end
 ---@return table
@@ -50,6 +57,7 @@ function m:PackTextures(textures, padding, maximumAtlasSize, makeNoLongerReadabl
 ---@param nativeTex System.IntPtr
 ---@return UnityEngine.Texture2D
 function m.CreateExternalTexture(width, height, format, mipChain, linear, nativeTex) end
+---@overload fun(x:int, y:int, color:UnityEngine.Color, mipLevel:int):void
 ---@param x int
 ---@param y int
 ---@param color UnityEngine.Color
@@ -64,14 +72,16 @@ function m:SetPixel(x, y, color) end
 ---@param colors table
 ---@param miplevel int
 function m:SetPixels(x, y, blockWidth, blockHeight, colors, miplevel) end
+---@overload fun(x:int, y:int, mipLevel:int):UnityEngine.Color
 ---@param x int
 ---@param y int
 ---@return UnityEngine.Color
 function m:GetPixel(x, y) end
----@param x float
----@param y float
+---@overload fun(u:float, v:float, mipLevel:int):UnityEngine.Color
+---@param u float
+---@param v float
 ---@return UnityEngine.Color
-function m:GetPixelBilinear(x, y) end
+function m:GetPixelBilinear(u, v) end
 ---@overload fun(data:table):void
 ---@param data System.IntPtr
 ---@param size int
@@ -82,6 +92,7 @@ function m:LoadRawTextureData(data, size) end
 ---@param makeNoLongerReadable bool
 function m:Apply(updateMipmaps, makeNoLongerReadable) end
 ---@overload fun(width:int, height:int, format:UnityEngine.TextureFormat, hasMipMap:bool):bool
+---@overload fun(width:int, height:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat, hasMipMap:bool):bool
 ---@param width int
 ---@param height int
 ---@return bool

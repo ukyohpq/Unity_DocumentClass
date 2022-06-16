@@ -2,11 +2,13 @@
 ---@field width int
 ---@field height int
 ---@field dimension UnityEngine.Rendering.TextureDimension
+---@field graphicsFormat UnityEngine.Experimental.Rendering.GraphicsFormat
 ---@field useMipMap bool
 ---@field sRGB bool
----@field format UnityEngine.RenderTextureFormat
 ---@field vrUsage UnityEngine.VRTextureUsage
 ---@field memorylessMode UnityEngine.RenderTextureMemoryless
+---@field format UnityEngine.RenderTextureFormat
+---@field stencilFormat UnityEngine.Experimental.Rendering.GraphicsFormat
 ---@field autoGenerateMips bool
 ---@field volumeDepth int
 ---@field antiAliasing int
@@ -45,6 +47,11 @@ function m:ConvertToEquirect(equirect, eye) end
 function m.SupportsStencil(rt) end
 ---@param temp UnityEngine.RenderTexture
 function m.ReleaseTemporary(temp) end
+---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless, vrUsage:UnityEngine.VRTextureUsage, useDynamicScale:bool):UnityEngine.RenderTexture
+---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless, vrUsage:UnityEngine.VRTextureUsage):UnityEngine.RenderTexture
+---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless):UnityEngine.RenderTexture
+---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing:int):UnityEngine.RenderTexture
+---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.Experimental.Rendering.GraphicsFormat):UnityEngine.RenderTexture
 ---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.RenderTextureFormat, readWrite:UnityEngine.RenderTextureReadWrite, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless, vrUsage:UnityEngine.VRTextureUsage, useDynamicScale:bool):UnityEngine.RenderTexture
 ---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.RenderTextureFormat, readWrite:UnityEngine.RenderTextureReadWrite, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless, vrUsage:UnityEngine.VRTextureUsage):UnityEngine.RenderTexture
 ---@overload fun(width:int, height:int, depthBuffer:int, format:UnityEngine.RenderTextureFormat, readWrite:UnityEngine.RenderTextureReadWrite, antiAliasing:int, memorylessMode:UnityEngine.RenderTextureMemoryless):UnityEngine.RenderTexture

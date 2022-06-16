@@ -7,6 +7,10 @@ local m = {}
 ---@param type System.Type
 ---@return UnityEngine.Component
 function m:GetComponent(type) end
+---@param type System.Type
+---@param component UnityEngine.Component
+---@return bool
+function m:TryGetComponent(type, component) end
 ---@overload fun(t:System.Type):UnityEngine.Component
 ---@param t System.Type
 ---@param includeInactive bool

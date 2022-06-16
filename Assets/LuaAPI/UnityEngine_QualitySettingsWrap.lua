@@ -24,7 +24,8 @@
 ---@field realtimeReflectionProbes bool
 ---@field billboardsFaceCameraPosition bool
 ---@field resolutionScalingFixedDPIFactor float
----@field blendWeights UnityEngine.BlendWeights
+---@field renderPipeline UnityEngine.Rendering.RenderPipelineAsset
+---@field skinWeights UnityEngine.SkinWeights
 ---@field streamingMipmapsActive bool
 ---@field streamingMipmapsMemoryBudget float
 ---@field streamingMipmapsAddAllCameras bool
@@ -43,6 +44,9 @@ function m.DecreaseLevel(applyExpensiveChanges) end
 ---@overload fun(index:int, applyExpensiveChanges:bool):void
 ---@param index int
 function m.SetQualityLevel(index) end
+---@param index int
+---@return UnityEngine.Rendering.RenderPipelineAsset
+function m.GetRenderPipelineAssetAt(index) end
 ---@return int
 function m.GetQualityLevel() end
 UnityEngine = {}

@@ -11,7 +11,7 @@ local GameSettings =
 }
 
 function SetLogLevel(level)
-    Babeltime.Log.BTLog.level = level
+    FLua.Log.BTLog.level = level
     print = function() end
     GameSettings.LOG_LEVEL = level
     if level > ELogType.Debug then

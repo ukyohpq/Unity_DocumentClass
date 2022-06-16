@@ -52,6 +52,8 @@ function m:Lerp(start, end, t) end
 function m:SetPass(pass) end
 ---@param mat UnityEngine.Material
 function m:CopyPropertiesFromMaterial(mat) end
+---@return int
+function m:ComputeCRC() end
 ---@overload fun(outNames:table):void
 ---@return table
 function m:GetTexturePropertyNames() end
@@ -79,13 +81,25 @@ function m:SetVector(name, value) end
 ---@param value UnityEngine.Matrix4x4
 function m:SetMatrix(name, value) end
 ---@overload fun(nameID:int, value:UnityEngine.Texture):void
+---@overload fun(name:string, value:UnityEngine.RenderTexture, element:UnityEngine.Rendering.RenderTextureSubElement):void
+---@overload fun(nameID:int, value:UnityEngine.RenderTexture, element:UnityEngine.Rendering.RenderTextureSubElement):void
 ---@param name string
 ---@param value UnityEngine.Texture
 function m:SetTexture(name, value) end
 ---@overload fun(nameID:int, value:UnityEngine.ComputeBuffer):void
+---@overload fun(name:string, value:UnityEngine.GraphicsBuffer):void
+---@overload fun(nameID:int, value:UnityEngine.GraphicsBuffer):void
 ---@param name string
 ---@param value UnityEngine.ComputeBuffer
 function m:SetBuffer(name, value) end
+---@overload fun(nameID:int, value:UnityEngine.ComputeBuffer, offset:int, size:int):void
+---@overload fun(name:string, value:UnityEngine.GraphicsBuffer, offset:int, size:int):void
+---@overload fun(nameID:int, value:UnityEngine.GraphicsBuffer, offset:int, size:int):void
+---@param name string
+---@param value UnityEngine.ComputeBuffer
+---@param offset int
+---@param size int
+function m:SetConstantBuffer(name, value, offset, size) end
 ---@overload fun(nameID:int, values:table):void
 ---@overload fun(name:string, values:table):void
 ---@overload fun(nameID:int, values:table):void

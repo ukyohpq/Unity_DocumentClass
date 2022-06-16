@@ -6,8 +6,8 @@
 ---@field loadType UnityEngine.AudioClipLoadType
 ---@field preloadAudioData bool
 ---@field ambisonic bool
----@field loadState UnityEngine.AudioDataLoadState
 ---@field loadInBackground bool
+---@field loadState UnityEngine.AudioDataLoadState
 local m = {}
 ---@return bool
 function m:LoadAudioData() end

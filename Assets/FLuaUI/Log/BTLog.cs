@@ -1,4 +1,4 @@
-﻿namespace Babeltime.Log
+﻿namespace FLua.Log
 {
     using System.Collections;
     using System.Collections.Generic;

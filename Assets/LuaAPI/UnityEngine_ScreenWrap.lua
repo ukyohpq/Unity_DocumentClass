@@ -2,17 +2,19 @@
 ---@field width int
 ---@field height int
 ---@field dpi float
----@field orientation UnityEngine.ScreenOrientation
----@field sleepTimeout int
+---@field currentResolution UnityEngine.Resolution
+---@field resolutions table
+---@field fullScreen bool
+---@field fullScreenMode UnityEngine.FullScreenMode
+---@field safeArea UnityEngine.Rect
+---@field cutouts table
 ---@field autorotateToPortrait bool
 ---@field autorotateToPortraitUpsideDown bool
 ---@field autorotateToLandscapeLeft bool
 ---@field autorotateToLandscapeRight bool
----@field currentResolution UnityEngine.Resolution
----@field fullScreen bool
----@field fullScreenMode UnityEngine.FullScreenMode
----@field safeArea UnityEngine.Rect
----@field resolutions table
+---@field orientation UnityEngine.ScreenOrientation
+---@field sleepTimeout int
+---@field brightness float
 local m = {}
 ---@overload fun(width:int, height:int, fullscreenMode:UnityEngine.FullScreenMode):void
 ---@overload fun(width:int, height:int, fullscreen:bool, preferredRefreshRate:int):void

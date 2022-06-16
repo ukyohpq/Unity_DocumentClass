@@ -1,18 +1,27 @@
 ---@class UnityEngine.Light : UnityEngine.Behaviour
 ---@field type UnityEngine.LightType
+---@field shape UnityEngine.LightShape
 ---@field spotAngle float
+---@field innerSpotAngle float
 ---@field color UnityEngine.Color
 ---@field colorTemperature float
+---@field useColorTemperature bool
 ---@field intensity float
 ---@field bounceIntensity float
+---@field useBoundingSphereOverride bool
+---@field boundingSphereOverride UnityEngine.Vector4
+---@field useViewFrustumForShadowCasterCull bool
 ---@field shadowCustomResolution int
 ---@field shadowBias float
 ---@field shadowNormalBias float
 ---@field shadowNearPlane float
+---@field useShadowMatrixOverride bool
+---@field shadowMatrixOverride UnityEngine.Matrix4x4
 ---@field range float
 ---@field flare UnityEngine.Flare
 ---@field bakingOutput UnityEngine.LightBakingOutput
 ---@field cullingMask int
+---@field renderingLayerMask int
 ---@field lightShadowCasterMode UnityEngine.LightShadowCasterMode
 ---@field shadows UnityEngine.LightShadows
 ---@field shadowStrength float

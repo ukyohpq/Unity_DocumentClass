@@ -14,6 +14,7 @@
 ---@field velocityOverLifetime UnityEngine.ParticleSystem.VelocityOverLifetimeModule
 ---@field limitVelocityOverLifetime UnityEngine.ParticleSystem.LimitVelocityOverLifetimeModule
 ---@field inheritVelocity UnityEngine.ParticleSystem.InheritVelocityModule
+---@field lifetimeByEmitterSpeed UnityEngine.ParticleSystem.LifetimeByEmitterSpeedModule
 ---@field forceOverLifetime UnityEngine.ParticleSystem.ForceOverLifetimeModule
 ---@field colorOverLifetime UnityEngine.ParticleSystem.ColorOverLifetimeModule
 ---@field colorBySpeed UnityEngine.ParticleSystem.ColorBySpeedModule
@@ -30,17 +31,6 @@
 ---@field trails UnityEngine.ParticleSystem.TrailModule
 ---@field customData UnityEngine.ParticleSystem.CustomDataModule
 local m = {}
----@param customData table
----@param streamIndex UnityEngine.ParticleSystemCustomData
-function m:SetCustomParticleData(customData, streamIndex) end
----@param customData table
----@param streamIndex UnityEngine.ParticleSystemCustomData
----@return int
-function m:GetCustomParticleData(customData, streamIndex) end
----@overload fun(subEmitterIndex:int, particle:UnityEngine.ParticleSystem.Particle):void
----@overload fun(subEmitterIndex:int, particles:table):void
----@param subEmitterIndex int
-function m:TriggerSubEmitter(subEmitterIndex) end
 ---@overload fun(particles:table, size:int):void
 ---@overload fun(particles:table):void
 ---@overload fun(particles:Unity.Collections.NativeArray, size:int, offset:int):void
@@ -60,6 +50,21 @@ function m:SetParticles(particles, size, offset) end
 ---@param offset int
 ---@return int
 function m:GetParticles(particles, size, offset) end
+---@param customData table
+---@param streamIndex UnityEngine.ParticleSystemCustomData
+function m:SetCustomParticleData(customData, streamIndex) end
+---@param customData table
+---@param streamIndex UnityEngine.ParticleSystemCustomData
+---@return int
+function m:GetCustomParticleData(customData, streamIndex) end
+---@return UnityEngine.ParticleSystem.PlaybackState
+function m:GetPlaybackState() end
+---@param playbackState UnityEngine.ParticleSystem.PlaybackState
+function m:SetPlaybackState(playbackState) end
+---@return UnityEngine.ParticleSystem.Trails
+function m:GetTrails() end
+---@param trailData UnityEngine.ParticleSystem.Trails
+function m:SetTrails(trailData) end
 ---@overload fun(t:float, withChildren:bool, restart:bool):void
 ---@overload fun(t:float, withChildren:bool):void
 ---@overload fun(t:float):void
@@ -89,7 +94,18 @@ function m:IsAlive(withChildren) end
 ---@overload fun(emitParams:UnityEngine.ParticleSystem.EmitParams, count:int):void
 ---@param count int
 function m:Emit(count) end
+---@overload fun(subEmitterIndex:int, particle:UnityEngine.ParticleSystem.Particle):void
+---@overload fun(subEmitterIndex:int, particles:table):void
+---@param subEmitterIndex int
+function m:TriggerSubEmitter(subEmitterIndex) end
 function m.ResetPreMappedBufferMemory() end
+---@param vertexBuffersCount int
+---@param indexBuffersCount int
+function m.SetMaximumPreMappedBufferCounts(vertexBuffersCount, indexBuffersCount) end
+function m:AllocateAxisOfRotationAttribute() end
+function m:AllocateMeshIndexAttribute() end
+---@param stream UnityEngine.ParticleSystemCustomData
+function m:AllocateCustomDataAttribute(stream) end
 UnityEngine = {}
 UnityEngine.ParticleSystem = m
 return m

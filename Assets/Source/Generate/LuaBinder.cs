@@ -80,14 +80,10 @@ public static class LuaBinder
 		L.RegFunction("PCMSetPositionCallback", UnityEngine_AudioClip_PCMSetPositionCallback);
 		L.EndModule();
 		L.EndModule();
-		L.BeginModule("Babeltime");
+		L.BeginModule("FLua");
 		L.BeginModule("Log");
-		Babeltime_Log_BTLogWrap.Register(L);
-		L.RegFunction("UploadMessage", Babeltime_Log_UploadMessage);
-		L.EndModule();
-		L.EndModule();
-		L.BeginModule("Framework");
-		L.BeginModule("core");
+		FLua_Log_BTLogWrap.Register(L);
+		L.RegFunction("UploadMessage", FLua_Log_UploadMessage);
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("System");
@@ -97,6 +93,7 @@ public static class LuaBinder
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Func_int_int", System_Func_int_int);
 		L.RegFunction("Action_bool", System_Action_bool);
+		L.RegFunction("Action_string", System_Action_string);
 		L.RegFunction("Func_bool", System_Func_bool);
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
 		L.EndModule();
@@ -111,7 +108,7 @@ public static class LuaBinder
 		L.AddPreLoad("UnityEngine.Animation", LuaOpen_UnityEngine_Animation, typeof(UnityEngine.Animation));
 		L.AddPreLoad("UnityEngine.AnimationClip", LuaOpen_UnityEngine_AnimationClip, typeof(UnityEngine.AnimationClip));
 		L.AddPreLoad("UnityEngine.AnimationState", LuaOpen_UnityEngine_AnimationState, typeof(UnityEngine.AnimationState));
-		L.AddPreLoad("UnityEngine.BlendWeights", LuaOpen_UnityEngine_BlendWeights, typeof(UnityEngine.BlendWeights));
+		L.AddPreLoad("UnityEngine.SkinWeights", LuaOpen_UnityEngine_SkinWeights, typeof(UnityEngine.SkinWeights));
 		L.AddPreLoad("UnityEngine.RenderTexture", LuaOpen_UnityEngine_RenderTexture, typeof(UnityEngine.RenderTexture));
 		L.AddPreLoad("UnityEngine.Rigidbody", LuaOpen_UnityEngine_Rigidbody, typeof(UnityEngine.Rigidbody));
 		L.EndPreLoad();
@@ -308,7 +305,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Babeltime_Log_UploadMessage(IntPtr L)
+	static int FLua_Log_UploadMessage(IntPtr L)
 	{
 		try
 		{
@@ -317,13 +314,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<Babeltime.Log.UploadMessage>.Create(func);
+				Delegate arg1 = DelegateTraits<FLua.Log.UploadMessage>.Create(func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<Babeltime.Log.UploadMessage>.Create(func, self);
+				Delegate arg1 = DelegateTraits<FLua.Log.UploadMessage>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -486,6 +483,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<bool>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_string(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<string>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<string>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -713,14 +737,14 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LuaOpen_UnityEngine_BlendWeights(IntPtr L)
+	static int LuaOpen_UnityEngine_SkinWeights(IntPtr L)
 	{
 		try
 		{
 			LuaState state = LuaState.Get(L);
 			state.BeginPreModule("UnityEngine");
-			UnityEngine_BlendWeightsWrap.Register(state);
-			int reference = state.GetMetaReference(typeof(UnityEngine.BlendWeights));
+			UnityEngine_SkinWeightsWrap.Register(state);
+			int reference = state.GetMetaReference(typeof(UnityEngine.SkinWeights));
 			state.EndPreModule(L, reference);
 			return 1;
 		}

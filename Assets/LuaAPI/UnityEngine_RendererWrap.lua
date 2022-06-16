@@ -4,11 +4,13 @@
 ---@field isVisible bool
 ---@field shadowCastingMode UnityEngine.Rendering.ShadowCastingMode
 ---@field receiveShadows bool
+---@field forceRenderingOff bool
 ---@field motionVectorGenerationMode UnityEngine.MotionVectorGenerationMode
 ---@field lightProbeUsage UnityEngine.Rendering.LightProbeUsage
 ---@field reflectionProbeUsage UnityEngine.Rendering.ReflectionProbeUsage
 ---@field renderingLayerMask uint
 ---@field rendererPriority int
+---@field rayTracingMode UnityEngine.Experimental.Rendering.RayTracingMode
 ---@field sortingLayerName string
 ---@field sortingLayerID int
 ---@field sortingOrder int

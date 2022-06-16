@@ -28,11 +28,12 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.Application.LowMemoryCallback), factory.UnityEngine_Application_LowMemoryCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), factory.UnityEngine_Application_LogCallback);
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
+		dict.Add(typeof(System.Action<string>), factory.System_Action_string);
 		dict.Add(typeof(System.Func<bool>), factory.System_Func_bool);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), factory.UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		dict.Add(typeof(System.Action<UnityEngine.AsyncOperation>), factory.System_Action_UnityEngine_AsyncOperation);
-		dict.Add(typeof(Babeltime.Log.UploadMessage), factory.Babeltime_Log_UploadMessage);
+		dict.Add(typeof(FLua.Log.UploadMessage), factory.FLua_Log_UploadMessage);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -45,11 +46,12 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.Application.LowMemoryCallback>.Init(factory.UnityEngine_Application_LowMemoryCallback);
 		DelegateTraits<UnityEngine.Application.LogCallback>.Init(factory.UnityEngine_Application_LogCallback);
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
+		DelegateTraits<System.Action<string>>.Init(factory.System_Action_string);
 		DelegateTraits<System.Func<bool>>.Init(factory.System_Func_bool);
 		DelegateTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.UnityEngine_AudioClip_PCMReaderCallback);
 		DelegateTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.System_Action_UnityEngine_AsyncOperation);
-		DelegateTraits<Babeltime.Log.UploadMessage>.Init(factory.Babeltime_Log_UploadMessage);
+		DelegateTraits<FLua.Log.UploadMessage>.Init(factory.FLua_Log_UploadMessage);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -62,11 +64,12 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.Application.LowMemoryCallback>.Init(factory.Check_UnityEngine_Application_LowMemoryCallback);
 		TypeTraits<UnityEngine.Application.LogCallback>.Init(factory.Check_UnityEngine_Application_LogCallback);
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
+		TypeTraits<System.Action<string>>.Init(factory.Check_System_Action_string);
 		TypeTraits<System.Func<bool>>.Init(factory.Check_System_Func_bool);
 		TypeTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMReaderCallback);
 		TypeTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMSetPositionCallback);
 		TypeTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.Check_System_Action_UnityEngine_AsyncOperation);
-		TypeTraits<Babeltime.Log.UploadMessage>.Init(factory.Check_Babeltime_Log_UploadMessage);
+		TypeTraits<FLua.Log.UploadMessage>.Init(factory.Check_FLua_Log_UploadMessage);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -79,11 +82,12 @@ public class DelegateFactory
 		StackTraits<UnityEngine.Application.LowMemoryCallback>.Push = factory.Push_UnityEngine_Application_LowMemoryCallback;
 		StackTraits<UnityEngine.Application.LogCallback>.Push = factory.Push_UnityEngine_Application_LogCallback;
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
+		StackTraits<System.Action<string>>.Push = factory.Push_System_Action_string;
 		StackTraits<System.Func<bool>>.Push = factory.Push_System_Func_bool;
 		StackTraits<UnityEngine.AudioClip.PCMReaderCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMReaderCallback;
 		StackTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMSetPositionCallback;
 		StackTraits<System.Action<UnityEngine.AsyncOperation>>.Push = factory.Push_System_Action_UnityEngine_AsyncOperation;
-		StackTraits<Babeltime.Log.UploadMessage>.Push = factory.Push_Babeltime_Log_UploadMessage;
+		StackTraits<FLua.Log.UploadMessage>.Push = factory.Push_FLua_Log_UploadMessage;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -832,6 +836,63 @@ public class DelegateFactory
 		ToLua.Push(L, o);
 	}
 
+	class System_Action_string_Event : LuaDelegate
+	{
+		public System_Action_string_Event(LuaFunction func) : base(func) { }
+		public System_Action_string_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(string param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(string param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<string> System_Action_string(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<string> fn = delegate(string param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_string_Event target = new System_Action_string_Event(func);
+			System.Action<string> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_string_Event target = new System_Action_string_Event(func, self);
+			System.Action<string> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_string(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<string>), L, pos);
+	}
+
+	void Push_System_Action_string(IntPtr L, System.Action<string> o)
+	{
+		ToLua.Push(L, o);
+	}
+
 	class System_Func_bool_Event : LuaDelegate
 	{
 		public System_Func_bool_Event(LuaFunction func) : base(func) { }
@@ -1062,10 +1123,10 @@ public class DelegateFactory
 		ToLua.Push(L, o);
 	}
 
-	class Babeltime_Log_UploadMessage_Event : LuaDelegate
+	class FLua_Log_UploadMessage_Event : LuaDelegate
 	{
-		public Babeltime_Log_UploadMessage_Event(LuaFunction func) : base(func) { }
-		public Babeltime_Log_UploadMessage_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public FLua_Log_UploadMessage_Event(LuaFunction func) : base(func) { }
+		public FLua_Log_UploadMessage_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
 		public void Call(string param0)
 		{
@@ -1085,36 +1146,36 @@ public class DelegateFactory
 		}
 	}
 
-	public Babeltime.Log.UploadMessage Babeltime_Log_UploadMessage(LuaFunction func, LuaTable self, bool flag)
+	public FLua.Log.UploadMessage FLua_Log_UploadMessage(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			Babeltime.Log.UploadMessage fn = delegate(string param0) { };
+			FLua.Log.UploadMessage fn = delegate(string param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			Babeltime_Log_UploadMessage_Event target = new Babeltime_Log_UploadMessage_Event(func);
-			Babeltime.Log.UploadMessage d = target.Call;
+			FLua_Log_UploadMessage_Event target = new FLua_Log_UploadMessage_Event(func);
+			FLua.Log.UploadMessage d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			Babeltime_Log_UploadMessage_Event target = new Babeltime_Log_UploadMessage_Event(func, self);
-			Babeltime.Log.UploadMessage d = target.CallWithSelf;
+			FLua_Log_UploadMessage_Event target = new FLua_Log_UploadMessage_Event(func, self);
+			FLua.Log.UploadMessage d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	bool Check_Babeltime_Log_UploadMessage(IntPtr L, int pos)
+	bool Check_FLua_Log_UploadMessage(IntPtr L, int pos)
 	{
-		return TypeChecker.CheckDelegateType(typeof(Babeltime.Log.UploadMessage), L, pos);
+		return TypeChecker.CheckDelegateType(typeof(FLua.Log.UploadMessage), L, pos);
 	}
 
-	void Push_Babeltime_Log_UploadMessage(IntPtr L, Babeltime.Log.UploadMessage o)
+	void Push_FLua_Log_UploadMessage(IntPtr L, FLua.Log.UploadMessage o)
 	{
 		ToLua.Push(L, o);
 	}

@@ -1,10 +1,7 @@
 ---@class UnityEngine.Application : object
 ---@field isPlaying bool
 ---@field isFocused bool
----@field platform UnityEngine.RuntimePlatform
 ---@field buildGUID string
----@field isMobilePlatform bool
----@field isConsolePlatform bool
 ---@field runInBackground bool
 ---@field isBatchMode bool
 ---@field dataPath string
@@ -22,12 +19,15 @@
 ---@field companyName string
 ---@field cloudProjectId string
 ---@field targetFrameRate int
----@field systemLanguage UnityEngine.SystemLanguage
 ---@field consoleLogPath string
 ---@field backgroundLoadingPriority UnityEngine.ThreadPriority
----@field internetReachability UnityEngine.NetworkReachability
 ---@field genuine bool
 ---@field genuineCheckAvailable bool
+---@field platform UnityEngine.RuntimePlatform
+---@field isMobilePlatform bool
+---@field isConsolePlatform bool
+---@field systemLanguage UnityEngine.SystemLanguage
+---@field internetReachability UnityEngine.NetworkReachability
 ---@field isEditor bool
 local m = {}
 ---@overload fun():void

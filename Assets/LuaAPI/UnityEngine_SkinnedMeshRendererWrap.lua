@@ -14,6 +14,7 @@ function m:GetBlendShapeWeight(index) end
 ---@param index int
 ---@param value float
 function m:SetBlendShapeWeight(index, value) end
+---@overload fun(mesh:UnityEngine.Mesh, useScale:bool):void
 ---@param mesh UnityEngine.Mesh
 function m:BakeMesh(mesh) end
 UnityEngine = {}

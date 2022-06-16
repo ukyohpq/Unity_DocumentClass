@@ -3,7 +3,7 @@
 --- DateTime: 2017/10/31 10:47
 ---
 local GameSettings = require("Framework.Setting")
-local _log = Babeltime.Log.BTLog
+local _log = FLua.Log.BTLog
 --------------------
 ELogType =
 {
@@ -178,7 +178,6 @@ function LogUtil.SdkAddTags(serverId, roleID, roleName)
     data.scriptVersion=  VersionHandle.GetScriptVersion()
     local jsonStr = json.encode(data)
     --LogUtil.LogError("LogUtil.SdkAddTags   %s", jsonStr)
-    Babeltime.SDK.BDSDK.SdkAddTags(jsonStr)
 end
 
 

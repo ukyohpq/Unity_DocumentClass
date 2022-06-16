@@ -20,6 +20,7 @@
 ---@field eventMask int
 ---@field layerCullSpherical bool
 ---@field cameraType UnityEngine.CameraType
+---@field overrideSceneCullingMask ulong
 ---@field layerCullDistances table
 ---@field useOcclusionCulling bool
 ---@field cullingMatrix UnityEngine.Matrix4x4
@@ -71,6 +72,10 @@ function m:ResetCullingMatrix() end
 ---@param replacementTag string
 function m:SetReplacementShader(shader, replacementTag) end
 function m:ResetReplacementShader() end
+---@return float
+function m:GetGateFittedFieldOfView() end
+---@return UnityEngine.Vector2
+function m:GetGateFittedLensShift() end
 ---@overload fun(colorBuffer:table, depthBuffer:UnityEngine.RenderBuffer):void
 ---@param colorBuffer UnityEngine.RenderBuffer
 ---@param depthBuffer UnityEngine.RenderBuffer
@@ -132,11 +137,19 @@ function m.CalculateProjectionMatrixFromPhysicalProperties(output, focalLength, 
 ---@param focalLength float
 ---@param sensorSize float
 ---@return float
-function m.FocalLengthToFOV(focalLength, sensorSize) end
----@param fov float
+function m.FocalLengthToFieldOfView(focalLength, sensorSize) end
+---@param fieldOfView float
 ---@param sensorSize float
 ---@return float
-function m.FOVToFocalLength(fov, sensorSize) end
+function m.FieldOfViewToFocalLength(fieldOfView, sensorSize) end
+---@param horizontalFieldOfView float
+---@param aspectRatio float
+---@return float
+function m.HorizontalToVerticalFieldOfView(horizontalFieldOfView, aspectRatio) end
+---@param verticalFieldOfView float
+---@param aspectRatio float
+---@return float
+function m.VerticalToHorizontalFieldOfView(verticalFieldOfView, aspectRatio) end
 ---@param eye UnityEngine.Camera.StereoscopicEye
 ---@return UnityEngine.Matrix4x4
 function m:GetStereoNonJitteredProjectionMatrix(eye) end
@@ -172,6 +185,8 @@ function m:Render() end
 ---@param replacementTag string
 function m:RenderWithShader(shader, replacementTag) end
 function m:RenderDontRestore() end
+---@param renderRequests table
+function m:SubmitRenderRequests(renderRequests) end
 ---@param cur UnityEngine.Camera
 function m.SetupCurrent(cur) end
 ---@param other UnityEngine.Camera
@@ -192,6 +207,10 @@ function m:RemoveCommandBuffer(evt, buffer) end
 ---@param evt UnityEngine.Rendering.CameraEvent
 ---@return table
 function m:GetCommandBuffers(evt) end
+---@overload fun(stereoAware:bool, cullingParameters:UnityEngine.Rendering.ScriptableCullingParameters):bool
+---@param cullingParameters UnityEngine.Rendering.ScriptableCullingParameters
+---@return bool
+function m:TryGetCullingParameters(cullingParameters) end
 UnityEngine = {}
 UnityEngine.Camera = m
 return m
